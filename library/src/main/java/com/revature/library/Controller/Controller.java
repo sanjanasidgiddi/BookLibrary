@@ -1,7 +1,9 @@
 package com.revature.library.Controller;
 
 import com.revature.library.Models.Book;
+import com.revature.library.Models.BookLog;
 import com.revature.library.Models.User;
+import com.revature.library.Service.BookLogService;
 import com.revature.library.Service.BookService;
 import com.revature.library.Service.UserService;
 
@@ -28,48 +30,82 @@ class Controller{
 
     private final BookService bookService;
 
+    private final BookLogService bookLogService;
+
     @Autowired
-    public Controller(UserService userService, BookService bookService){
+    public Controller(UserService userService, BookService bookService, BookLogService bookLogService){
         this.userService=userService;
         this.bookService=bookService;
+        this.bookLogService = bookLogService;
     }
 
     private boolean isAdmin(){
         throw new UnsupportedOperationException();
     }
 
-    //returns -1 if admin
-    private int getLoggedInUserId(){
+    //returns a different value if admin
+    private String getLoggedInUserId(){
         throw new UnsupportedOperationException();
     }
 
-
-    @PostMapping("user/{id}")
-    ResponseEntity<User> getUser(@PathVariable int id){
-        if (!isAdmin() && getLoggedInUserId() != id){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-
-        throw new UnsupportedOperationException();
-    }
-
-    @PostMapping("user")
+    @PostMapping("/users")
     ResponseEntity<List<User>> getAllUser(){
         if (!isAdmin()){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
-        throw new UnsupportedOperationException();
+        return ResponseEntity.ok(userService.getAll());
     }
 
+    @PostMapping("/users/{username}")
+    ResponseEntity<User> getUser(@PathVariable String username){
+        if (!isAdmin() && !getLoggedInUserId().equals(username)){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
 
-    @DeleteMapping("user/{id}")
-    ResponseEntity<User> deleteUser(@PathVariable int id){
+        return userService
+                .getByUsername(username)
+                .map(it-> ResponseEntity.ok(it))
+                .orElse(
+                        ResponseEntity.status(HttpStatus.NOT_FOUND).build()
+                );
+    }
+
+    @DeleteMapping("/users/{username}")
+    ResponseEntity<User> deleteUser(@PathVariable String username){
         if (!isAdmin()){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
-        throw new UnsupportedOperationException();
+        var user = userService.getByUsername(username);
+
+        if (user.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        if (!userService.removeUser(username)){
+            //user is holding a book and cannot be deleted
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        return ResponseEntity.ok(user.get());
+    }
+
+    @GetMapping("/logs")
+    ResponseEntity<List<BookLog>> getAllLogs(){
+        if (!isAdmin()){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        return ResponseEntity.ok(bookLogService.getAll());
+    }
+
+    @GetMapping("/logs/{username}")
+    ResponseEntity<List<BookLog>> getAllLogsByUsername(@PathVariable String username){
+        if (!isAdmin()){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        return ResponseEntity.ok(bookLogService.getAll(username));
     }
 
     /*
