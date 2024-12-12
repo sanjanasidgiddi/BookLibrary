@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Books</title>
+
+  <link rel="stylesheet" href="style.css">
+  <script src="make-entry.js"></script>
+
+  <script>
+    function makeBookEntry(title, author, issued_date, return_by){
+      makeEntry(
+          {
+            "Title": title,
+            "Author": author,
+            "Issued Date": issued_date,
+            "Return By": return_by
+          }
+      )
+    }
+  </script>
+
+
+</head>
+<body>
+<h1>My Books</h1>
+<div id="entries">
+  <script>
+    makeBookEntry("Harry Potter", "JK Rowling", "12/12/24", "12/30/24")
+    makeBookEntry("Lord of The Rings", "JRR Tolkien", "12/12/24", "12/30/24")
+  </script>
+</div>
+
+</body>
+</html>

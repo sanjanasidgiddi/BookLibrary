@@ -1,0 +1,6 @@
+.entry > dt {
+    color:gray;
+    float:left;
+    font-weight:bold;
+    width:100px;
+}
