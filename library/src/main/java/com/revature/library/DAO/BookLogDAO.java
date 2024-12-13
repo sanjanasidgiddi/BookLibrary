@@ -8,5 +8,8 @@ import com.revature.library.Models.BookLog;
 @Repository
 public interface BookLogDAO extends JpaRepository<BookLog,Integer> {
     
-}
 
+}
+/*
+ * 
+ */
