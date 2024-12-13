@@ -17,7 +17,9 @@ public class BookLogService{
     }
 
     public boolean isUserHoldingBook(String username){
-        throw new UnsupportedOperationException();
+        return dao.findByUsername(username)
+            .stream()
+            .anyMatch(it->it.getDateActuallyReturned() == null);
     }
 
     public List<BookLog> getAll(){
@@ -25,6 +27,6 @@ public class BookLogService{
     }
 
     public List<BookLog> getAll(String username){
-        throw new UnsupportedOperationException();
+        return dao.findByUsername(username);
     }
 }
