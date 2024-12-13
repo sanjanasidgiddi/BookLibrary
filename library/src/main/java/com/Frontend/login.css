@@ -1,0 +1,19 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins",sans-serif;
+    
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: peachpuff;
+    background-image: url(background_img.jpg);
+}
+
+.login-box-wrapper{
+    background: whitesmoke;
+}

@@ -54,7 +54,7 @@ public class BookService {
             existingBook.setBookName(updatedBook.getBookName());
             existingBook.setBookGenre(updatedBook.getBookGenre());
             existingBook.setAuthor(updatedBook.getAuthor());
-            existingBook.setBookAgeRatedReads(updatedBook.getBookAgeRatedReads());
+            existingBook.setBookAgeRatedReads(updatedBook.getBookAgeLimit());
             return bookDAO.save(existingBook);
         }
         else{

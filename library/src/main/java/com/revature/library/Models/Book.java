@@ -13,24 +13,24 @@ public class Book {
     @Column(name="book_name")
     private int BookName;
     
-    @Column(name="authors")
+    @Column(name="author")
     private String Author;
     
     @Column(name="book_genre")
     private String BookGenre;
     
-    @Column(name="book_age_rated_reads")
-    private int BookAgeRatedReads;
+    @Column(name="book_age_limit")
+    private int BookAgeLimit;
 
     //Constructors
     public Book(){}
 
-    public Book(int BookId, int BookName, String Author, String BookGenre, int BookAgeRatedReads){
+    public Book(int BookId, int BookName, String Author, String BookGenre, int BookAgeLimit){
         this.BookId=BookId;
         this.BookName=BookName;
         this.Author=Author;
         this.BookGenre=BookGenre;
-        this.BookAgeRatedReads=BookAgeRatedReads;
+        this.BookAgeLimit=BookAgeLimit;
     }
 
     //Getters and Setters
@@ -66,12 +66,12 @@ public class Book {
         BookGenre = bookGenre;
     }
 
-    public int getBookAgeRatedReads() {
-        return BookAgeRatedReads;
+    public int getBookAgeLimit() {
+        return BookAgeLimit;
     }
 
-    public void setBookAgeRatedReads(int bookAgeRatedReads) {
-        BookAgeRatedReads = bookAgeRatedReads;
+    public void setBookAgeRatedReads(int bookAgeLimit) {
+        BookAgeLimit = bookAgeLimit;
     }
     
 
