@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 class Controller{
@@ -115,6 +116,17 @@ class Controller{
      * edit book data
      * delete books(cannot delete books already issued)
      */
+
+    @GetMapping("book/{book_id}")
+    public ResponseEntity<Book> getBookById(@PathVariable int bookId){
+        Optional<Book> book=bookService.getBookById(bookId);
+        if (book.isPresent()) {
+            return ResponseEntity.ok(book.get());  // Return the book if found
+        } else {
+            return ResponseEntity.notFound().build();  // Return 404 if book not found
+        }
+    }
+
 
      @GetMapping
      public List<Book> getAllBooks(){

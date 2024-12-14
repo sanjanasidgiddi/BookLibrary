@@ -3,26 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <link rel="stylesheet" href="login.css">
+    <title>Login</title>
+    <link rel="stylesheet" href="register-login.css">
 </head>
 <body>
-    <div class="login-box-wrapper">
-        <form>
+    <div class="wrapper">
+        <form action="">
             <h1>Login</h1>
-            <input type="text" placeholder="Username" required>
-            <br><br>
-            <input type="password" placeholder="Password" required>
-            <br><br>
-            <button type="submit"> Login </button>
-            <br>
-            <div>
+            <div class="input_box">
+                <input type="text" placeholder="Username" required>
+                <box-icon type='solid' name='user'></box-icon>
+            </div>
+            <div class="input_box">
+                <input type="password" placeholder="Password" required>
+                <box-icon type='solid' name='lock-alt'></box-icon>
+            </div>
+            
+            <button class="button" type="submit"> Login </button>
+            <div class="register">
                 <p>Don't have an account?
-                    <a href="#">Register</a>
+                    <a href="register.html">Register</a>
                 </p>
             </div>
         </form>
     </div>
-    
+    <script src="login.js"></script>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+
 </body>
 </html>
