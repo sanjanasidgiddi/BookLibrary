@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book List</title>
+    <link rel="stylesheet" href="book-list.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="view_users">
+            <a id="user_link_text" title="User List">
+                <i class='bx bx-user-circle' ></i>
+                Users
+            </a>
+        </div>
+        <div id="add_books">
+            <span id="title"><b>List of Books<b></span>
+            <a id="add_book_link_text" title="Add Books" onclick="openBookForm()">
+                <i class='bx bxs-book-add' ></i>
+            </a>
+        </div>
+        <div class="form_popup" id="id_form_popup">
+            <form id="form_add_books">
+                <h1>Add Book</h1>
+                <input type="text" placeholder="Book Title" required>
+                <input type="text" placeholder="Author" required>
+                <input type="text" placeholder="Genre" required>
+                <input type="text" placeholder="Author" required>
+                <input type="text" placeholder="Age Limit" required>
+                <input type="text" placeholder="Book Cover" required>
+                <button type="submit" class="add_book_button">Add</button>
+                <button type="button" class="cancel_button" onclick="closeForm()">Close</button>
+            </form>
+        </div>
+        <table id="book_list_id">
+            <tr>
+                <th id="bookIdInput">Book Id</th>
+                <th id="bookNameInput">Book Title</th>
+                <th id="authorInput">Author</th>
+                <th id="genreInput">Genre</th>
+                <th id="ageLimitInput">Age Limit</th>
+                <th id="bookCover">Book Cover</th>
+            </tr>
+
+        </table>
+    </div>
+    <script src="book-list.js"></script>
+</body>
+</html>

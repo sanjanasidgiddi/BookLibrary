@@ -5,17 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Books</title>
     <link rel="stylesheet" href="book-dashboard.css">
-
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
     <div id="my_books_link">
-        <a id="link_text" href="my-books.html">My Books</a>
+        <a id="link_text" title="My Books" href="my-books.html">
+            <i class='bx bxs-bookmark-heart'></i>
+        </a>
     </div>
     <div class="upper_block">
         <h1 id="qoute">Books are uniquely portable magic.</h1>
         <div class="book_search">
-            <input type="text" placeholder="Search your book">
-            <button><img src="#"></button>
+            <input type="text" placeholder="Search your book" autocomplete="off">
+            <button><i class='bx bx-search'></i></button>
         </div>
     </div>
     <div class="book_container">

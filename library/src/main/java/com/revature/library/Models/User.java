@@ -9,7 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 @Entity
-@Table(name="messages")
+@Table(name="users")
 public class User {
     @Id
     private String username;

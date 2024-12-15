@@ -1,21 +1,25 @@
 *{
     margin:0;
     padding:0;
-    font-family: "Bodoni Moda",serif;
+    font-family: "Poppins",sans-serif;
 }
 
 #my_books_link #link_text{
-    background-color: gainsboro;
+    background-color: rgba(207, 204, 204, 0.967);
     padding: 10px;
     align-items: flex-end;
     justify-content: flex-end;
     display: flex;
-    font-size: 20px;
     right: auto;
     color: black;
     text-decoration: none;
 }
 
+.bxs-bookmark-heart{
+    font-size: 30px;
+    color: black;
+    padding-right: 10px;
+}
 
 .upper_block{
     background-image: url(background_img.jpg);
@@ -27,6 +31,7 @@
 }
 
 #qoute{
+    font-family: "Bodoni Moda",serif;
     color: whitesmoke;
     text-align: center;
     top:30%;
@@ -44,11 +49,66 @@
     left: 50%;
     transform: translate(-50%, -50%);
     position: absolute;
+    padding: 20px 30px 20px 20px;
+    width: 500px;
+    height: 30px;
+    background: whitesmoke;
+    border-radius: 5px;
+}
+
+.book_search:hover{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.book_search input{
+    width:100%;
+    height: 100%;
+    background: whitesmoke;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(255, 255, 255, .2);
+    font-size: 16px;
+    color: rgb(57, 55, 55);
+    padding: 5px;
+    right: 10px;
+    bottom: 10px;
+    transform: translateY(-10%);
+}
+    
+
+input{
+    display: flex;
+    align-items: center;
+}
+
+.book_search button{
+    background: transparent;
+    border: 0;
+    outline: 0; 
+}
+
+.book_search button .bx-search{
+    width: 25;
+    color: #555;
+    font-size: 22px;
+    cursor:pointer;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    transform: translateY(-40%);
+    
+    
+    
+}
+
+input .bx-search{
+    
 }
 
 .book_item:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+
 
 .book_container{
     display: flex;
