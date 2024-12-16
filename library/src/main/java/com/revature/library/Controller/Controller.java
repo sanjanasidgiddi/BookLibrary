@@ -51,7 +51,7 @@ class Controller{
         throw new UnsupportedOperationException();
     }
 
-    @PostMapping("/users")
+    @GetMapping("/users")
     ResponseEntity<List<User>> getAllUser(){
         if (!isAdmin()){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -60,7 +60,7 @@ class Controller{
         return ResponseEntity.ok(userService.getAll());
     }
 
-    @PostMapping("/users/{username}")
+    @GetMapping("/users/{username}")
     ResponseEntity<User> getUser(@PathVariable String username){
         if (!isAdmin() && !getLoggedInUserId().equals(username)){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
