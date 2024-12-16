@@ -3,29 +3,64 @@
 <head>
   <title>My Books</title>
   <meta charset="UTF-8">
-
   <link rel="stylesheet" href="style.css">
-  <script src="generate-table.js"></script>
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      font-family: "Poppins",sans-serif;
+    }
+    body{
+      flex-direction: column;
+    }
+
+    .book_item {
+      width:200px;
+      margin: 20px ;
+      display:block;
+      border-radius: 12px;
+      background: whitesmoke;
+      padding:15px;
+      text-decoration: none;
+      float: left;
+      font-family: "Tahoma", sans-serif;
+
+      &:hover {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .book_title, .due_date {
+        color: black;
+        padding: 5px;
+        padding-top: 10px;
+      }
+
+      .book_image{
+        width:100%;
+        aspect-ratio: 9/16;
+        border-radius: 12px;
+        object-fit: cover;
+        padding-bottom: 20px;
+      }
+
+      .book_genre{
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border-style: none;
+        border-radius: 50px;
+        background-color: darkgoldenrod;
+        color: whitesmoke;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<div class="wrapper">
-  <h1>My Books</h1>
-
-    <div id="entries"></div>
-
-    <script>
-      generateTable(
-          [
-              "Book"
-          ]
-      )
-
-      makeBookEntry([
-          ["Harry Potter", "JK Rowling", "12/12/24", "12/30/24"],
-          ["Lord of The Rings", "JRR Tolkien", "12/12/24", "12/30/24"]
-      ])
-    </script>
-</div>
-
+<h1>My Books</h1>
+<ul id="book_list_id" class="book_list">
+</ul>
+<script src="my-book.js"></script>
 </body>
 </html>
