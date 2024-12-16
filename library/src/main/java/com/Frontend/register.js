@@ -1,6 +1,7 @@
 const register_user = document.getElementById('register_user')
 
 //get current values from html
+let darkl_button = document.getElementById('darklight')
 let firstNameInput=document.getElementById("firstNameInput")
 let lastNameInput=document.getElementById("lastNameInput")
 let emailInput=document.getElementById("emailInput")
@@ -9,6 +10,18 @@ let dateOfBirthInput=document.getElementById("dateOfBirthInput")
 let usernameInput=document.getElementById("usernameInput")
 let passwordInput=document.getElementById("passwordInput")
 let re_passwordInput=document.getElementById("re_passwordInput")
+
+/** Change page appearance to Dark or Light mode. */
+function toggleDarkLight(){
+    /* Toggle Button Text */
+    let current_text = darkl_button.innerText;
+    darkl_button.innerText = current_text === 'Dark' ? 'Light' : 'Dark';
+    /** Log it */
+    console.log("Toggle button clicked!");
+    /** Switch background and text colors using css class under wrapper */
+    var theme_element = document.body;
+    theme_element.classList.toggle("dark_mode");
+}
 
 register_user.addEventListener('submit',function(event){
     event.preventDefault();
