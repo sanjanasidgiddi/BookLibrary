@@ -1,3 +1,4 @@
+
 function generateTable(header, objs){
     let table = document.getElementById("book_list_id")
 
@@ -29,4 +30,17 @@ function generateTable(header, objs){
 
         table.appendChild(tr)
     }
+}
+
+var darkl_button = document.getElementById('darklight')
+
+function toggleDarkLight(){
+    /* Toggle Button Text */
+    let current_text = darkl_button.innerText;
+    darkl_button.innerText = current_text === 'Dark' ? 'Light' : 'Dark';
+    /** Log it */
+    console.log("Toggle button clicked!");
+    /** Switch background and text colors using css class under wrapper */
+    var theme_element = document.body;
+    theme_element.classList.toggle("dark_mode");
 }

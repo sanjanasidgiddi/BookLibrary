@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>Admin Users</title>
   <meta charset="UTF-8">
 
   <link rel="stylesheet" href="style.css">
-  <script src="generate-table.js"></script>
 </head>
+
 <body>
-<div class="wrapper">
-  <h1>Users</h1>
+  <div id="dark-topright">
+    <label for="darklight">Appearance</label>
+    <button id="darklight" onclick="toggleDarkLight()">Light</button>
+  </div>
+  <div class="wrapper">
+    <h1>Users</h1>
     <div class="entries"></div>
     <script>
       function makeUserEntries(objs) {
@@ -26,11 +31,13 @@
       }
 
       makeUserEntries([
-          ["japple17", "Johnny", "Appleseed", "1/1/1800"],
-          ["jdoe15", "John", "Doe", "12/12/1990"]
+        ["japple17", "Johnny", "Appleseed", "1/1/1800"],
+        ["jdoe15", "John", "Doe", "12/12/1990"]
       ])
     </script>
-</div>
+  </div>
+  <script src="generate-table.js"></script>
 
 </body>
+
 </html>
