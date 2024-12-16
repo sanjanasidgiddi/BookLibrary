@@ -1,0 +1,7 @@
+{
+  "type": "module",
+  "dependencies": {
+    "boxicons": "^2.1.4",
+    "react-dom": "^19.0.0"
+  }
+}

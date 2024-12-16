@@ -9,18 +9,18 @@
 </head>
 <body>
     <div class="wrapper">
-        <div id="view_users">
+        <nav id="view_users">
             <a id="user_link_text" title="User List">
                 <i class='bx bx-user-circle' ></i>
                 Users
             </a>
-        </div>
-        <div id="add_books">
+        </nav>
+        <header id="add_books">
             <span id="title"><b>List of Books<b></span>
             <a id="add_book_link_text" title="Add Books" href="#">
                 <i class='bx bxs-book-add' ></i>
             </a>
-        </div>
+        </header>
         <div class="form_popup" id="id_form_popup">
             <form id="form_add_books">
                 <h1>Add Book</h1>
@@ -46,17 +46,19 @@
                 <button type="button" class="cancel_button" onclick="closeForm()">Close</button>
             </form>
         </div>
-        <table id="book_list_id">
-            <tr>
-                <th id="bookIdInput">Book Id</th>
-                <th id="bookNameInput">Book Title</th>
-                <th id="authorInput">Author</th>
-                <th id="genreInput">Genre</th>
-                <th id="ageLimitInput">Age Limit</th>
-                <th id="bookCover">Book Cover</th>
-            </tr>
+        <main id="book_table">
+            <table id="book_list_id">
+                <tr>
+                    <th id="bookIdInput">Book Id</th>
+                    <th id="bookNameInput">Book Title</th>
+                    <th id="authorInput">Author</th>
+                    <th id="genreInput">Genre</th>
+                    <th id="ageLimitInput">Age Limit</th>
+                    <th id="bookCover">Book Cover</th>
+                </tr>
 
-        </table>
+            </table>
+        </main>
     </div>
     <script src="book-list.js"></script>
 </body>

@@ -5,34 +5,93 @@
   <meta charset="UTF-8">
 
   <link rel="stylesheet" href="style.css">
-  <script src="make-entries.js"></script>
-</head>
-<body>
-<div class="wrapper">
-  <h1>Logs</h1>
-    <div class="entries"></div>
+  <script src="generate-table.js"></script>
+  <style>
+    body{
+      background-image: none;
+      background-color: grey;
+      flex-direction: column;
+    }
 
-    <script>
-      function makeLogEntries(objs) {
-        objs = objs.map(
-          it => ({
-            "ID": it[0],
-            "Book": it[1],
-            "Issued To": it[2],
-            "Date Rented": it[3],
-            "Date Returned": it[4],
-            "Lateness": it[5]
-          })
-        )
+    #book_list_id{
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-size: 1.2em;
+      min-height: 400px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
 
-        makeEntries(objs)
+      & tbody{
+        height: 50px;
+        font-weight: bold;
+
+        & th{
+          background-color: lightgrey;
+          color: rgb(31, 31, 31);
+          text-align: center;
+          font-weight: bold;
+        }
       }
 
-      makeLogEntries([
-          ["0", "0 / Harry Potter / JK Rowling", "jappleseed15 / John Appleseed", "12/12/2024 - 12/30/2024", null, "On-Time"],
-      ])
-    </script>
-</div>
+      & tr{
+        & td{
+          color: black;
+          font-weight: 540;
+          text-align: center;
+        }
+
+        &:nth-of-type(odd){
+          background-color: whitesmoke;
+        }
+
+        &:nth-of-type(even){
+          background-color: white;
+        }
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Logs</h1>
+  <table id="book_list_id"></table>
+
+  <script>
+    generateTable(
+      [
+        "Username",
+        "Name",
+        "BookId",
+        "Book",
+        "Author",
+        "Date Rented",
+        "Date Returned",
+        "Timeliness"
+      ],
+      [
+        {
+          "Username": "japple",
+          "Name": "Johnny Appleseed",
+          "BookId": 0,
+          "Book": "Harry Potter",
+          "Author": "JK Rowling",
+          "Date Rented": "12/12/24 - 12/30/24",
+          "Date Returned": null,
+          "Timeliness": "On-Time"
+        },
+        {
+          "Username": "japple",
+          "Name": "Johnny Appleseed",
+          "BookId": 0,
+          "Book": "Harry Potter",
+          "Author": "JK Rowling",
+          "Date Rented": "12/12/24 - 12/30/24",
+          "Date Returned": null,
+          "Timeliness": "On-Time"
+        },
+      ]
+    )
+
+  </script>
 
 </body>
 </html>

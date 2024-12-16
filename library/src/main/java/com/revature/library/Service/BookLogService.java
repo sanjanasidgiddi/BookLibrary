@@ -18,7 +18,7 @@ public class BookLogService{
     }
 
     public boolean isUserHoldingBook(String username){
-        return dao.findByUsername(username)
+        return dao.findByUser_Username(username)
             .stream()
             .anyMatch(it->it.getDateActuallyReturned() == null);
     }
@@ -28,6 +28,6 @@ public class BookLogService{
     }
 
     public List<BookLog> getAll(String username){
-        return dao.findByUsername(username);
+        return dao.findByUser_Username(username);
     }
 }

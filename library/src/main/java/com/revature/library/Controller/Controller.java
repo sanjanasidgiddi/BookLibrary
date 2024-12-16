@@ -51,7 +51,7 @@ class Controller{
         throw new UnsupportedOperationException();
     }
 
-    @PostMapping("/users")
+    @GetMapping("/users")
     ResponseEntity<List<User>> getAllUser(){
         if (!isAdmin()){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -60,7 +60,7 @@ class Controller{
         return ResponseEntity.ok(userService.getAll());
     }
 
-    @PostMapping("/users/{username}")
+    @GetMapping("/users/{username}")
     ResponseEntity<User> getUser(@PathVariable String username){
         if (!isAdmin() && !getLoggedInUserId().equals(username)){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -72,6 +72,17 @@ class Controller{
                 .orElse(
                         ResponseEntity.status(HttpStatus.NOT_FOUND).build()
                 );
+    }
+
+    @GetMapping("/users/{username}")
+    ResponseEntity<User> createUser(@RequestBody User user){
+        return userService.addUser(user)
+            .map(
+                it-> new ResponseEntity<>(it, HttpStatus.CREATED)
+            )
+            .orElse(
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
+            );
     }
 
     @DeleteMapping("/users/{username}")
@@ -102,7 +113,7 @@ class Controller{
      */
 
     //get book by id
-    @GetMapping("book/{book_id}")
+    @GetMapping("/book/{book_id}")
     public ResponseEntity<Book> getBookById(@PathVariable int bookId){
         Optional<Book> book=bookService.getBookById(bookId);
         if (book.isPresent()) {
@@ -113,12 +124,12 @@ class Controller{
     }
 
 
-     @GetMapping
+     @GetMapping("/book")
      public List<Book> getAllBooks(){
         return bookService.getAllBooks();
      }
 
-     @PostMapping("book/{book_id}")
+     @PostMapping("/book/{book_id}")
      public ResponseEntity<Book> createNewBook(@RequestBody Book book){
         Book newBook=bookService.createNewBook(book);
         /*if(newBook==null){
@@ -131,7 +142,7 @@ class Controller{
         return new ResponseEntity<>(newBook, HttpStatus.CREATED);
      }
 
-     @PutMapping("book/{book_id}")
+     @PutMapping("/book/{book_id}")
      public ResponseEntity<Book> editBook(@PathVariable int bookId,@RequestBody Book book) throws NotFoundException{
         try{
             Book updatedBook=bookService.editBook(bookId, book);
@@ -143,7 +154,7 @@ class Controller{
         
      }
 
-     @DeleteMapping("book/{book_id}")
+     @DeleteMapping("/book/{book_id}")
      public ResponseEntity<Void> deleteBook(@PathVariable int bookId){
         try{
             bookService.deleteBook(bookId);

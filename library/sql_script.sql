@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS "Library".users (
     email VARCHAR(255) NOT NULL UNIQUE,
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
-    phone_number DOUBLE PRECISION NOT NULL,
+    phone_number VARCHAR(255) NOT NULL,
     DOB DATE CHECK (DOB <= CURRENT_DATE)
 );
 

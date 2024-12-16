@@ -25,19 +25,19 @@ public class UserService{
             return false;
         }
 
-        throw new UnsupportedOperationException();
+        return true;
     }
 
     private boolean validPassword(String username){
-        throw new UnsupportedOperationException();
+        return true;
     }
 
     private boolean validFirstOrLastName(String username){
-        throw new UnsupportedOperationException();
+        return true;
     }
 
     private boolean validEmail(String username){
-        throw new UnsupportedOperationException();
+        return true;
     }
 
     public Optional<User> getByUsername(String username){
