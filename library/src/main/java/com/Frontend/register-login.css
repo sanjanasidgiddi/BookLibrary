@@ -112,3 +112,12 @@ input:focus::placeholder {
 .register p a:hover{
     text-decoration: underline;
 }
+
+/* Top-right corner position for Page Appearance Settings (Dark Mode) */
+#dark-topright{
+    color: #fff;
+    position:absolute;
+    padding:10px;
+    top:0;
+    right:0
+}
