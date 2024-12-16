@@ -74,6 +74,17 @@ class Controller{
                 );
     }
 
+    @GetMapping("/users/{username}")
+    ResponseEntity<User> createUser(@RequestBody User user){
+        return userService.addUser(user)
+            .map(
+                it-> new ResponseEntity<>(it, HttpStatus.CREATED)
+            )
+            .orElse(
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
+            );
+    }
+
     @DeleteMapping("/users/{username}")
     ResponseEntity<User> deleteUser(@PathVariable String username){
         if (!isAdmin()){
