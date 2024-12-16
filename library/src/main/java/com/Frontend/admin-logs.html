@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Admin Logs</title>
+  <meta charset="UTF-8">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="make-entries.js"></script>
+</head>
+<body>
+<div class="wrapper">
+  <h1>Logs</h1>
+    <div class="entries"></div>
+
+    <script>
+      function makeLogEntries(objs) {
+        objs = objs.map(
+          it => ({
+            "ID": it[0],
+            "Book": it[1],
+            "Issued To": it[2],
+            "Date Rented": it[3],
+            "Date Returned": it[4],
+            "Lateness": it[5]
+          })
+        )
+
+        makeEntries(objs)
+      }
+
+      makeLogEntries([
+          ["0", "0 / Harry Potter / JK Rowling", "jappleseed15 / John Appleseed", "12/12/2024 - 12/30/2024", null, "On-Time"],
+      ])
+    </script>
+</div>
+
+</body>
+</html>

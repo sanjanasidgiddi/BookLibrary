@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Admin Users</title>
+  <meta charset="UTF-8">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="make-entries.js"></script>
+</head>
+<body>
+<div class="wrapper">
+  <h1>Users</h1>
+    <div class="entries"></div>
+    <script>
+      function makeUserEntries(objs) {
+        objs = objs.map(
+          it => ({
+            "Username": it[0],
+            "First Name": it[1],
+            "Last Name": it[2],
+            "DOB": it[3],
+          })
+        )
+
+        makeEntries(objs)
+      }
+
+      makeUserEntries([
+          ["japple17", "Johnny", "Appleseed", "1/1/1800"],
+          ["jdoe15", "John", "Doe", "12/12/1990"]
+      ])
+    </script>
+</div>
+
+</body>
+</html>
