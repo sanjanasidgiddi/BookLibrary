@@ -74,7 +74,7 @@ class Controller{
                 );
     }
 
-    @GetMapping("/users/{username}")
+    @PostMapping("/users/{username}")
     ResponseEntity<User> createUser(@RequestBody User user){
         return userService.addUser(user)
             .map(
