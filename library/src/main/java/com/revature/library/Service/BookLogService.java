@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public class BookLogService{
+
     private final BookLogDAO dao;
 
     @Autowired

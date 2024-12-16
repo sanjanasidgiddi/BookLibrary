@@ -91,24 +91,6 @@ class Controller{
         return ResponseEntity.ok(user.get());
     }
 
-    @GetMapping("/logs")
-    ResponseEntity<List<BookLog>> getAllLogs(){
-        if (!isAdmin()){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-
-        return ResponseEntity.ok(bookLogService.getAll());
-    }
-
-    @GetMapping("/logs/{username}")
-    ResponseEntity<List<BookLog>> getAllLogsByUsername(@PathVariable String username){
-        if (!isAdmin()){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-
-        return ResponseEntity.ok(bookLogService.getAll(username));
-    }
-
     /*
      * get a single book
      * get all books
@@ -117,6 +99,7 @@ class Controller{
      * delete books(cannot delete books already issued)
      */
 
+    //get book by id
     @GetMapping("book/{book_id}")
     public ResponseEntity<Book> getBookById(@PathVariable int bookId){
         Optional<Book> book=bookService.getBookById(bookId);
@@ -172,6 +155,42 @@ class Controller{
         }
      }
 
+
+     /*
+      * booklogs:
+            get books from a userid
+            get users from a bookid
+            get all logs
+
+
+      */
+
+      @GetMapping("/logs")
+    ResponseEntity<List<BookLog>> getAllLogs(){
+        if (!isAdmin()){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        return ResponseEntity.ok(bookLogService.getAll());
+    }
+
+    @GetMapping("/logs/{username}")
+    ResponseEntity<List<BookLog>> getAllLogsByUsername(@PathVariable String username){
+        if (!isAdmin()){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        return ResponseEntity.ok(bookLogService.getAll(username));
+    }
+
+    @GetMapping("/logs/{bookId}")
+    ResponseEntity<List<BookLog>> getAllLogsByBookId(@PathVariable String BookId){
+        if (!isAdmin()){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        return ResponseEntity.ok(bookLogService.getAll(BookId));
+    }
 
 
 }

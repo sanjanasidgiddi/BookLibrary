@@ -17,7 +17,7 @@
         </div>
         <div id="add_books">
             <span id="title"><b>List of Books<b></span>
-            <a id="add_book_link_text" title="Add Books" onclick="openBookForm()">
+            <a id="add_book_link_text" title="Add Books" href="#">
                 <i class='bx bxs-book-add' ></i>
             </a>
         </div>
@@ -26,10 +26,22 @@
                 <h1>Add Book</h1>
                 <input type="text" placeholder="Book Title" required>
                 <input type="text" placeholder="Author" required>
-                <input type="text" placeholder="Genre" required>
+                <div id="id_book_genre">
+                    <label> Genre
+                        <select>
+                            <option value="Fiction">Fiction</option>
+                            <option value="non-Fiction">non-Fiction</option>
+                            <option value="Business">Business</option>
+                            <option value="Self-Help">Self-Help</option>
+                            <option value="Historical">Historical</option>
+                        </select>
+                    </label>
+                </div>
                 <input type="text" placeholder="Author" required>
                 <input type="text" placeholder="Age Limit" required>
-                <input type="text" placeholder="Book Cover" required>
+                <label class="book_cover_upload"> Book Cover
+                    <input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)" required>
+                </label>
                 <button type="submit" class="add_book_button">Add</button>
                 <button type="button" class="cancel_button" onclick="closeForm()">Close</button>
             </form>

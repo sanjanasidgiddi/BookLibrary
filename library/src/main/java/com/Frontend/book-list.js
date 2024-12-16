@@ -3,7 +3,7 @@ let books = [
         BookId:1,
         BookName: "Harry Potter and the Philosopher’s Stone",
         Author: "JK Rowling",
-        BookGenre: "Fantasy",
+        BookGenre: "Fiction",
         BookAgeLimit: "8",
         image: "harry_potter1.jpg"
     },
@@ -11,7 +11,7 @@ let books = [
         BookId:2,
         BookName: "Harry Potter and the Chamber of Secrets",
         Author: "JK Rowling",
-        BookGenre: "Fantasy",
+        BookGenre: "Fiction",
         BookAgeLimit: "8",
         image: "harry_potter2.jpg"
     }
@@ -38,6 +38,14 @@ function populateBooks(books){
 
 populateBooks(books)
 
+let book_popup = document.getElementById('add_book_link_text');
+
+
+book_popup.addEventListener('click',function(event){
+    event.preventDefault()
+    openBookForm()
+})
+
 function openBookForm(){
     document.getElementById("id_form_popup").style.display="block";
 }
@@ -45,3 +53,4 @@ function openBookForm(){
 function closeForm(){
     document.getElementById("id_form_popup").style.display = "none";
 }
+

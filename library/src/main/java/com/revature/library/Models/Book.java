@@ -11,7 +11,7 @@ public class Book {
     private int BookId;
     
     @Column(name="book_name")
-    private int BookName;
+    private String BookName;
     
     @Column(name="author")
     private String Author;
@@ -25,7 +25,7 @@ public class Book {
     //Constructors
     public Book(){}
 
-    public Book(int BookId, int BookName, String Author, String BookGenre, int BookAgeLimit){
+    public Book(int BookId, String BookName, String Author, String BookGenre, int BookAgeLimit){
         this.BookId=BookId;
         this.BookName=BookName;
         this.Author=Author;
@@ -42,11 +42,11 @@ public class Book {
         BookId = bookId;
     }
 
-    public int getBookName() {
+    public String getBookName() {
         return BookName;
     }
 
-    public void setBookName(int bookName) {
+    public void setBookName(String bookName) {
         BookName = bookName;
     }
 

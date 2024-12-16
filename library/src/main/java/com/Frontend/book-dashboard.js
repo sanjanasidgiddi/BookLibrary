@@ -2,13 +2,13 @@ let books = [
     {
         BookId:1,
         BookName: "Harry Potter and the Philosopher’s Stone",
-        BookGenre: "Fantasy",
+        BookGenre: "fiction",
         image: "harry_potter1.jpg"
     },
     {
         BookId:2,
         BookName: "Harry Potter and the Chamber of Secrets",
-        BookGenre: "Fantasy",
+        BookGenre: "fiction",
         image: "harry_potter2.jpg"
     }
 ]
@@ -23,8 +23,8 @@ function populateBooks(books){
 
         bookItem.innerHTML=`
             <img src=${book.image} alt="book image" class="book_image" height="256" width="81">
+            <span class="book_genre">${book.BookGenre}</span>
             <h3 class="book_title"> ${book.BookName} </h3>
-            <p class="book_genre">${book.BookGenre}</p>
             <button class="book_button" data-id=${book.BookId}>Book</button>
         `   
         book_list.appendChild(bookItem)
