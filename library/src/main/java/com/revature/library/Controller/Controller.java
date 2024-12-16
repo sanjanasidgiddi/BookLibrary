@@ -12,6 +12,7 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:5500", "http://127.0.0.1:5500"})
 class Controller{
 
     private final UserService userService;
@@ -91,24 +93,6 @@ class Controller{
         return ResponseEntity.ok(user.get());
     }
 
-    @GetMapping("/logs")
-    ResponseEntity<List<BookLog>> getAllLogs(){
-        if (!isAdmin()){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-
-        return ResponseEntity.ok(bookLogService.getAll());
-    }
-
-    @GetMapping("/logs/{username}")
-    ResponseEntity<List<BookLog>> getAllLogsByUsername(@PathVariable String username){
-        if (!isAdmin()){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-
-        return ResponseEntity.ok(bookLogService.getAll(username));
-    }
-
     /*
      * get a single book
      * get all books
@@ -117,6 +101,7 @@ class Controller{
      * delete books(cannot delete books already issued)
      */
 
+    //get book by id
     @GetMapping("book/{book_id}")
     public ResponseEntity<Book> getBookById(@PathVariable int bookId){
         Optional<Book> book=bookService.getBookById(bookId);
@@ -172,6 +157,42 @@ class Controller{
         }
      }
 
+
+     /*
+      * booklogs:
+            get books from a userid
+            get users from a bookid
+            get all logs
+
+
+      */
+
+      @GetMapping("/logs")
+    ResponseEntity<List<BookLog>> getAllLogs(){
+        if (!isAdmin()){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        return ResponseEntity.ok(bookLogService.getAll());
+    }
+
+    @GetMapping("/logs/{username}")
+    ResponseEntity<List<BookLog>> getAllLogsByUsername(@PathVariable String username){
+        if (!isAdmin()){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        return ResponseEntity.ok(bookLogService.getAll(username));
+    }
+
+    @GetMapping("/logs/{bookId}")
+    ResponseEntity<List<BookLog>> getAllLogsByBookId(@PathVariable String BookId){
+        if (!isAdmin()){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        return ResponseEntity.ok(bookLogService.getAll(BookId));
+    }
 
 
 }

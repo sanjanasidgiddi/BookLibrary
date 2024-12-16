@@ -8,34 +8,38 @@
 </head>
 <body>
     <div class="wrapper">
-        <form action="" id="register_button">
+        <form action="" id="register_user">
             <h1>Register</h1>
             <div class="input_box">
-                <input type="text" placeholder="First Name" >
+                <input type="text" id="firstNameInput" placeholder="First Name" required>
             </div>
 
             <div class="input_box">
-                <input type="text" placeholder="Last Name" >
+                <input type="text" id="lastNameInput" placeholder="Last Name" required>
             </div>
 
             <div class="input_box">
-                <input type="email" placeholder="Email" >
+                <input type="email" id="emailInput" placeholder="Email" required>
             </div>
 
             <div class="input_box">
-                <input type="tel" placeholder="Phone Number" >
+                <input type="tel" id="phoneNumberInput" placeholder="Phone Number" required>
             </div>
 
             <div class="input_box">
-                <input type="text" placeholder="Username" maxlength=20 >
+                <input type="date" id="dateOfBirthInput" title="Date of Birth" placeholder="Date of Birth" required>
             </div>
 
             <div class="input_box">
-                <input type="password" placeholder="Password" >
+                <input type="text" id="usernameInput" placeholder="Username" maxlength=20 required>
             </div>
 
             <div class="input_box">
-                <input type="password" placeholder="Re-enter Password" >
+                <input type="password" id="passwordInput" placeholder="Password" required>
+            </div>
+
+            <div class="input_box">
+                <input type="password" id="re_passwordInput" placeholder="Re-enter Password" required>
             </div>
 
             <button class="button" type="submit"> Register </button>

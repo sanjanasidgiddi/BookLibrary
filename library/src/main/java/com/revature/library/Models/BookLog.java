@@ -12,11 +12,11 @@ public class BookLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int BookLogId;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="username")
+    @ManyToOne
+    @JoinColumn(name = "username")
     private User user;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="BookId")
     private Book book;
 

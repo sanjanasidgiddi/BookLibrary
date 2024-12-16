@@ -3,6 +3,7 @@ package com.revature.library.Service;
 import com.revature.library.DAO.UserDAO;
 import com.revature.library.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class UserService{
     private final BookLogService bookLogService;
 
     @Autowired
-    UserService(UserDAO dao, BookLogService bookLogService) {
+    UserService(UserDAO dao, @Lazy BookLogService bookLogService) {
         this.dao = dao;
         this.bookLogService = bookLogService;
     }
