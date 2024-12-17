@@ -10,7 +10,7 @@ public class BookLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int BookLogId;
+    private int bookLogId;
 
     @ManyToOne
     @JoinColumn(name = "username")
@@ -34,18 +34,18 @@ public class BookLog {
     public BookLog(User user, Book book, int BookLogId, Date dateIssued, Date dateToBeReturned, Date dateActuallyReturned){
         this.user=user;
         this.book=book;
-        this.BookLogId=BookLogId;
+        this.bookLogId=BookLogId;
         this.dateIssued=dateIssued;
         this.dateToBeReturned=dateToBeReturned;
         this.dateActuallyReturned=dateActuallyReturned;
     }
 
     public int getBookLogId() {
-        return BookLogId;
+        return bookLogId;
     }
 
     public void setBookLogId(int bookLogId) {
-        BookLogId = bookLogId;
+        this.bookLogId = bookLogId;
     }
 
     public User getUser() {

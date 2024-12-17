@@ -8,72 +8,71 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int BookId;
+    private int bookId;
     
     @Column(name="book_name")
-    private String BookName;
+    private String bookName;
     
     @Column(name="author")
-    private String Author;
+    private String author;
     
     @Column(name="book_genre")
-    private String BookGenre;
+    private String bookGenre;
     
     @Column(name="book_age_limit")
-    private int BookAgeLimit;
+    private int bookAgeLimit;
 
     //Constructors
     public Book(){}
 
-    public Book(int BookId, String BookName, String Author, String BookGenre, int BookAgeLimit){
-        this.BookId=BookId;
-        this.BookName=BookName;
-        this.Author=Author;
-        this.BookGenre=BookGenre;
-        this.BookAgeLimit=BookAgeLimit;
+    public Book(int bookId, String bookName, String author, String bookGenre, int bookAgeLimit){
+        this.bookId=bookId;
+        this.bookName=bookName;
+        this.author=author;
+        this.bookGenre=bookGenre;
+        this.bookAgeLimit=bookAgeLimit;
     }
 
-    //Getters and Setters
     public int getBookId() {
-        return BookId;
+        return bookId;
     }
 
     public void setBookId(int bookId) {
-        BookId = bookId;
+        this.bookId = bookId;
     }
 
     public String getBookName() {
-        return BookName;
+        return bookName;
     }
 
     public void setBookName(String bookName) {
-        BookName = bookName;
+        this.bookName = bookName;
     }
 
     public String getAuthor() {
-        return Author;
+        return author;
     }
 
     public void setAuthor(String author) {
-        Author = author;
+        this.author = author;
     }
 
     public String getBookGenre() {
-        return BookGenre;
+        return bookGenre;
     }
 
     public void setBookGenre(String bookGenre) {
-        BookGenre = bookGenre;
+        this.bookGenre = bookGenre;
     }
 
     public int getBookAgeLimit() {
-        return BookAgeLimit;
+        return bookAgeLimit;
     }
 
-    public void setBookAgeRatedReads(int bookAgeLimit) {
-        BookAgeLimit = bookAgeLimit;
+    public void setBookAgeLimit(int bookAgeLimit) {
+        this.bookAgeLimit = bookAgeLimit;
     }
-    
-
-
 }
+
+    //Getters and Setters
+    

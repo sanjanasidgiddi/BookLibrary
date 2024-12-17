@@ -113,7 +113,7 @@ class Controller{
      */
 
     //get book by id
-    @GetMapping("/book/{book_id}")
+    @GetMapping("/books/{book_id}")
     public ResponseEntity<Book> getBookById(@PathVariable int bookId){
         Optional<Book> book=bookService.getBookById(bookId);
         if (book.isPresent()) {
@@ -124,12 +124,12 @@ class Controller{
     }
 
 
-     @GetMapping("/book")
+     @GetMapping("books")
      public List<Book> getAllBooks(){
         return bookService.getAllBooks();
      }
 
-     @PostMapping("/book/{book_id}")
+     @PostMapping("books")
      public ResponseEntity<Book> createNewBook(@RequestBody Book book){
         Book newBook=bookService.createNewBook(book);
         /*if(newBook==null){
@@ -142,8 +142,8 @@ class Controller{
         return new ResponseEntity<>(newBook, HttpStatus.CREATED);
      }
 
-     @PutMapping("/book/{book_id}")
-     public ResponseEntity<Book> editBook(@PathVariable int bookId,@RequestBody Book book) throws NotFoundException{
+     @PutMapping("books/{bookId}")
+     public ResponseEntity<Book> editBook(@PathVariable("bookId") int bookId,@RequestBody Book book) throws NotFoundException{
         try{
             Book updatedBook=bookService.editBook(bookId, book);
             return new ResponseEntity<>(updatedBook, HttpStatus.OK);
@@ -154,7 +154,7 @@ class Controller{
         
      }
 
-     @DeleteMapping("/book/{book_id}")
+     @DeleteMapping("/books/{bookId}")
      public ResponseEntity<Void> deleteBook(@PathVariable int bookId){
         try{
             bookService.deleteBook(bookId);
@@ -178,7 +178,7 @@ class Controller{
 
       */
 
-      @GetMapping("/logs")
+      @GetMapping("/booklogs")
     ResponseEntity<List<BookLog>> getAllLogs(){
         if (!isAdmin()){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -187,7 +187,7 @@ class Controller{
         return ResponseEntity.ok(bookLogService.getAll());
     }
 
-    @GetMapping("/logs/{username}")
+    @GetMapping("/booklogs/{username}")
     ResponseEntity<List<BookLog>> getAllLogsByUsername(@PathVariable String username){
         if (!isAdmin()){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -196,7 +196,7 @@ class Controller{
         return ResponseEntity.ok(bookLogService.getAll(username));
     }
 
-    @GetMapping("/logs/{bookId}")
+    @GetMapping("/booklogs/{bookId}")
     ResponseEntity<List<BookLog>> getAllLogsByBookId(@PathVariable String BookId){
         if (!isAdmin()){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();

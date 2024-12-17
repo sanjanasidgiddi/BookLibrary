@@ -32,7 +32,7 @@ public class BookService {
 
     //create a new book
     public Book createNewBook(Book newbook){
-        Optional<Book> book=bookDAO.findById(newbook.getBookId());
+        /*Optional<Book> book=bookDAO.findById(newbook.getBookId());
         if(book.isPresent()){
             Book newBook=book.get();;
             return bookDAO.save(newBook);
@@ -41,7 +41,9 @@ public class BookService {
             throw new IllegalArgumentException("Book with ID " + newbook.getBookId() + " already exists.");
             
             //return null;
-        }
+        }*/
+        
+        return bookDAO.save(newbook);
         
     }
 
@@ -54,7 +56,7 @@ public class BookService {
             existingBook.setBookName(updatedBook.getBookName());
             existingBook.setBookGenre(updatedBook.getBookGenre());
             existingBook.setAuthor(updatedBook.getAuthor());
-            existingBook.setBookAgeRatedReads(updatedBook.getBookAgeLimit());
+            existingBook.setBookAgeLimit(updatedBook.getBookAgeLimit());
             return bookDAO.save(existingBook);
         }
         else{
