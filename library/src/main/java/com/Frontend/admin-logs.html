@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css">
   <script src="generate-table.js"></script>
   <style>
+    /*TODO Move this to the external css*/
     body{
       background-image: none;
       background-color: grey;
@@ -52,6 +53,10 @@
   </style>
 </head>
 <body>
+  <div id="dark-topright">
+    <label for="darklight">Appearance</label>
+    <button id="darklight" onclick="toggleDarkLight()">Light</button>
+  </div>
   <h1>Logs</h1>
   <table id="book_list_id"></table>
 
@@ -90,8 +95,6 @@
         },
       ]
     )
-
   </script>
-
 </body>
 </html>
