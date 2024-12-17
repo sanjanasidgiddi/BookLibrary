@@ -182,3 +182,24 @@ book_button
 .book_button:hover{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+
+/* Top-right corner position for Page Appearance Settings (Dark Mode) */
+#dark-topright{
+    color: black;
+    position:absolute;
+    padding:10px;
+    top:0;
+    right:0;
+    box-shadow: 0 0 10px rgba(248, 248, 248, 0.973);
+    background-color: rgb(3, 37, 9);
+    padding: 10px;
+}
+
+/* Dark Mode feature */
+.dark_mode .book_container{  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background:rgb(52, 29, 29);
+}
