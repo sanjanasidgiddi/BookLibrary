@@ -117,15 +117,17 @@ input:focus::placeholder {
 #dark-topright{
     color: #fff;
     position:absolute;
-    padding:10px;
     top:0;
     left:0;
-    box-shadow: 0 0 10px rgba(248, 248, 248, 0.973);
-    background-color: rgb(3, 37, 9);
-    padding: 10px;
+    padding: 10px 10px;
+    border-radius: 10px;
+    background-blend-mode: soft-light;
+    background-color: rgba(172, 227, 178, 0.7);
+    backdrop-filter: blur(1px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.dark_mode .wrapper{
+.dark_mode .wrapper {
     width: 420px;
     background: rgb(5, 30, 10);
     color: rgb(23, 44, 26);
