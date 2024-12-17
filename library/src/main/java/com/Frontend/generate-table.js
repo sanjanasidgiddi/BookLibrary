@@ -1,6 +1,6 @@
 
 function generateTable(header, objs){
-    let table = document.getElementById("book_list_id")
+    let table = document.getElementById("custom-table")
 
     let tbody = document.createElement("tbody")
 

@@ -14,43 +14,6 @@
       background-color: grey;
       flex-direction: column;
     }
-
-    #book_list_id{
-      border-collapse: collapse;
-      margin: 25px 0;
-      font-size: 1.2em;
-      min-height: 400px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-      width: 100%;
-
-      & tbody{
-        height: 50px;
-        font-weight: bold;
-
-        & th{
-          background-color: lightgrey;
-          color: rgb(31, 31, 31);
-          text-align: center;
-          font-weight: bold;
-        }
-      }
-
-      & tr{
-        & td{
-          color: black;
-          font-weight: 540;
-          text-align: center;
-        }
-
-        &:nth-of-type(odd){
-          background-color: whitesmoke;
-        }
-
-        &:nth-of-type(even){
-          background-color: white;
-        }
-      }
-    }
   </style>
 </head>
 
@@ -60,7 +23,7 @@
     <button id="darklight" onclick="toggleDarkLight()">Light</button>
   </div>
   <h1>Logs</h1>
-  <table id="book_list_id"></table>
+  <table id="custom-table"></table>
 
   <script>
     generateTable(
