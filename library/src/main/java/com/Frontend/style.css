@@ -84,3 +84,8 @@ body{
     backdrop-filter: blur(1px);
     box-shadow: 0 0 10px rgb(10, 10, 10);
 }
+
+.dark-special .body{
+    background-color: black;
+    color: white
+  }
