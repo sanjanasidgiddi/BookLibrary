@@ -184,6 +184,7 @@ book_button
 }
 
 /* Top-right corner position for Page Appearance Settings (Dark Mode) */
+/* Top-right corner position for Page Appearance Settings (Dark Mode) */
 #dark-topright{
     color: black;
     position:absolute;
@@ -194,7 +195,6 @@ book_button
     background-color: rgb(3, 37, 9);
     padding: 10px;
 }
-
 /* Dark Mode feature */
 .dark_mode .book_container{  
     display: flex;

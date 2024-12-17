@@ -193,3 +193,19 @@ select{
     opacity: 1;
 }
 
+/*Dark mode*/
+#dark-topright{
+    color: #fff;
+    position:absolute;
+    padding:10px;
+    top:0;
+    right:0;
+    box-shadow: 0 0 10px rgba(248, 248, 248, 0.973);
+    background-color: rgb(3, 37, 9);
+    padding: 10px;
+}
+
+.dark_mode{
+    color:white;
+    background-color: rgb(57, 39, 39);
+}
