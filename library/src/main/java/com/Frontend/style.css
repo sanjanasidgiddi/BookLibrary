@@ -67,7 +67,7 @@ body{
     position:absolute;
     padding:10px;
     top:0;
-    right:0;
+    left:0;
     box-shadow: 0 0 10px rgba(248, 248, 248, 0.973);
     background-color: rgb(3, 37, 9);
     padding: 10px;

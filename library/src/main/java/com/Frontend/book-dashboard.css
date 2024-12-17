@@ -4,6 +4,10 @@
     font-family: "Poppins",sans-serif;
 }
 
+#nav_bar{
+    
+}
+
 #my_books_link #link_text{
     background-color: rgba(207, 204, 204, 0.967);
     padding: 10px;
@@ -190,7 +194,7 @@ book_button
     position:absolute;
     padding:10px;
     top:0;
-    right:0;
+    left:0;
     box-shadow: 0 0 10px rgba(248, 248, 248, 0.973);
     background-color: rgb(3, 37, 9);
     padding: 10px;
