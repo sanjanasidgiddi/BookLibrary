@@ -26,7 +26,7 @@
 }
 
 .upper_block{
-    background-image: url(.assests/background_img.jpg);
+    background-image: url(background_img.jpg);
     
     background-size: cover;
     min-height: 50vh;
