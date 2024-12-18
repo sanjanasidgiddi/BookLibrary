@@ -2,6 +2,8 @@ package com.revature.library.Models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -44,9 +46,12 @@ public class User {
     @Column(name="dob")
     private Date dob;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     public User(){}
 
-    public User(String username, String password, String email, String firstName, String lastName, String phoneNumber, Date dob){
+    public User(String username, String password, String email, String firstName, String lastName, String phoneNumber, Date dob, Role role){
         this.username=username;
         this.password=password;
         this.email=email;
@@ -54,6 +59,7 @@ public class User {
         this.lastName=lastName;
         this.phoneNumber=phoneNumber;
         this.dob=dob;
+        this.role=role;
     }
 
     public String getUsername() {
@@ -113,4 +119,13 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+    
 }
