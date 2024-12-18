@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface BookLogDAO extends JpaRepository<BookLog,Integer> {
     List<BookLog> findByUser_Username(String username);
+
+    List<BookLog> findByBook_id(int id);
 }

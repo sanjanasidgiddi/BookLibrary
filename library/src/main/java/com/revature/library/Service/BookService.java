@@ -3,8 +3,8 @@ package com.revature.library.Service;
 import java.util.List;
 import java.util.Optional;
 
+import com.revature.library.DAO.BookLogDAO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.revature.library.DAO.BookDAO;
@@ -14,10 +14,24 @@ import com.revature.library.Models.Book;
 public class BookService {
     
     private final BookDAO bookDAO;
+    private final BookLogDAO bookLogDAO;
 
     @Autowired
-    public BookService(BookDAO bookDAO){
+    public BookService(BookDAO bookDAO, BookLogDAO bookLogDAO){
         this.bookDAO=bookDAO;
+        this.bookLogDAO = bookLogDAO;
+    }
+
+    //create a new book
+    public static class TitleAndAuthorAlreadyExists extends Exception{}
+    public Book createNewBook(Book newbook) throws TitleAndAuthorAlreadyExists {
+        var booksWithSameTitleAndAuthor = bookDAO.findByBookNameAndAuthor(newbook.getBookName(), newbook.getAuthor());
+
+        if (!hasAuthor(newbook) && !booksWithSameTitleAndAuthor.isEmpty()){
+            throw new TitleAndAuthorAlreadyExists();
+        }
+
+        return bookDAO.save(newbook);
     }
 
     //Get a book by Id
@@ -30,50 +44,45 @@ public class BookService {
         return bookDAO.findAll();
     }
 
-    //create a new book
-    public Book createNewBook(Book newbook){
-        /*Optional<Book> book=bookDAO.findById(newbook.getBookId());
-        if(book.isPresent()){
-            Book newBook=book.get();;
-            return bookDAO.save(newBook);
-        }
-        else{
-            throw new IllegalArgumentException("Book with ID " + newbook.getBookId() + " already exists.");
-            
-            //return null;
-        }*/
-        
-        return bookDAO.save(newbook);
-        
-    }
-
     //edit book
-    public Book editBook(int BookId, Book updatedBook) throws NotFoundException{
-        Optional<Book> book=bookDAO.findById(BookId);
-
-        if(book.isPresent()){
-            Book existingBook=book.get();
-            existingBook.setBookName(updatedBook.getBookName());
-            existingBook.setBookGenre(updatedBook.getBookGenre());
-            existingBook.setAuthor(updatedBook.getAuthor());
-            existingBook.setBookAgeLimit(updatedBook.getBookAgeLimit());
-            return bookDAO.save(existingBook);
-        }
-        else{
-            throw new NotFoundException();
-        }
+    public Book editBook(int bookId, Book updatedBook) throws NotFound {
+        return bookDAO.findById(bookId)
+            .map(existingBook-> {
+                existingBook.setBookName(updatedBook.getBookName());
+                existingBook.setBookGenre(updatedBook.getBookGenre());
+                existingBook.setAuthor(updatedBook.getAuthor());
+                existingBook.setBookAgeLimit(updatedBook.getBookAgeLimit());
+                return bookDAO.save(existingBook);
+            })
+            .orElseThrow(
+                ()->new NotFound()
+            );
     }
 
     //delete book
-    public void deleteBook(int BookId){
-        //if (isBookBorrowed(BookId)) {
-        //    throw new IllegalArgumentException("Book with ID " + BookId + " is currently borrowed and cannot be deleted.");
-        //}
-        //else{
-            bookDAO.deleteById(BookId);
-        //}
+    public static class BookIsHeld extends Exception{}
+    public void deleteBook(int bookId) throws NotFound, BookIsHeld {
+        if (bookDAO.existsById(bookId)){
+            throw new NotFound();
+        }
+        if (isBookHeld(bookId)){
+            throw new BookIsHeld();
+        }
+
+        bookDAO.deleteById(bookId);
     }
 
+    public static class NotFound extends Exception{}
+
+    boolean isBookHeld(int bookId){
+        return bookLogDAO.findByBook_id(bookId)
+            .stream()
+            .anyMatch(it->it.getDateActuallyReturned() == null);
+    }
+
+    boolean hasAuthor(Book book){
+        return !book.getAuthor().isBlank();
+    }
 
     /*
      * get a single book

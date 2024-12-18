@@ -5,11 +5,12 @@ import com.revature.library.Models.BookLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookLogService{
-
     private final BookLogDAO dao;
 
     @Autowired
@@ -17,10 +18,28 @@ public class BookLogService{
         this.dao = dao;
     }
 
-    public boolean isUserHoldingBook(String username){
-        return dao.findByUser_Username(username)
-            .stream()
-            .anyMatch(it->it.getDateActuallyReturned() == null);
+    public static class InvalidReturnDate extends Exception{}
+    public static class BookAlreadyHeld extends Exception{}
+
+    public BookLog issue(BookLog newLog) throws BookAlreadyHeld, InvalidReturnDate {
+        //overwrites previous data
+        //TODO might cause issues
+        newLog.setDateIssued(new Date());
+        newLog.setDateToBeReturned(null);
+
+        if (isBookHeld(newLog.getBook().getBookId())){
+            throw new BookAlreadyHeld();
+        }
+
+        if (!newLog.getDateIssued().before(newLog.getDateToBeReturned())){
+            throw new InvalidReturnDate();
+        }
+
+        return dao.save(newLog);
+    }
+
+    public Optional<BookLog> get(int id){
+        return dao.findById(id);
     }
 
     public List<BookLog> getAll(){
@@ -29,5 +48,41 @@ public class BookLogService{
 
     public List<BookLog> getAll(String username){
         return dao.findByUser_Username(username);
+    }
+
+    public void returnBook(int id) throws NotFound {
+        var log = dao.findById(id).orElseThrow(()->new NotFound());
+
+        log.setDateActuallyReturned(new Date());
+
+        dao.save(log);
+    }
+
+    public void edit(int id, BookLog newBookLog) throws NotFound {
+        var logInTable = dao.findById(id).orElseThrow(()->new NotFound());
+
+        logInTable.setBook(newBookLog.getBook());
+        logInTable.setUser(newBookLog.getUser());
+        logInTable.setDateIssued(newBookLog.getDateIssued());
+        logInTable.setDateToBeReturned(newBookLog.getDateToBeReturned());
+        logInTable.setDateActuallyReturned(logInTable.getDateActuallyReturned());
+
+        dao.save(logInTable);
+    }
+
+    public void delete(int id) throws NotFound {
+        if (dao.existsById(id)){
+            throw new NotFound();
+        }
+
+        dao.deleteById(id);
+    }
+
+    public static class NotFound extends Exception{}
+
+    boolean isBookHeld(int bookId){
+        return dao.findByBook_id(bookId)
+            .stream()
+            .anyMatch(it->it.getDateActuallyReturned() == null);
     }
 }
