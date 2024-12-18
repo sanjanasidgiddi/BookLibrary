@@ -1,8 +1,12 @@
 import 'boxicons'
 import './Login.css'
-import { SyntheticEvent, useState } from 'react';
+import axios from "axios"
+import { SyntheticEvent, useContext, useState } from 'react';
+import { UserInfo } from '../../App';
 
 function Login() {
+  /** Information about the currently logged in user */
+  const userAuth = useContext(UserInfo)
   /** State variables username and password */
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -20,7 +24,7 @@ function Login() {
   }
 
   /** Set state variables upon submit */
-  let submitUnamePass= () => {
+  let submitUnamePass = () => {
     console.log("Username and password submitted!")
     console.log("Entered: ", username)
     console.log("Entered: ", password)
@@ -31,6 +35,16 @@ function Login() {
       alert("Password is blank, please type password");
       return;
     }
+    /** Sending a post request to the database and setting authentication credentials/context. */
+    axios.post("http://localhost:8080/users/login",
+      {username, password}, {withCredentials: true}
+    ).then((res) => {
+      console.log(res.data);
+      userAuth?.setUsername(res.data.username);
+      userAuth?.setRole(res.data.role);
+    }).catch((err) => {
+      console.log(err);
+    })
   }
 
   return (
@@ -47,7 +61,7 @@ function Login() {
             <input type="text"
               placeholder="Username" required
               value={username}
-              onChange={(e: SyntheticEvent) => { setUsername((e.target as HTMLInputElement).value)}} />
+              onChange={(e: SyntheticEvent) => { setUsername((e.target as HTMLInputElement).value) }} />
             <i className='bx bxs-user' id="usernameInput"></i>
           </div>
           <div className="input_box">
@@ -55,7 +69,7 @@ function Login() {
               id="passwordInput"
               placeholder="Password" required
               value={password}
-              onChange={(e: SyntheticEvent) => { setPassword((e.target as HTMLInputElement).value)}} />
+              onChange={(e: SyntheticEvent) => { setPassword((e.target as HTMLInputElement).value) }} />
             <i className='bx bxs-lock-alt' ></i>
           </div>
 
