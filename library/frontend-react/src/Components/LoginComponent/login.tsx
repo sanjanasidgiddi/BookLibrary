@@ -3,10 +3,11 @@ import './Login.css'
 import { SyntheticEvent, useState } from 'react';
 
 function Login() {
-
+  /** State variables username and password */
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
+  /** Function to trigger appearance theme change */
   let toggleDarkLight = () => {
     console.log("Dark mode clicked")
     const darkl_button = document.getElementById('darklight')
@@ -16,6 +17,20 @@ function Login() {
     /* Switch background and text colors using css class under wrapper */
     var theme_element = document.body;
     theme_element.classList.toggle("dark_mode");
+  }
+
+  /** Set state variables upon submit */
+  let submitUnamePass= () => {
+    console.log("Username and password submitted!")
+    console.log("Entered: ", username)
+    console.log("Entered: ", password)
+    if (!username) {
+      alert("Username is blank, please type username");
+      return;
+    } else if (!password) {
+      alert("Password is blank, please type password");
+      return;
+    }
   }
 
   return (
@@ -29,15 +44,22 @@ function Login() {
         <form action="" id="login_user">
           <h1>Login</h1>
           <div className="input_box">
-            <input type="text" placeholder="Username" required />
+            <input type="text"
+              placeholder="Username" required
+              value={username}
+              onChange={(e: SyntheticEvent) => { setUsername((e.target as HTMLInputElement).value)}} />
             <i className='bx bxs-user' id="usernameInput"></i>
           </div>
           <div className="input_box">
-            <input type="password" id="passwordInput" placeholder="Password" required />
+            <input type="password"
+              id="passwordInput"
+              placeholder="Password" required
+              value={password}
+              onChange={(e: SyntheticEvent) => { setPassword((e.target as HTMLInputElement).value)}} />
             <i className='bx bxs-lock-alt' ></i>
           </div>
 
-          <button className="button" type="submit"> Login </button>
+          <button className="button" type="submit" onClick={submitUnamePass}> Login </button>
           <div className="register">
             <p>Don't have an account?
               <a href="register.html">Register</a>
