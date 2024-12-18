@@ -8,28 +8,7 @@
     
 }
 
-/* #my_books_link #link_text {
-    background-color: rgba(207, 204, 204, 0.967);
-    padding: 10px;
-    align-items: flex-end;
-    justify-content: flex-end;
-    display: flex;
-    right: auto;
-    color: black;
-    text-decoration: none;
-} */
 
-/* nav {
-    background-color: rgba(182, 179, 179, 0.967);
-    padding: 10px;
-    color: black;
-}
-
-#logout #logout_text{
-
-    right:auto;
-
-} */
 
 nav {
     display: flex; 
