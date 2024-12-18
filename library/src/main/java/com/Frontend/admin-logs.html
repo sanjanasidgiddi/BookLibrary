@@ -12,13 +12,170 @@
       background-color: grey;
       flex-direction: column;
     }
+
+    nav {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        background-color: rgba(182, 179, 179, 0.967);
+        padding: 10px;
+        padding-bottom: 50%;
+        color: black;
+        gap: 10px;
+        
+    }
+
+    #dark-topright {
+        margin-right: auto;
+    }
+
+    #logout {
+        padding: 10px;
+    }
+
+    #logout a,
+    #dark-topright label {
+        text-decoration: none;
+        color: black;
+        font-weight: 600;
+        font-size: large;
+    }
+
+
+
+    #view_users #user_link_text {
+        background-color: lightgrey;
+        padding: 10px;
+        display: flex;
+        font-weight: 600;
+        color: rgb(42, 42, 42);
+        text-decoration: none;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    #view_users {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    #user_link_text {
+        font-size: 20px;
+        padding-right: 20px;
+    }
+
+    .bx-user-circle {
+        font-size: 30px;
+        padding-right: 6px;
+    }
+
+    #custom-table {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 1.2em;
+        min-height: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        width: 100%;
+    }
+
+    #custom-table tbody {
+        height: 50px;
+        font-weight: bold;
+    }
+
+    #custom-table th {
+        border-right: 1px solid rgb(200, 199, 199);
+        background-color: lightgrey;
+        color: rgb(165, 162, 162);
+        text-align: center;
+        font-weight: bold;
+    }
+
+    #custom-table tr td {
+        color: black;
+        font-weight: 540;
+        text-align: center;
+        border-bottom: 1px solid lightgrey;
+        border-right: 1px solid lightgrey;
+    }
+
+    #custom-table tr:nth-of-type(odd) {
+        background-color: whitesmoke;
+    }
+
+    #custom-table tr:nth-of-type(even) {
+        background-color: white;
+    }
+
+    .entry {
+        padding-bottom: 10px;
+    }
+
+    .entry>dt,
+    .entry>dd {
+        display: inline-block;
+        width: calc(50% - 0.5rem);
+        margin: 0;
+    }
+
+    .entry>dt {
+        text-align: right;
+        padding-right: 10px;
+        color: gray;
+        font-weight: bold;
+    }
+
+    .entry>dd {
+        white-space: nowrap;
+        color: white;
+    }
+
+    #dark-topright {
+        color: black;
+        position: absolute;
+        padding: 10px;
+        top: 0;
+        left: 0;
+        box-shadow: 0 0 10px rgba(248, 248, 248, 0.973);
+        background-color: rgb(3, 37, 9);
+        padding: 10px;
+    }
+
+    .dark_mode .wrapper {
+        width: 420px;
+        background: rgb(5, 30, 10);
+        color: rgb(23, 44, 26);
+        padding: 30px 40px;
+        border-radius: 10px;
+        background-blend-mode: soft-light;
+        background-color: rgba(172, 227, 178, 0.7);
+        backdrop-filter: blur(1px);
+        box-shadow: 0 0 10px rgb(10, 10, 10);
+    }
+
+    .dark-special .body {
+        background-color: black;
+        color: white;
+    }
   </style>
 </head>
 <body>
-  <div id="dark-topright">
-    <label for="darklight">Appearance</label>
-    <button id="darklight" onclick="toggleDarkLightSpecial()">Light</button>
-  </div>
+  <nav>
+    <div id="dark-topright">
+        <label for="darklight">Appearance</label>
+        <button id="darklight" onclick="toggleDarkLight()">Dark</button>
+    </div>
+
+    <div id="logout">
+        <a id="link_text" title="logout" href="#">
+            <label>Logout</label>
+        </a>
+    </div>
+    <div id="view_users">
+        <a id="user_link_text" title="Books" href="book-list.html">
+            <i class='bx bx-user-circle'></i>
+            Book Data
+        </a>
+    </div>
+</nav>
   <h1>Logs</h1>
   <table id="custom-table"></table>
 

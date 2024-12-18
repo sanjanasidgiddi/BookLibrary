@@ -4,7 +4,37 @@
     font-family: "Poppins",sans-serif;
 }
 
-#view_users #user_link_text{
+
+nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: rgba(182, 179, 179, 0.967);
+    padding: 10px;
+    color: black;
+    gap: 10px;
+}
+
+#dark-topright {
+    margin-right: auto;
+}
+
+#logout {
+    padding: 10px;
+}
+
+#logout a, #dark-topright label {
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    font-size: large;
+}
+
+#view_users {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+#view_users #user_link_text {
     background-color: lightgrey;
     padding: 10px;
     align-items: flex-end;
@@ -16,18 +46,17 @@
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
-#view_users{
+#view_users {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
-#user_link_text{
+#user_link_text {
     font-size: 20px;
     padding-right: 20px;
 }
 
-.bx-user-circle{
+.bx-user-circle {
     font-size: 30px;
-    
     padding-right: 6px;
 }
 
@@ -207,5 +236,5 @@ select{
 
 .dark_mode{
     color:white;
-    background-color: rgb(114, 95, 95);
+    background-color: rgb(57, 39, 39);
 }

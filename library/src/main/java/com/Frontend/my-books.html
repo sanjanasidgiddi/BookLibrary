@@ -3,17 +3,47 @@
 <head>
   <title>My Books</title>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="style.css">
-  <style>
+  <!-- <style>
     *{
       margin:0;
       padding:0;
       font-family: "Poppins",sans-serif;
     }
-    body{
-      flex-direction: column;
+
+    nav {
+        display: flex; 
+        justify-content: flex-end; 
+        align-items: center;
+        background-color: rgba(182, 179, 179, 0.967);
+        padding: 10px;
+        color: black;
+        gap: 10px; /
     }
 
+    #dark-topright {
+        margin-right: auto; 
+    }
+
+    #my_books_link a {
+        padding: 10px;
+        text-decoration: none;
+        color: black; 
+    }
+
+    #logout {
+        padding: 10px;
+        
+    }
+
+    #logout a, #dark-topright label {
+        text-decoration: none;
+        color: black;
+        font-weight: 600;
+        font-size: large;
+    }
+
+
+    
     .book_item {
       width:200px;
       margin: 20px ;
@@ -54,13 +84,33 @@
         color: whitesmoke;
       }
     }
-  </style>
+  </style> -->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="my-books.css">
 </head>
 
 <body>
-<h1>My Books</h1>
-<ul id="book_list_id" class="book_list">
-</ul>
-<script src="my-book.js"></script>
+  <nav>
+    <div id="dark-topright">
+        <label for="darklight">Appearance</label>
+        <button id="darklight" onclick="toggleDarkLight()">Dark</button>
+    </div>
+    <div id="logout">
+        <a id="link_text" title="logout" href="#">
+            <label>Logout</label>
+        </a>
+    </div>
+    <div id="my_books_link">
+        <a id="logout_text" title="All Books" href="book-dashboard.html">
+          <i class='bx bxs-bookmarks'></i>
+        </a>
+    </div>
+  </nav>
+  <main class="content">
+    <h1 class="page-title">My Books</h1>
+    <ul id="book_list_id" class="book_list">
+    </ul>
+<main>
+ <script src="my-book.js"></script>
 </body>
 </html>
