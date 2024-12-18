@@ -6,7 +6,8 @@ function Nav() {
         <div>
             <nav>
                 <ul>
-                    <li className="login-link"><Link to="/login">Login Page</Link></li>
+                    <li className="link-styles"><Link to="/login">Login Page</Link></li>
+                    <li className="link-styles"><Link to="/register">Register New User Page</Link></li>
                 </ul>
             </nav>
         </div>

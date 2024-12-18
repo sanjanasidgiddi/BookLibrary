@@ -4,6 +4,7 @@ import Login from './Components/LoginComponent/Login'
 import AllBooks from './Components/BookComponent/allBooks'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Nav from './Components/NavigationLinks/Nav'
+import Register from './Components/RegisterComponent/Register'
 
 /** Storing information about the logged in user */
 export interface UserInfoType {
@@ -36,6 +37,7 @@ function App() {
           <Nav></Nav>
           <Routes>
             <Route path='/login' element={<Login></Login>}></Route>
+            <Route path='/register' element={<Register></Register>}></Route>
           </Routes>
         </BrowserRouter>
         {/*<AllBooks></AllBooks> */}

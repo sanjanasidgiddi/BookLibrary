@@ -28,13 +28,6 @@ function Login() {
     console.log("Username and password submitted!")
     console.log("Entered: ", username)
     console.log("Entered: ", password)
-    if (!username) {
-      alert("Username is blank, please type username");
-      return;
-    } else if (!password) {
-      alert("Password is blank, please type password");
-      return;
-    }
     /** Sending a post request to the database and setting authentication credentials/context. */
     axios.post("http://localhost:8080/users/login",
       {username, password}, {withCredentials: true}
