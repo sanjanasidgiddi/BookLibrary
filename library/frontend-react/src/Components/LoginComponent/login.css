@@ -11,7 +11,7 @@ body{
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-image: url(background_img.jpg);
+    background-image: url(src/assets/background_img.jpg);
     background-size: cover;
     background-position: center;
 }
@@ -120,6 +120,7 @@ input:focus::placeholder {
     padding:10px;
     top:0;
     left:0;
+    font-size: large;
     box-shadow: 0 0 10px rgba(248, 248, 248, 0.973);
     background-color: rgb(3, 37, 9);
     padding: 10px;

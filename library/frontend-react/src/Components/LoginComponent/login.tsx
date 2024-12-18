@@ -1,45 +1,29 @@
 import 'boxicons'
+import './Login.css'
+import { SyntheticEvent, useState } from 'react';
 
-function login() {
+function Login() {
 
+  const [username, setUsername] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
 
-  function toggleDarkLight() {
-    var darkl_button = document.getElementById('darklight')
+  let toggleDarkLight = () => {
+    console.log("Dark mode clicked")
+    const darkl_button = document.getElementById('darklight')
     /* Toggle Button Text */
-    let current_text = darkl_button!.innerText;
+    let current_text: string = darkl_button!.innerText;
     darkl_button!.innerText = current_text === 'Dark' ? 'Light' : 'Dark';
-    /** Log it */
-    console.log("Toggle button clicked!");
-    /** Switch background and text colors using css class under wrapper */
+    /* Switch background and text colors using css class under wrapper */
     var theme_element = document.body;
     theme_element.classList.toggle("dark_mode");
   }
-  //let usernameInput=document.getElementById("usernameInput")
-  //let passwordInput=document.getElementById("passwordInput")
-
-  //get values
-  //let usernameValue=usernameInput.value
-  //let passwordValue=passwordInput.value
-
-  //store values in object
-  /*let users={
-      username: usernameValue,
-      password: passwordValue
-  }*/
-
-  const login_user = document.getElementById('login_user')
-  login_user!.addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    console.log("User Logged in Successfully")
-    window.location.href = 'book-dashboard.html'
-  })
 
   return (
     <div>
       <div id="dark-topright">
-        <label htmlFor="darklight">Appearance</label>
-        <button id="darklight" onClick={toggleDarkLight}>Light</button>
+        <label>
+          <i className='bx bx-moon' id="darklight" onClick={toggleDarkLight}>Light</i>
+        </label>
       </div>
       <div className="wrapper">
         <form action="" id="login_user">
@@ -65,4 +49,4 @@ function login() {
   )
 }
 
-export default login
+export default Login
