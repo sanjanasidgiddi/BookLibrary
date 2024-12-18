@@ -20,7 +20,7 @@ public class UserService{
         this.bookLogDao = bookLogDAO;
     }
 
-    public User createUser(User user) throws NotAbsent, UsernameInvalid, EmailInvalid, PasswordInvalid {
+    public User register(User user) throws NotAbsent, UsernameInvalid, EmailInvalid, PasswordInvalid {
         //TODO check for admin username
         if (dao.existsById(user.getUsername())){
             throw new NotAbsent();
@@ -29,6 +29,17 @@ public class UserService{
         checkValidity(user);
 
         return dao.save(user);
+    }
+
+    public Optional<User> login(String username, String password){
+        return dao.findById(username).flatMap(user->{
+            if (user.getPassword().equals(password)){
+                return Optional.of(user);
+            }
+            else {
+                return Optional.empty();
+            }
+        });
     }
 
     public Optional<User> getByUsername(String username){

@@ -5,6 +5,7 @@ import com.revature.library.Models.BookLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +25,11 @@ public class BookLogService{
     public BookLog issue(BookLog newLog) throws BookAlreadyHeld, InvalidReturnDate {
         //overwrites previous data
         //TODO might cause issues
+        var returnDate = Calendar.getInstance();
+        returnDate.add(Calendar.DATE, 30);
+
         newLog.setDateIssued(new Date());
+        newLog.setDateIssued(returnDate.getTime());
         newLog.setDateToBeReturned(null);
 
         if (isBookHeld(newLog.getBook().getBookId())){
