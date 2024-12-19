@@ -16,7 +16,7 @@ function Nav() {
         .then((res) => {
             userAuth?.setUsername('')
             userAuth?.setRole('unauthenticated')
-            navigate('/Login')
+            navigate('/login')
         })
     }
     return (
@@ -29,7 +29,10 @@ function Nav() {
                         <li className="link-styles"><Link to="/login">Login Page</Link></li> :
                         <li><button onClick={logOut}>Logout</button></li>
                     }
+                    {/* Registration page */}
                     <li className="link-styles"><Link to="/register">Register New User Page</Link></li>
+                    {/* Link to all books page */}
+                    <li className="link-styles"><Link to="/allbooks">All Books</Link></li>
                 </ul>
             </nav>
         </div>

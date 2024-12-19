@@ -86,7 +86,7 @@ function Register() {
                     <div className="input_box">
                         <input type="password" id="re_passwordInput" placeholder="Re-enter Password" required />
                     </div>
-                    <button className="button" type="submit" onClick={submitUnamePass}> Login </button>
+                    <button className="button" type="submit" onClick={submitUnamePass}> Register </button>
                     <div className="register">
                         <p>Don't have an account?
                             <a href="register.html">Register</a>

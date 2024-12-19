@@ -53,9 +53,9 @@ function App() {
           <Routes>
             <Route path='/login' element={<Login></Login>}></Route>
             <Route path='/register' element={<Register></Register>}></Route>
+            <Route path='/allbooks' element={<AllBooks></AllBooks>}></Route>
           </Routes>
         </BrowserRouter>
-        {/*<AllBooks></AllBooks> */}
       </UserInfo.Provider>
     </>
 
