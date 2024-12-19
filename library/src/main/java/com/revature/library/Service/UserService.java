@@ -83,15 +83,15 @@ public class UserService{
     public static class PasswordInvalid extends Exception{};
     public static class EmailInvalid extends Exception{};
     void checkValidity(User user) throws UsernameInvalid, PasswordInvalid, EmailInvalid {
-        if (!user.getUsername().matches("[a-zA-Z0-9_]{3,16}")){
-            throw new UsernameInvalid();
-        }
-        if (!user.getPassword().matches(".{8,64}")){
-            throw new PasswordInvalid();
-        }
-        if (!user.getEmail().matches("[^@]+@[^.]+\\.[^.]+")){
-            throw new EmailInvalid();
-        }
+//        if (!user.getUsername().matches("[a-zA-Z0-9_]{3,16}")){
+//            throw new UsernameInvalid();
+//        }
+//        if (!user.getPassword().matches(".{8,64}")){
+//            throw new PasswordInvalid();
+//        }
+//        if (!user.getEmail().matches("[^@]+@[^.]+\\.[^.]+")){
+//            throw new EmailInvalid();
+//        }
     }
 
     boolean isUserHoldingBook(String username){
