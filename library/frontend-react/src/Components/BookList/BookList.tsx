@@ -72,6 +72,7 @@ function BookList() {
 
     return (
         <div>
+            <nav>
             <h1> Book List Page rendered!</h1>
              <div id="dark-topright">
                 <label>
@@ -108,6 +109,7 @@ function BookList() {
                 {/* <button type="button" className="cancel_button" onClick={closeForm}>Close</button> */}
                 <button type="button" className="cancel_button">Close</button>
             </div> 
+            </nav>
         </div>
     )
 }

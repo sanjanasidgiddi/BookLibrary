@@ -234,7 +234,7 @@ select{
     padding: 10px;
 }
 
-.dark_mode{
+.dark_mode .nav{
     color:white;
     background-color: rgb(57, 39, 39);
 }
