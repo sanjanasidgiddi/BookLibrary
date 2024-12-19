@@ -33,22 +33,7 @@ function AllBooks() {
   
     return (
         <div>
-            <nav>
-                <div id="dark-topright">
-                    <label htmlFor="darklight">Appearance</label>
-                    <button id="darklight" onClick={toggleDarkLight}>Dark</button>
-                </div>
-                <div id="logout">
-                    <a id="link_text" title="logout" href="#">
-                        <label>Logout</label>
-                    </a>
-                </div>
-                <div id="my_books_link">
-                    <a id="logout_text" title="My Books" href="my-books.html">
-                        <i className='bx bxs-bookmark-heart'></i>
-                    </a>
-                </div>
-            </nav>
+            
             <header className="upper_block">
                 <h1 id="qoute">Books are uniquely portable magic.</h1>
                 <div className="book_search">

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:5500", "http://127.0.0.1:5500"})
@@ -35,7 +36,9 @@ class Controller {
 
     boolean isAdmin(HttpSession session) {
         //TODO there is probably a better way
-        return Role.ADMIN.equals(Role.valueOf((String) session.getAttribute("role")));
+        //String role = (String) session.getAttribute("role");
+        //System.out.println("Session role: " + role);  // Debugging
+        return "ADMIN".equals(session.getAttribute("role"));
     }
 
     //returns a different value if admin
@@ -48,25 +51,53 @@ class Controller {
     }
 
     //region user
-    @PostMapping("users/login/{username}")
-    public ResponseEntity<User> login(@PathVariable String username, @RequestBody String password, HttpSession session) {
-        //TODO there is probably a better way
-        if (session.getAttribute("role") != Role.ADMIN){
-            //session.setAttribute("username", "admin");
-            return ResponseEntity.ok(new User());
-        }
-        
-        return userService.login(username, password)
-            .map(user->{
-                //session.setAttribute("username", user.getUsername());
-                session.setAttribute("role", user.getRole().name());
+//     @PostMapping("users/login/{username}")
+//     public ResponseEntity<User> login(@PathVariable String username, @RequestBody String password, HttpSession session) {
+//     System.out.println("Password from request: " + username + password); 
 
-                return ResponseEntity.ok(user);
-            })
-            .orElse(ResponseEntity.badRequest().build());
+//     if (!isAdmin(session)) {
+//         return ResponseEntity.ok(new User()); 
+//     }
+
+//     Optional<User> optionalUser = userService.login(username, password);
+
+//     if (optionalUser.isEmpty()) {
+//         return ResponseEntity.badRequest().build();
+//     }
+
+//     User user = optionalUser.get();
+//     session.setAttribute("username", user.getUsername());
+//     session.setAttribute("role", user.getRole().name());
+
+//     return ResponseEntity.ok(user); 
+//     }
+    
+
+    @PostMapping("users/login") // http://localhost:8080/users/login
+    public ResponseEntity<User> loginHandler(@RequestBody User user, HttpSession session){
+        // Now I want to validate that the user has provided the correct credentials
+
+        User returnedUser = userService.login(user.getUsername(), user.getPassword());
+
+        if (returnedUser == null){
+            // This means the user had the wrong credentials or we couldn't find the user with the specific username
+            return ResponseEntity.badRequest().build();
+            // return new ResponseEntity(HttpStatus.BAD_REQUEST)
+        }
+
+        // We'll store some information inside of the session to hold it for later
+        session.setAttribute("username", returnedUser.getUsername());
+        session.setAttribute("userId", returnedUser.getUsername());
+        session.setAttribute("role", returnedUser.getRole().name());
+
+
+        // OTHERWISE
+        return ResponseEntity.ok(returnedUser);
     }
 
-    @PostMapping("users/register/{username}")
+
+
+    @PostMapping("users/register")
     public ResponseEntity<User> register(@RequestBody User user) {
         try {
             return new ResponseEntity<>(userService.register(user), HttpStatus.CREATED);
