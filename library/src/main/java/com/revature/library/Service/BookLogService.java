@@ -1,7 +1,10 @@
 package com.revature.library.Service;
 
+import com.revature.library.DAO.BookDAO;
 import com.revature.library.DAO.BookLogDAO;
 import com.revature.library.Models.BookLog;
+import com.revature.library.Models.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +16,12 @@ import java.util.Optional;
 @Service
 public class BookLogService{
     private final BookLogDAO dao;
+    private final BookDAO bookDAO;
 
     @Autowired
-    public BookLogService(BookLogDAO dao) {
+    public BookLogService(BookLogDAO dao, BookDAO bookDAO) {
         this.dao = dao;
+        this.bookDAO=bookDAO;
     }
 
     public static class InvalidReturnDate extends Exception{}
@@ -55,6 +60,11 @@ public class BookLogService{
         return dao.findByUser_Username(username);
     }
 
+    public Optional<User> getAllBookByUser(String username) {
+        // TODO Auto-generated method stub
+        return dao.findBookByUser_Username(username);
+    }
+
     public void returnBook(int id) throws NotFound {
         var log = dao.findById(id).orElseThrow(()->new NotFound());
 
@@ -86,7 +96,7 @@ public class BookLogService{
     public static class NotFound extends Exception{}
 
     boolean isBookHeld(int bookId){
-        return dao.findByBook_id(bookId)
+        return dao.findByBook_BookId(bookId)
             .stream()
             .anyMatch(it->it.getDateActuallyReturned() == null);
     }

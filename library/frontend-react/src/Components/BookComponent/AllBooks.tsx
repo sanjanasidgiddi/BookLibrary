@@ -1,9 +1,23 @@
-import React from 'react';
+import {useEffect,useState} from 'react';
+import {Book} from "../../interface/Book"
 import "./AllBooks.css";
+import axios from "axios"
 import backgroundImg from './background_img.jpg';
 
+
 function AllBooks() {
-  
+    
+    const [allBooks, setAllBooks] = useState<Book[]>([])
+
+    useEffect(() => {
+        // This will execute when the component mounts and on certain other conditions
+        // Send an AXIOS request when the page loads
+        axios.get<Book[]>("http://localhost:8080/players")
+        .then((res) => {
+            setAllBooks(res.data)
+        })
+    }, [])
+
     function toggleDarkLight() {
         var darkl_button = document.getElementById('darklight')
         /* Toggle Button Text */
@@ -20,15 +34,20 @@ function AllBooks() {
     return (
         <div>
             <nav>
-            <div id="dark-topright">
-                <label htmlFor="darklight">Appearance</label>
-                <button id="darklight" onClick={toggleDarkLight}>Dark</button>
-            </div>
-            <div id="my_books_link">
-                <a id="link_text" title="My Books" href="my-books.html">
-                    <i className='bx bxs-bookmark-heart'></i>
-                </a>
-            </div>
+                <div id="dark-topright">
+                    <label htmlFor="darklight">Appearance</label>
+                    <button id="darklight" onClick={toggleDarkLight}>Dark</button>
+                </div>
+                <div id="logout">
+                    <a id="link_text" title="logout" href="#">
+                        <label>Logout</label>
+                    </a>
+                </div>
+                <div id="my_books_link">
+                    <a id="logout_text" title="My Books" href="my-books.html">
+                        <i className='bx bxs-bookmark-heart'></i>
+                    </a>
+                </div>
             </nav>
             <header className="upper_block">
                 <h1 id="qoute">Books are uniquely portable magic.</h1>

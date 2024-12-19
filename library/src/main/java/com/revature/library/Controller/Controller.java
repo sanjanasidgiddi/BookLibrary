@@ -2,6 +2,7 @@ package com.revature.library.Controller;
 
 import com.revature.library.Models.Book;
 import com.revature.library.Models.BookLog;
+import com.revature.library.Models.Role;
 import com.revature.library.Models.User;
 import com.revature.library.Service.BookLogService;
 import com.revature.library.Service.BookService;
@@ -34,10 +35,7 @@ class Controller {
 
     boolean isAdmin(HttpSession session) {
         //TODO there is probably a better way
-        return Objects.equals(
-            session.getAttribute("username"),
-            "admin"
-        );
+        return Role.ADMIN.equals(Role.valueOf((String) session.getAttribute("role")));
     }
 
     //returns a different value if admin
@@ -50,24 +48,25 @@ class Controller {
     }
 
     //region user
-    @GetMapping("/login/{username}")
+    @PostMapping("users/login/{username}")
     public ResponseEntity<User> login(@PathVariable String username, @RequestBody String password, HttpSession session) {
         //TODO there is probably a better way
-        if (username.equals("admin") && password.equals("admin")){
-            session.setAttribute("username", "admin");
+        if (session.getAttribute("role") != Role.ADMIN){
+            //session.setAttribute("username", "admin");
             return ResponseEntity.ok(new User());
         }
         
         return userService.login(username, password)
             .map(user->{
-                session.setAttribute("username", user.getUsername());
+                //session.setAttribute("username", user.getUsername());
+                session.setAttribute("role", user.getRole().name());
 
                 return ResponseEntity.ok(user);
             })
             .orElse(ResponseEntity.badRequest().build());
     }
 
-    @PostMapping("/users/{username}")
+    @PostMapping("users/register/{username}")
     public ResponseEntity<User> register(@RequestBody User user) {
         try {
             return new ResponseEntity<>(userService.register(user), HttpStatus.CREATED);
@@ -76,14 +75,14 @@ class Controller {
         }
     }
 
-    @GetMapping("/logout")
+    @PostMapping("users/logout")
     public ResponseEntity<Void> logout(HttpSession session) {
         session.invalidate();
         
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/users")
+    @GetMapping("users")
     ResponseEntity<List<User>> getAllUser(HttpSession session) {
         if (!isAdmin(session)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -92,7 +91,7 @@ class Controller {
         return ResponseEntity.ok(userService.getAll());
     }
 
-    @GetMapping("/users/{username}")
+    @GetMapping("users/{username}")
     ResponseEntity<User> getUser(@PathVariable String username, HttpSession session) {
         if (!isAdmin(session) && !getLoggedInUsername(session).equals(username)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -106,7 +105,7 @@ class Controller {
             );
     }
 
-    @PatchMapping("/users/{username}")
+    @PatchMapping("users/{username}")
     ResponseEntity<User> updateUser(@PathVariable String username, @RequestBody User user, HttpSession session) {
         if (!isAdmin(session)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -119,7 +118,7 @@ class Controller {
         }
     }
 
-    @DeleteMapping("/users/{username}")
+    @DeleteMapping("users/{username}")
     ResponseEntity<Void> deleteUser(@PathVariable String username, HttpSession session) {
         if (!isAdmin(session)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -145,7 +144,7 @@ class Controller {
      * delete books(cannot delete books already issued)
      */
     //region books
-    @GetMapping("/books/{bookId}")
+    @GetMapping("books/{bookId}")
     public ResponseEntity<Book> getBookById(@PathVariable int bookId) {
         return bookService.getBookById(bookId).map(
                 book -> ResponseEntity.ok(book)
@@ -155,12 +154,12 @@ class Controller {
             );
     }
 
-    @GetMapping("/books")
+    @GetMapping("books")
     public List<Book> getAllBooks() {
         return bookService.getAllBooks();
     }
 
-    @PostMapping("/books")
+    @PostMapping("books")
     public ResponseEntity<Book> createNewBook(@RequestBody Book book, HttpSession session) {
         if (!isAdmin(session)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -175,7 +174,7 @@ class Controller {
         }
     }
 
-    @PatchMapping("/books/{bookId}")
+    @PatchMapping("books/{bookId}")
     public ResponseEntity<Book> editBook(@PathVariable int bookId, @RequestBody Book book, HttpSession session) {
         if (!isAdmin(session)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -189,7 +188,7 @@ class Controller {
         }
     }
 
-    @DeleteMapping("/books/{bookId}")
+    @DeleteMapping("books/{bookId}")
     public ResponseEntity<Void> deleteBook(@PathVariable int bookId) {
         try {
             bookService.deleteBook(bookId);
@@ -209,7 +208,7 @@ class Controller {
      * get all logs
      */
     //region booklog
-    @PostMapping("/bookLogs")
+    @PostMapping("bookLogs")
     ResponseEntity<BookLog> createLog(@RequestBody BookLog log, HttpSession session) {
         if (!isAdmin(session) || !getLoggedInUsername(session).equals(log.getUser().getUsername())) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -222,7 +221,7 @@ class Controller {
         }
     }
 
-    @GetMapping("/bookLogs")
+    @GetMapping("bookLogs")
     ResponseEntity<List<BookLog>> getAllLogs(HttpSession session) {
         if (!isAdmin(session)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -231,7 +230,7 @@ class Controller {
         return ResponseEntity.ok(bookLogService.getAll());
     }
 
-    @GetMapping("/bookLogs/{username}")
+    @GetMapping("bookLogs/{username}")
     ResponseEntity<List<BookLog>> getAllLogsByUsername(@PathVariable String username, HttpSession session) {
         if (!isAdmin(session)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -240,7 +239,7 @@ class Controller {
         return ResponseEntity.ok(bookLogService.getAll(username));
     }
 
-    @GetMapping("/bookLogs/{bookId}")
+    @GetMapping("bookLogs/{bookId}")
     ResponseEntity<List<BookLog>> getAllLogsByBookId(@PathVariable String bookId, HttpSession session) {
         if (!isAdmin(session)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -249,7 +248,7 @@ class Controller {
         return ResponseEntity.ok(bookLogService.getAll(bookId));
     }
 
-    @PatchMapping("/bookLogs/{logId}")
+    @PatchMapping("bookLogs/{logId}")
     ResponseEntity<Void> editLog(@PathVariable int logId, HttpSession session) {
         if (!isAdmin(session)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -264,7 +263,7 @@ class Controller {
         }
     }
 
-    @DeleteMapping("/bookLogs/{logId}")
+    @DeleteMapping("bookLogs/{logId}")
     ResponseEntity<Void> deleteLog(@PathVariable int logId, HttpSession session) {
         if (!isAdmin(session)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -278,5 +277,11 @@ class Controller {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("books/{username}")
+    public ResponseEntity<List<BookLog>> getAllBookByusername(@PathVariable String username) {
+        return ResponseEntity.ok(bookLogService.getAll(username));
+    }
+
     //endregion
 }

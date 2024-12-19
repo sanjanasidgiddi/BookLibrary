@@ -27,4 +27,10 @@ CREATE TABLE IF NOT EXISTS "Library".booklogs (
     FOREIGN KEY (book_id) REFERENCES "Library".books(book_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+SELECT * FROM USERS
 
+INSERT INTO USERS (username, password, email, first_name, last_name, phone_number, dob, role) 
+VALUES ('tomcat123', 'securePassword1', 'tomcat@gmail.com', 'Tom', 'Cat', '1234567898', '2024-09-01', 'ADMIN');
+
+DELETE FROM USERS
+WHERE USERNAME='tomcat123'

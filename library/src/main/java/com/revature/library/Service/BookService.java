@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.revature.library.DAO.BookDAO;
 import com.revature.library.Models.Book;
+import com.revature.library.Models.User;
 
 @Service
 public class BookService {
@@ -75,7 +76,7 @@ public class BookService {
     public static class NotFound extends Exception{}
 
     boolean isBookHeld(int bookId){
-        return bookLogDAO.findByBook_id(bookId)
+        return bookLogDAO.findByBook_BookId(bookId)
             .stream()
             .anyMatch(it->it.getDateActuallyReturned() == null);
     }

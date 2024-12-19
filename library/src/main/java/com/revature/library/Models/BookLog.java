@@ -17,7 +17,7 @@ public class BookLog {
     private User user;
     
     @ManyToOne
-    @JoinColumn(name="BookId")
+    @JoinColumn(name="Book_id")
     private Book book;
 
     @Column(name="date_issued")
