@@ -35,6 +35,8 @@ function Nav() {
                     <li className="link-styles"><Link to="/allbooks">All Books</Link></li>
                     {/* Link to books list page */}
                     <li className="link-styles"><Link to="/booklist">Book List</Link></li>
+                    {/* Link to my books page */}
+                    <li className="link-styles"><Link to="/mybooks">My Books</Link></li>
                 </ul>
             </nav>
         </div>
