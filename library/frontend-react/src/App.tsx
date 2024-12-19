@@ -7,6 +7,7 @@ import Nav from './Components/NavigationLinks/Nav'
 import Register from './Components/RegisterComponent/Register'
 import axios from 'axios'
 import BookList from './Components/BookList/BookList'
+import MyBooks from './Components/MyBooks/MyBooks'
 
 /** Storing information about the logged in user */
 export interface UserInfoType {
@@ -56,6 +57,7 @@ function App() {
             <Route path='/register' element={<Register></Register>}></Route>
             <Route path='/allbooks' element={<AllBooks></AllBooks>}></Route>
             <Route path='/booklist' element={<BookList></BookList>}></Route>
+            <Route path='/mybooks' element={<MyBooks></MyBooks>}></Route>
           </Routes>
         </BrowserRouter>
       </UserInfo.Provider>

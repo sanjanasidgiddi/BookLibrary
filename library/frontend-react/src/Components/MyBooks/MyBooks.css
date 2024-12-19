@@ -190,16 +190,7 @@ book_button
     padding: 10px;
 }
 /* Dark Mode feature */
-.dark_mode .book_item{  
+.dark_mode{  
     background:rgb(52, 29, 29);
     color:white;
-    width: 200px;
-    display: flex;
-    flex-direction: column;
-    border-radius: 12px;
-    padding: 15px;
-    text-decoration: none;
-    font-family: "Tahoma", sans-serif;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
