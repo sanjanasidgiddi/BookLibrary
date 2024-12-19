@@ -33,6 +33,8 @@ function Nav() {
                     <li className="link-styles"><Link to="/register">Register New User Page</Link></li>
                     {/* Link to all books page */}
                     <li className="link-styles"><Link to="/allbooks">All Books</Link></li>
+                    {/* Link to books list page */}
+                    <li className="link-styles"><Link to="/booklist">Book List</Link></li>
                 </ul>
             </nav>
         </div>

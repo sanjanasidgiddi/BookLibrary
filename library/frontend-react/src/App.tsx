@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Nav from './Components/NavigationLinks/Nav'
 import Register from './Components/RegisterComponent/Register'
 import axios from 'axios'
+import BookList from './Components/BookList/BookList'
 
 /** Storing information about the logged in user */
 export interface UserInfoType {
@@ -54,6 +55,7 @@ function App() {
             <Route path='/login' element={<Login></Login>}></Route>
             <Route path='/register' element={<Register></Register>}></Route>
             <Route path='/allbooks' element={<AllBooks></AllBooks>}></Route>
+            <Route path='/booklist' element={<BookList></BookList>}></Route>
           </Routes>
         </BrowserRouter>
       </UserInfo.Provider>
