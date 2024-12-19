@@ -28,7 +28,7 @@ function Register() {
         console.log("Entered: ", username)
         console.log("Entered: ", password)
         /** Sending a post request to the database and setting authentication credentials/context. */
-        axios.post("http://localhost:8080/users/login",
+        axios.post("http://localhost:8080/users/register",
             { username, password }, { withCredentials: true }
         ).then((res) => {
             console.log(res.data);
