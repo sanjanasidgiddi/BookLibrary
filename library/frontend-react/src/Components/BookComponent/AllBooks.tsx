@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Book } from "../../interface/Book"
+import { Book } from "../interface/Book"
 import "./AllBooks.css";
 import axios from "axios"
 import backgroundImg from './background_img.jpg';
