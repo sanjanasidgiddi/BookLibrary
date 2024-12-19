@@ -207,7 +207,7 @@ class Controller {
         }
     }
 
-    @PostMapping("bookLogs/return/{bookLogId}")
+    @PostMapping("bookLogs/return/{bookId}")
     public ResponseEntity<Void> returnBook(@PathVariable int bookLogId, HttpSession session) {
         try {
             bookLogService.returnBook(bookLogId, getUser(session));
@@ -222,6 +222,7 @@ class Controller {
         }
     }
 
+    //look into date to be returned
     @GetMapping("bookLogs")
     ResponseEntity<List<BookLog>> getAllLogs(HttpSession session) {
         try {
