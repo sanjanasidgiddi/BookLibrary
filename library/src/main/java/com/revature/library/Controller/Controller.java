@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -31,7 +32,6 @@ class Controller {
         this.bookService = bookService;
         this.bookLogService = bookLogService;
     }
-
     
     static String USERNAME_KEY = "username";
     void setUser(User user, HttpSession session){
@@ -49,15 +49,27 @@ class Controller {
     }
 
     //region user
-    @PostMapping("users/login/{username}")
-    public ResponseEntity<User> login(@PathVariable String username, @RequestBody String password, HttpSession session) {
-        return userService.login(username, password)
-            .map(user->{
-                setUser(user, session);
+    @PostMapping("users/login")
+    public ResponseEntity<User> login(@RequestBody Map<String, String> body, HttpSession session) {
+        try{
+            var username = (String)body.get("username");
+            var password = (String)body.get("password");
 
-                return ResponseEntity.ok(user);
-            })
-            .orElse(ResponseEntity.badRequest().build());
+            return userService.login(username, password)
+                .map(user->{
+                    setUser(user, session);
+
+                    return ResponseEntity.ok(user);
+                })
+                .orElse(
+                    ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
+                );
+        }
+        catch (NullPointerException|ClassCastException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+
     }
 
     @PostMapping("users/register")
