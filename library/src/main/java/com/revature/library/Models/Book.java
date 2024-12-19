@@ -22,14 +22,13 @@ public class Book {
     @Column(name="book_age_limit")
     private int bookAgeLimit;
 
-    @Lob
-    @Column(name = "image", columnDefinition = "BLOB")
-    private byte[] image;
+    @Column(name = "image")
+    private String image;
 
     //Constructors
     public Book(){}
 
-    public Book(int bookId, String bookName, String author, String bookGenre, int bookAgeLimit, byte[] image){
+    public Book(int bookId, String bookName, String author, String bookGenre, int bookAgeLimit, String image){
         this.bookId=bookId;
         this.bookName=bookName;
         this.author=author;
@@ -79,11 +78,11 @@ public class Book {
         this.bookAgeLimit = bookAgeLimit;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

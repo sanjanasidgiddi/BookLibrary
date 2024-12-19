@@ -30,7 +30,17 @@ CREATE TABLE IF NOT EXISTS "Library".booklogs (
 SELECT * FROM USERS
 
 INSERT INTO USERS (username, password, email, first_name, last_name, phone_number, dob, role) 
-VALUES ('tomcat123', 'securePassword1', 'tomcat@gmail.com', 'Tom', 'Cat', '1234567898', '2024-09-01', 'ADMIN');
+VALUES ('tomcat', 'securePassword', 'tomcat@gmail.com', 'Tom', 'Cat', '1234567898', '2024-09-01', 'ADMIN');
+
+INSERT INTO USERS (username, password, email, first_name, last_name, phone_number, dob, role) 
+VALUES ('ginagina', 'securePassword', 'ginagina@gmail.com', 'Gina', 'Gina', '9876543212', '1990-05-08', 'USER');
 
 DELETE FROM USERS
-WHERE USERNAME='tomcat123'
+WHERE USERNAME=''
+
+{
+    "username"="ginagina",
+    "bookId"=1,
+    "date_issued": 2024/12/01,
+    "date_issued": 2024/12/19,
+}

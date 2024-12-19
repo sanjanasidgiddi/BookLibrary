@@ -41,17 +41,17 @@ public class BookLogServiceTest {
         bookLogService = new BookLogService(bookLogDao, bookDao);
 
         bookDao.save(
-            new Book(0, "Harry Potter", "JK Rowling", "Fantasy", 8, new byte[0])
+            new Book(0, "Harry Potter", "JK Rowling", "Fantasy", 8, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474169725i/15881.jpg")
         );
         book1 = bookDao.findById(1).get();
 
         bookDao.save(
-            new Book(0, "Lord Of The Rings", "JJR Tolkien", "Fantasy", 12, new byte[0])
+            new Book(0, "Lord Of The Rings", "JJR Tolkien", "Fantasy", 12, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1566425108i/33.jpg")
         );
         book2 = bookDao.findById(2).get();
 
         bookDao.save(
-            new Book(0, "Wheel Of Time", "Robert Jordan", "Fantasy", 12, new byte[0])
+            new Book(0, "Wheel Of Time", "Robert Jordan", "Fantasy", 12, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1659905815i/228665.jpg")
         );
         book3 = bookDao.findById(3).get();
 
