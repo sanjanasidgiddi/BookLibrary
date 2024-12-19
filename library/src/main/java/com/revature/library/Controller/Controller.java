@@ -60,7 +60,7 @@ class Controller {
             .orElse(ResponseEntity.badRequest().build());
     }
 
-    @PostMapping("users/register/{username}")
+    @PostMapping("users/register")
     public ResponseEntity<User> register(@RequestBody User user) {
         try {
             return new ResponseEntity<>(userService.register(user), HttpStatus.CREATED);
