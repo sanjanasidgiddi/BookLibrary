@@ -31,24 +31,11 @@ public class UserService{
         return dao.save(user);
     }
 
-    public User login(String username, String password){
-        // Look up the user by the username
-        Optional<User> possibleUser = dao.getUserByUsername(username);
-
-        // Check to make sure the user exists
-        if (possibleUser.isEmpty()){
-            return null;
-        }
-
-        // At this point we've validated that the user exists
-        User returnedUser = possibleUser.get();
-
-        // Validate the password added in will match the db password
-        if (returnedUser.getPassword().equals(password)){
-            return returnedUser;
-        }
-
-        return null;
+    public Optional<User> login(String username, String password){
+        return dao.getUserByUsername(username)
+            .filter(
+                user->user.getPassword().equals(password)
+            );
     }
 
     public Optional<User> getByUsername(String username){

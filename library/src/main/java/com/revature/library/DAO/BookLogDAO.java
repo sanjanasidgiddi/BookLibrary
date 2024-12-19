@@ -15,5 +15,5 @@ public interface BookLogDAO extends JpaRepository<BookLog,Integer> {
 
     List<BookLog> findByBook_BookId(int id);
 
-    Optional<User> findBookByUser_Username(String username);
+//    Optional<User> findBookByUser_Username(String username);
 }

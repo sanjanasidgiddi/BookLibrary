@@ -3,6 +3,7 @@ package com.revature.library.Service;
 import com.revature.library.DAO.BookDAO;
 import com.revature.library.DAO.BookLogDAO;
 import com.revature.library.Models.BookLog;
+import com.revature.library.Models.Role;
 import com.revature.library.Models.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,57 +25,101 @@ public class BookLogService{
         this.bookDAO=bookDAO;
     }
 
-    public static class InvalidReturnDate extends Exception{}
+    public static class Unauthorized extends Exception{}
+    public static class BookNotFound extends Exception{}
     public static class BookAlreadyHeld extends Exception{}
 
-    public BookLog issue(BookLog newLog) throws BookAlreadyHeld, InvalidReturnDate {
-        //overwrites previous data
-        //TODO might cause issues
-        var returnDate = Calendar.getInstance();
-        returnDate.add(Calendar.DATE, 30);
-
-        newLog.setDateIssued(new Date());
-        newLog.setDateIssued(returnDate.getTime());
-        newLog.setDateToBeReturned(null);
-
-        if (isBookHeld(newLog.getBook().getBookId())){
+    public BookLog issueBook(int bookId, Optional<User> loggedIn) throws BookAlreadyHeld, BookNotFound, Unauthorized {
+        if (isBookHeld(bookId)){
             throw new BookAlreadyHeld();
         }
 
-        if (!newLog.getDateIssued().before(newLog.getDateToBeReturned())){
-            throw new InvalidReturnDate();
-        }
+        var user = loggedIn
+            .orElseThrow(
+                ()->new Unauthorized()
+            );
+
+        var book = bookDAO
+            .findById(bookId)
+            .orElseThrow(
+                ()-> new BookNotFound()
+            );
+
+        var returnDate = Calendar.getInstance();
+        returnDate.add(Calendar.DATE, 30);
+
+        var newLog = new BookLog();
+        newLog.setUser(user);
+        newLog.setBook(book);
+        newLog.setDateIssued(new Date());
+        newLog.setDateToBeReturned(returnDate.getTime());
+        newLog.setDateToBeReturned(null);
 
         return dao.save(newLog);
     }
 
-    public Optional<BookLog> get(int id){
-        return dao.findById(id);
-    }
+    public BookLog returnBook(int bookLogId, Optional<User> loggedIn) throws Unauthorized, NotFound {
+        var log = dao
+            .findById(bookLogId)
+            .orElseThrow(
+                ()->new NotFound()
+            );
 
-    public List<BookLog> getAll(){
-        return dao.findAll();
-    }
-
-    public List<BookLog> getAll(String username){
-        return dao.findByUser_Username(username);
-    }
-
-    public Optional<User> getAllBookByUser(String username) {
-        // TODO Auto-generated method stub
-        return dao.findBookByUser_Username(username);
-    }
-
-    public void returnBook(int id) throws NotFound {
-        var log = dao.findById(id).orElseThrow(()->new NotFound());
+        var authorized = loggedIn.map(user->user.getRole() == Role.ADMIN || log.getUser().equals(user)).orElse(false);
+        if (!authorized){
+            throw new Unauthorized();
+        }
 
         log.setDateActuallyReturned(new Date());
 
         dao.save(log);
+
+        return log;
     }
 
-    public void edit(int id, BookLog newBookLog) throws NotFound {
-        var logInTable = dao.findById(id).orElseThrow(()->new NotFound());
+    public BookLog get(int id, Optional<User> loggedIn) throws Unauthorized, NotFound {
+        var log = dao
+            .findById(id)
+            .orElseThrow(
+                ()->new NotFound()
+            );
+
+        var authorized = loggedIn.map(user->user.getRole() == Role.ADMIN || user.getUsername().equals(log.getUser().getUsername())).orElse(false);
+        if (!authorized){
+            throw new Unauthorized();
+        }
+
+        return log;
+    }
+
+    public List<BookLog> getAll(Optional<User> loggedIn) throws Unauthorized {
+        var user = loggedIn
+            .orElseThrow(
+                ()->new Unauthorized()
+            );
+
+        if (user.getRole() == Role.ADMIN){
+            return dao.findAll();
+        }
+        return dao.findByUser_Username(user.getUsername());
+    }
+
+    public BookLog edit(int id, BookLog newBookLog, Optional<User> loggedIn) throws Unauthorized, NotFound {
+        var isAuthorized = loggedIn
+            .map(
+                user->user.getRole() == Role.ADMIN
+            )
+            .orElse(false);
+
+        if (!isAuthorized){
+            throw new Unauthorized();
+        }
+
+        var logInTable = dao
+            .findById(id)
+            .orElseThrow(
+                ()->new NotFound()
+            );
 
         logInTable.setBook(newBookLog.getBook());
         logInTable.setUser(newBookLog.getUser());
@@ -83,10 +128,21 @@ public class BookLogService{
         logInTable.setDateActuallyReturned(logInTable.getDateActuallyReturned());
 
         dao.save(logInTable);
+
+        return logInTable;
     }
 
-    public void delete(int id) throws NotFound {
-        if (dao.existsById(id)){
+    public void delete(int id, Optional<User> loggedIn) throws Unauthorized, NotFound {
+        var isAuthorized = loggedIn.map(
+            user->user.getRole() == Role.ADMIN
+        )
+        .orElse(false);
+
+        if (!isAuthorized){
+            throw new Unauthorized();
+        }
+
+        if (!dao.existsById(id)){
             throw new NotFound();
         }
 
