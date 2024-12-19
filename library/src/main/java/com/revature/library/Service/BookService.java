@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.revature.library.DAO.BookLogDAO;
+import com.revature.library.Models.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +45,7 @@ public class BookService {
     public List<Book> getAllBooks(){
         return bookDAO.findAll();
     }
+
 
     //edit book
     public Book editBook(int bookId, Book updatedBook) throws NotFound {

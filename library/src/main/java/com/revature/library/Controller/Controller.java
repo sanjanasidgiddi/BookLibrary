@@ -32,9 +32,19 @@ class Controller {
         this.bookLogService = bookLogService;
     }
 
+    
+    static String USERNAME_KEY = "username";
+    void setUser(User user, HttpSession session){
+        session.setAttribute(USERNAME_KEY, user.getUsername());
+    }
+
     Optional<User> getUser(HttpSession session){
-        return Optional.ofNullable(
-            (User)session.getAttribute("user")
+        if (session.getAttribute(USERNAME_KEY) == null){
+            return Optional.empty();
+        }
+
+        return userService.getByUsername(
+            (String)session.getAttribute(USERNAME_KEY)
         );
     }
 
@@ -43,8 +53,7 @@ class Controller {
     public ResponseEntity<User> login(@PathVariable String username, @RequestBody String password, HttpSession session) {
         return userService.login(username, password)
             .map(user->{
-                //session.setAttribute("username", user.getUsername());
-                session.setAttribute("user", user);
+                setUser(user, session);
 
                 return ResponseEntity.ok(user);
             })
@@ -186,7 +195,7 @@ class Controller {
         }
     }
 
-    @GetMapping("bookLogs/return/{bookLogId}")
+    @PostMapping("bookLogs/return/{bookLogId}")
     public ResponseEntity<Void> returnBook(@PathVariable int bookLogId, HttpSession session) {
         try {
             bookLogService.returnBook(bookLogId, getUser(session));
