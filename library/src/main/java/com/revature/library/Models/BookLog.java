@@ -7,7 +7,6 @@ import jakarta.persistence.*;
 @Entity
 @Table(name="book_logs")
 public class BookLog {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int bookLogId;
@@ -42,10 +41,6 @@ public class BookLog {
 
     public int getBookLogId() {
         return bookLogId;
-    }
-
-    public void setBookLogId(int bookLogId) {
-        this.bookLogId = bookLogId;
     }
 
     public User getUser() {

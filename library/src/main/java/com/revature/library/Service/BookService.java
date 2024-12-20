@@ -14,7 +14,6 @@ import com.revature.library.Models.User;
 
 @Service
 public class BookService {
-    
     private final BookDAO bookDAO;
     private final BookLogDAO bookLogDAO;
 
@@ -24,31 +23,33 @@ public class BookService {
         this.bookLogDAO = bookLogDAO;
     }
 
-    //create a new book
-    public static class TitleAndAuthorAlreadyExists extends Exception{}
-    public Book createNewBook(Book newbook) throws TitleAndAuthorAlreadyExists {
+    public Book createNewBook(Book newbook, Optional<User> loggedIn) throws Unauthorized, TitleAndAuthorAlreadyExists {
+        if (!loggedIn.map(user->user.getRole() == Role.ADMIN).orElse(false)){
+            throw new Unauthorized();
+        }
+
         var booksWithSameTitleAndAuthor = bookDAO.findByBookNameAndAuthor(newbook.getBookName(), newbook.getAuthor());
 
-        if (!hasAuthor(newbook) && !booksWithSameTitleAndAuthor.isEmpty()){
+        if (hasAuthor(newbook) && !booksWithSameTitleAndAuthor.isEmpty()){
             throw new TitleAndAuthorAlreadyExists();
         }
 
         return bookDAO.save(newbook);
     }
 
-    //Get a book by Id
-    public Optional<Book> getBookById(int BookId){
-        return bookDAO.findById(BookId);
+    public Book getBookById(int BookId) throws NotFound {
+        return bookDAO.findById(BookId).orElseThrow(()->new NotFound());
     }
 
-    //Get all books
     public List<Book> getAllBooks(){
         return bookDAO.findAll();
     }
 
+    public Book editBook(int bookId, Book updatedBook, Optional<User> loggedIn) throws Unauthorized, NotFound {
+        if (loggedIn.map(user -> user.getRole() == Role.ADMIN).orElse(false)){
+            throw new Unauthorized();
+        }
 
-    //edit book
-    public Book editBook(int bookId, Book updatedBook) throws NotFound {
         return bookDAO.findById(bookId)
             .map(existingBook-> {
                 existingBook.setBookName(updatedBook.getBookName());
@@ -62,10 +63,12 @@ public class BookService {
             );
     }
 
-    //delete book
-    public static class BookIsHeld extends Exception{}
-    public void deleteBook(int bookId) throws NotFound, BookIsHeld {
-        if (bookDAO.existsById(bookId)){
+    public void deleteBook(int bookId, Optional<User> loggedIn) throws Unauthorized, NotFound, BookIsHeld {
+        if (!loggedIn.map(user->user.getRole() == Role.ADMIN).orElse(false)){
+            throw new Unauthorized();
+        }
+
+        if (!bookDAO.existsById(bookId)){
             throw new NotFound();
         }
         if (isBookHeld(bookId)){
@@ -75,7 +78,10 @@ public class BookService {
         bookDAO.deleteById(bookId);
     }
 
+    public static class Unauthorized extends Exception{}
+    public static class BookIsHeld extends Exception{}
     public static class NotFound extends Exception{}
+    public static class TitleAndAuthorAlreadyExists extends Exception{}
 
     boolean isBookHeld(int bookId){
         return bookLogDAO.findByBook_BookId(bookId)

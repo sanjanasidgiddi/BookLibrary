@@ -32,8 +32,9 @@ class Controller {
         this.bookService = bookService;
         this.bookLogService = bookLogService;
     }
-    
+
     static String USERNAME_KEY = "username";
+
     void setUser(User user, HttpSession session){
         session.setAttribute(USERNAME_KEY, user.getUsername());
     }
@@ -49,81 +50,103 @@ class Controller {
     }
 
     //region user
-    @PostMapping("users/login")
+    @PostMapping("/users/login")
     public ResponseEntity<User> login(@RequestBody Map<String, String> body, HttpSession session) {
         try{
+            if (getUser(session).isPresent()){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
+
             var username = (String)body.get("username");
             var password = (String)body.get("password");
 
-            return userService.login(username, password)
-                .map(user->{
-                    setUser(user, session);
+            var user = userService.login(username, password);
 
-                    return ResponseEntity.ok(user);
-                })
-                .orElse(
-                    ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
-                );
+            setUser(user, session);
+
+            return ResponseEntity.ok(user);
+        }
+        catch (UserService.Unauthorized e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         catch (NullPointerException|ClassCastException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-
-
     }
 
-    @PostMapping("users/register")
+    @PostMapping("/users/register")
     public ResponseEntity<User> register(@RequestBody User user) {
         try {
-            return new ResponseEntity<>(userService.register(user), HttpStatus.CREATED);
+            return ResponseEntity.status(HttpStatus.CREATED).body(userService.register(user));
         } catch (UserService.NotAbsent | UserService.UsernameInvalid | UserService.EmailInvalid | UserService.PasswordInvalid e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
-    @PostMapping("users/logout")
+    @PostMapping("/users/logout")
     public ResponseEntity<Void> logout(HttpSession session) {
+        if (getUser(session).isEmpty()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
         session.invalidate();
         
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("users")
-    ResponseEntity<List<User>> getAllUser(HttpSession session) {
-        return ResponseEntity.ok(userService.getAll());
-    }
-
-    @GetMapping("users/{username}")
-    ResponseEntity<User> getUser(@PathVariable String username, HttpSession session) {
-        return userService
-            .getByUsername(username)
-            .map(
-                it -> ResponseEntity.ok(it)
-            )
-            .orElse(
-                ResponseEntity.status(HttpStatus.NOT_FOUND).build()
-            );
-    }
-
-    @PatchMapping("users/{username}")
-    ResponseEntity<User> updateUser(@PathVariable String username, @RequestBody User user, HttpSession session) {
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> getAllUser(HttpSession session) {
         try {
-            return ResponseEntity.ok(userService.editUser(username, user));
-        } catch (UserService.NotFound | UserService.UsernameInvalid | UserService.EmailInvalid | UserService.PasswordInvalid e) {
+            return ResponseEntity.ok(
+                userService.getAll(getUser(session))
+            );
+        } catch (UserService.Unauthorized e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @GetMapping("/users/{username}")
+    public ResponseEntity<User> getUser(@PathVariable String username, HttpSession session) {
+        try {
+            return ResponseEntity.ok(userService.getByUsername(username, getUser(session)));
+        }
+        catch (UserService.Unauthorized e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        catch (UserService.NotFound e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PatchMapping("/users/{username}")
+    public ResponseEntity<User> updateUser(@PathVariable String username, @RequestBody User user, HttpSession session) {
+        try {
+            return ResponseEntity.ok(userService.editUser(username, user, getUser(session)));
+        }
+        catch (UserService.Unauthorized e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        } catch (UserService.NotFound e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (UserService.UsernameInvalid | UserService.EmailInvalid | UserService.PasswordInvalid e) {
             return ResponseEntity.badRequest().build();
         }
     }
 
-    @DeleteMapping("users/{username}")
-    ResponseEntity<Void> deleteUser(@PathVariable String username, HttpSession session) {
+    @DeleteMapping("/users/{username}")
+    public ResponseEntity<Void> deleteUser(@PathVariable String username, HttpSession session) {
         try {
-            userService.deleteUser(username);
+            userService.deleteUser(username, getUser(session));
 
             return ResponseEntity.ok().build();
-        } catch (UserService.IsHoldingBook e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } catch (UserService.NotFound e) {
+        }
+        catch (UserService.Unauthorized e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        catch (UserService.NotFound e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        catch (UserService.IsHoldingBook e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
     //endregion
@@ -136,51 +159,63 @@ class Controller {
      * delete books(cannot delete books already issued)
      */
     //region books
-    @GetMapping("books/{bookId}")
+    @GetMapping("/books/{bookId}")
     public ResponseEntity<Book> getBookById(@PathVariable int bookId) {
-        return bookService.getBookById(bookId).map(
-                book -> ResponseEntity.ok(book)
-            )
-            .orElse(
-                ResponseEntity.notFound().build()
-            );
+        try {
+            return ResponseEntity.ok(bookService.getBookById(bookId));
+        } catch (BookService.NotFound e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
-    @GetMapping("books")
+    @GetMapping("/books")
     public List<Book> getAllBooks() {
         return bookService.getAllBooks();
     }
 
-    @PostMapping("books")
+    @PostMapping("/books")
     public ResponseEntity<Book> createNewBook(@RequestBody Book book, HttpSession session) {
         try {
-            var newBook = bookService.createNewBook(book);
+            var newBook = bookService.createNewBook(book, getUser(session));
 
-            return new ResponseEntity<>(newBook, HttpStatus.CREATED);
-        } catch (BookService.TitleAndAuthorAlreadyExists e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.CREATED).body(newBook);
+        } 
+        catch (BookService.Unauthorized e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+        catch (BookService.TitleAndAuthorAlreadyExists e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        } 
     }
 
-    @PatchMapping("books/{bookId}")
+    @PatchMapping("/books/{bookId}")
     public ResponseEntity<Book> editBook(@PathVariable int bookId, @RequestBody Book book, HttpSession session) {
         try {
-            Book updatedBook = bookService.editBook(bookId, book);
-            return new ResponseEntity<>(updatedBook, HttpStatus.OK);
-        } catch (BookService.NotFound e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.ok(bookService.editBook(bookId, book, getUser(session)));
+        }
+        catch (BookService.Unauthorized e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        catch (BookService.NotFound e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
-    @DeleteMapping("books/{bookId}")
-    public ResponseEntity<Void> deleteBook(@PathVariable int bookId) {
+    @DeleteMapping("/books/{bookId}")
+    public ResponseEntity<Void> deleteBook(@PathVariable int bookId, HttpSession session) {
         try {
-            bookService.deleteBook(bookId);
-            return ResponseEntity.noContent().build();
-        } catch (BookService.NotFound e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (BookService.BookIsHeld e) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+            bookService.deleteBook(bookId, getUser(session));
+
+            return ResponseEntity.ok().build();
+        }
+        catch (BookService.Unauthorized e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        catch (BookService.NotFound e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        catch (BookService.BookIsHeld e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
     //endregion
@@ -192,39 +227,43 @@ class Controller {
      * get all logs
      */
     //region booklog
-    @PostMapping("bookLogs/{bookId}")
+    @PostMapping("/bookLogs/{bookId}")
     ResponseEntity<BookLog> issueBook(@PathVariable int bookId, HttpSession session) {
         try {
-            return ResponseEntity.ok(bookLogService.issueBook(bookId, getUser(session)));
-        } catch (BookLogService.Unauthorized e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-        catch (BookLogService.BookAlreadyHeld e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
-        catch (BookLogService.BookNotFound e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
-
-    @PostMapping("bookLogs/return/{bookId}")
-    public ResponseEntity<Void> returnBook(@PathVariable int bookLogId, HttpSession session) {
-        try {
-            bookLogService.returnBook(bookLogId, getUser(session));
-
-            return ResponseEntity.ok().build();
-        }
-        catch (BookLogService.NotFound e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.CREATED).body(bookLogService.issueBook(bookId, getUser(session)));
         }
         catch (BookLogService.Unauthorized e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+        catch (BookLogService.BookNotFound e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        catch (BookLogService.BookAlreadyHeld e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+    }
+
+    @PostMapping("/bookLogs/return/{bookId}")
+    public ResponseEntity<Void> returnBook(@PathVariable int bookId, HttpSession session) {
+        try {
+            bookLogService.returnBook(bookId, getUser(session));
+
+            return ResponseEntity.ok().build();
+        }
+        catch (BookLogService.Unauthorized e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        catch (BookLogService.NotFound e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        catch (BookLogService.BookAlreadyReturned e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 
     //look into date to be returned
-    @GetMapping("bookLogs")
-    ResponseEntity<List<BookLog>> getAllLogs(HttpSession session) {
+    @GetMapping("/bookLogs")
+    public ResponseEntity<List<BookLog>> getAllLogs(HttpSession session) {
         try {
             return ResponseEntity.ok(bookLogService.getAll(getUser(session)));
         } catch (BookLogService.Unauthorized e) {
@@ -232,8 +271,8 @@ class Controller {
         }
     }
 
-    @PatchMapping("bookLogs/{logId}")
-    ResponseEntity<BookLog> editLog(@PathVariable int logId, @RequestBody BookLog bookLog, HttpSession session) {
+    @PatchMapping("/bookLogs/{logId}")
+    public ResponseEntity<BookLog> editLog(@PathVariable int logId, @RequestBody BookLog bookLog, HttpSession session) {
         try {
             return ResponseEntity.ok(bookLogService.edit(logId, bookLog, getUser(session)));
         }
@@ -241,20 +280,22 @@ class Controller {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         catch (BookLogService.NotFound e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
-    @DeleteMapping("bookLogs/{logId}")
-    ResponseEntity<Void> deleteLog(@PathVariable int logId, HttpSession session) {
+    @DeleteMapping("/bookLogs/{logId}")
+    public ResponseEntity<Void> deleteLog(@PathVariable int logId, HttpSession session) {
         try {
             bookLogService.delete(logId, getUser(session));
 
-            return ResponseEntity.ok(null);
-        } catch (BookLogService.NotFound e) {
-            return ResponseEntity.notFound().build();
-        } catch (BookLogService.Unauthorized e) {
+            return ResponseEntity.ok().build();
+        }
+        catch (BookLogService.Unauthorized e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        catch (BookLogService.NotFound e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
     //endregion

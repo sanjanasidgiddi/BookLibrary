@@ -25,10 +25,6 @@ public class BookLogService{
         this.bookDAO=bookDAO;
     }
 
-    public static class Unauthorized extends Exception{}
-    public static class BookNotFound extends Exception{}
-    public static class BookAlreadyHeld extends Exception{}
-
     public BookLog issueBook(int bookId, Optional<User> loggedIn) throws BookAlreadyHeld, BookNotFound, Unauthorized {
         if (isBookHeld(bookId)){
             throw new BookAlreadyHeld();
@@ -53,12 +49,12 @@ public class BookLogService{
         newLog.setBook(book);
         newLog.setDateIssued(new Date());
         newLog.setDateToBeReturned(returnDate.getTime());
-        newLog.setDateToBeReturned(null);
+        newLog.setDateActuallyReturned(null);
 
         return dao.save(newLog);
     }
 
-    public BookLog returnBook(int bookLogId, Optional<User> loggedIn) throws Unauthorized, NotFound {
+    public BookLog returnBook(int bookLogId, Optional<User> loggedIn) throws Unauthorized, NotFound, BookAlreadyReturned {
         var log = dao
             .findById(bookLogId)
             .orElseThrow(
@@ -68,6 +64,10 @@ public class BookLogService{
         var authorized = loggedIn.map(user->user.getRole() == Role.ADMIN || log.getUser().equals(user)).orElse(false);
         if (!authorized){
             throw new Unauthorized();
+        }
+
+        if (log.getDateActuallyReturned() != null){
+            throw new BookAlreadyReturned();
         }
 
         log.setDateActuallyReturned(new Date());
@@ -149,6 +149,10 @@ public class BookLogService{
         dao.deleteById(id);
     }
 
+    public static class Unauthorized extends Exception{}
+    public static class BookNotFound extends Exception{}
+    public static class BookAlreadyHeld extends Exception{}
+    public static class BookAlreadyReturned extends Exception{}
     public static class NotFound extends Exception{}
 
     boolean isBookHeld(int bookId){
