@@ -1,9 +1,9 @@
 // Fetch books from backend
 export interface Book{
-    book_id: number,
-    book_name: string,
+    bookId: number,
+    bookName: string,
     author: string,
-    book_genre: string,
-    book_age_limit: number,
+    bookGenre: string,
+    bookAgeLimit: number,
     image: string
 }
