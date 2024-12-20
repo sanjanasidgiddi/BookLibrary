@@ -25,7 +25,7 @@ function Nav() {
                     {
                         userAuth?.role == "unauthenticated" ?
                         <li className="link-styles"><Link to="/login">Login Page</Link></li> :
-                        <li><button onClick={logOut}>Logout</button></li>
+                        <li><button className="link-styles" onClick={logOut}>Logout</button></li>
                     }
                     {/* Registration page */}
                     <li className="link-styles"><Link to="/register">Register New User Page</Link></li>

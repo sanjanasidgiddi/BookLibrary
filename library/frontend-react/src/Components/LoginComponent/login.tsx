@@ -32,9 +32,19 @@ function Login() {
     axios.post("http://localhost:8080/users/login",
       {username, password}, {withCredentials: true}
     ).then((res) => {
-      console.log(res.data);
+      console.log("Login Successful, here's the data returned: ", res.data);
       userAuth?.setUsername(res.data.username);
       userAuth?.setRole(res.data.role);
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+  
+  /** Tester Function: Sending a get request to the database and checking who the users are. */
+  let getusers = () => {
+    axios.get("http://localhost:8080/users"
+    ).then((res) => {
+      console.log("Here are the current users in the database: ", res.data);
     }).catch((err) => {
       console.log(err);
     })
@@ -67,6 +77,7 @@ function Login() {
           </div>
 
           <button className="button" type="submit" onClick={submitUnamePass}> Login </button>
+          <button className="button" type="submit" onClick={getusers}> Get Current users in Database </button>
           <div className="register">
             <p>Don't have an account?
               <a href="register.html">Register</a>
