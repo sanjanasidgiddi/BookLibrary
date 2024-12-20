@@ -96,9 +96,17 @@ function BookList() {
                         <select>
                             <option value="Fiction">Fiction</option>
                             <option value="non-Fiction">non-Fiction</option>
-                            <option value="Business">Business</option>
-                            <option value="Self-Help">Self-Help</option>
+                            <option value="Dystopian">Business</option>
+                            <option value="Adventure">Self-Help</option>
                             <option value="Historical">Historical</option>
+                            <option value="Fantasy">Historical</option>
+                            <option value="Romance">Historical</option>
+                            <option value="Contemporary">Historical</option>
+                            <option value="Mystery">Historical</option>
+                            <option value="Thriller">Historical</option>
+                            <option value="Horror">Historical</option>
+                            <option value="Historical Fiction">Historical</option>
+                            <option value="Non-Fiction">Historical</option>
                         </select>
                     </label>
                 </div>

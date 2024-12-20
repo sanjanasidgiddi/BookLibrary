@@ -12,7 +12,7 @@ function AllBooks() {
     useEffect(() => {
         // This will execute when the component mounts and on certain other conditions
         // Send an AXIOS request when the page loads
-        axios.get<Book[]>("http://localhost:8080/players")
+        axios.get<Book[]>("http://localhost:8080/books")
             .then((res) => {
                 setAllBooks(res.data)
             })

@@ -23,7 +23,7 @@ public class BookLog {
     @Column(name="date_issued")
     private Date dateIssued;
 
-    @Column(name="date_to_be_returned")
+    @Column(name="date_to_be_returned") 
     private Date dateToBeReturned;
 
     @Column(name="date_actually_returned")
