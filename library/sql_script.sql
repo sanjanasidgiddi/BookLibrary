@@ -67,16 +67,25 @@ INSERT INTO BOOKS (book_name, author, book_genre, book_age_limit, image) VALUES
 ('The Kite Runner', 'Khaled Hosseini', 'Drama', 16, 'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1484565687l/77203.jpg'),
 ('Moby Dick', 'Herman Melville', 'Adventure', 14, 'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1327940656l/153747.jpg');
 
-
 --USER JSON
 [
+    {
+        "username": "johnsmith",
+        "password": "securePassword",
+        "email": "john.smith@gmail.com",
+        "firstName": "John",
+        "lastName": "Smith",
+        "phoneNumber": "1112223333",
+        "dob": "1985-01-15",
+        "role": "ADMIN"
+    },
     {
         "username": "emilyjohnson",
         "password": "securePassword",
         "email": "emily.johnson@gmail.com",
-        "first_name": "Emily",
-        "last_name": "Johnson",
-        "phone_number": "2223334444",
+        "firstName": "Emily",
+        "lastName": "Johnson",
+        "phoneNumber": "2223334444",
         "dob": "1990-03-22",
         "role": "USER"
     },
@@ -84,9 +93,9 @@ INSERT INTO BOOKS (book_name, author, book_genre, book_age_limit, image) VALUES
         "username": "michaelbrown",
         "password": "securePassword",
         "email": "michael.brown@gmail.com",
-        "first_name": "Michael",
-        "last_name": "Brown",
-        "phone_number": "3334445555",
+        "firstName": "Michael",
+        "lastName": "Brown",
+        "phoneNumber": "3334445555",
         "dob": "1987-06-12",
         "role": "USER"
     },
@@ -94,9 +103,9 @@ INSERT INTO BOOKS (book_name, author, book_genre, book_age_limit, image) VALUES
         "username": "sarahdavis",
         "password": "securePassword",
         "email": "sarah.davis@gmail.com",
-        "first_name": "Sarah",
-        "last_name": "Davis",
-        "phone_number": "4445556666",
+        "firstName": "Sarah",
+        "lastName": "Davis",
+        "phoneNumber": "4445556666",
         "dob": "1992-11-05",
         "role": "USER"
     },
@@ -104,9 +113,9 @@ INSERT INTO BOOKS (book_name, author, book_genre, book_age_limit, image) VALUES
         "username": "davidmiller",
         "password": "securePassword",
         "email": "david.miller@gmail.com",
-        "first_name": "David",
-        "last_name": "Miller",
-        "phone_number": "5556667777",
+        "firstName": "David",
+        "lastName": "Miller",
+        "phoneNumber": "5556667777",
         "dob": "1983-08-19",
         "role": "USER"
     },
@@ -114,9 +123,9 @@ INSERT INTO BOOKS (book_name, author, book_genre, book_age_limit, image) VALUES
         "username": "oliviagarcia",
         "password": "securePassword",
         "email": "olivia.garcia@gmail.com",
-        "first_name": "Olivia",
-        "last_name": "Garcia",
-        "phone_number": "6667778888",
+        "firstName": "Olivia",
+        "lastName": "Garcia",
+        "phoneNumber": "6667778888",
         "dob": "1995-02-10",
         "role": "USER"
     },
@@ -124,9 +133,9 @@ INSERT INTO BOOKS (book_name, author, book_genre, book_age_limit, image) VALUES
         "username": "jamesmartinez",
         "password": "securePassword",
         "email": "james.martinez@gmail.com",
-        "first_name": "James",
-        "last_name": "Martinez",
-        "phone_number": "7778889999",
+        "firstName": "James",
+        "lastName": "Martinez",
+        "phoneNumber": "7778889999",
         "dob": "1989-12-25",
         "role": "USER"
     },
@@ -134,9 +143,9 @@ INSERT INTO BOOKS (book_name, author, book_genre, book_age_limit, image) VALUES
         "username": "isabellarodriguez",
         "password": "securePassword",
         "email": "isabella.rodriguez@gmail.com",
-        "first_name": "Isabella",
-        "last_name": "Rodriguez",
-        "phone_number": "8889990000",
+        "firstName": "Isabella",
+        "lastName": "Rodriguez",
+        "phoneNumber": "8889990000",
         "dob": "1993-07-17",
         "role": "USER"
     },
@@ -144,9 +153,9 @@ INSERT INTO BOOKS (book_name, author, book_genre, book_age_limit, image) VALUES
         "username": "ethanwilliams",
         "password": "securePassword",
         "email": "ethan.williams@gmail.com",
-        "first_name": "Ethan",
-        "last_name": "Williams",
-        "phone_number": "9990001111",
+        "firstName": "Ethan",
+        "lastName": "Williams",
+        "phoneNumber": "9990001111",
         "dob": "1991-04-30",
         "role": "USER"
     },
@@ -154,121 +163,122 @@ INSERT INTO BOOKS (book_name, author, book_genre, book_age_limit, image) VALUES
         "username": "miasmith",
         "password": "securePassword",
         "email": "mia.smith@gmail.com",
-        "first_name": "Mia",
-        "last_name": "Smith",
-        "phone_number": "0001112222",
+        "firstName": "Mia",
+        "lastName": "Smith",
+        "phoneNumber": "0001112222",
         "dob": "1994-09-15",
         "role": "USER"
     }
 ]
 
 
+
 --BOOKS JSON
 
 [
     {
-        "book_name": "Harry Potter and the Philosopher's Stone",
+        "bookName": "Harry Potter and the Philosopher's Stone",
         "author": "J.K. Rowling",
-        "book_genre": "Fantasy",
-        "book_age_limit": 8,
+        "bookGenre": "Fantasy",
+        "bookAgeLimit": 8,
         "image": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474169725i/15881.jpg"
     },
     {
-        "book_name": "To Kill a Mockingbird",
+        "bookName": "To Kill a Mockingbird",
         "author": "Harper Lee",
-        "book_genre": "Fiction",
-        "book_age_limit": 12,
+        "bookGenre": "Fiction",
+        "bookAgeLimit": 12,
         "image": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1553383690l/2657._SY475_.jpg"
     },
     {
-        "book_name": "The Great Gatsby",
+        "bookName": "The Great Gatsby",
         "author": "F. Scott Fitzgerald",
-        "book_genre": "Classic",
-        "book_age_limit": 14,
+        "bookGenre": "Classic",
+        "bookAgeLimit": 14,
         "image": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1490528560l/4671.jpg"
     },
     {
-        "book_name": "1984",
+        "bookName": "1984",
         "author": "George Orwell",
-        "book_genre": "Dystopian",
-        "book_age_limit": 16,
+        "bookGenre": "Dystopian",
+        "bookAgeLimit": 16,
         "image": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1348990566l/5470.jpg"
     },
     {
-        "book_name": "The Catcher in the Rye",
+        "bookName": "The Catcher in the Rye",
         "author": "J.D. Salinger",
-        "book_genre": "Classic",
-        "book_age_limit": 14,
+        "bookGenre": "Classic",
+        "bookAgeLimit": 14,
         "image": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1398034300l/5107.jpg"
     },
     {
-        "book_name": "Pride and Prejudice",
+        "bookName": "Pride and Prejudice",
         "author": "Jane Austen",
-        "book_genre": "Romance",
-        "book_age_limit": 12,
+        "bookGenre": "Romance",
+        "bookAgeLimit": 12,
         "image": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1320399351l/1885.jpg"
     },
     {
-        "book_name": "The Hobbit",
+        "bookName": "The Hobbit",
         "author": "J.R.R. Tolkien",
-        "book_genre": "Fantasy",
-        "book_age_limit": 10,
+        "bookGenre": "Fantasy",
+        "bookAgeLimit": 10,
         "image": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1546071216l/5907.jpg"
     },
     {
-        "book_name": "Fahrenheit 451",
+        "bookName": "Fahrenheit 451",
         "author": "Ray Bradbury",
-        "book_genre": "Science Fiction",
-        "book_age_limit": 14,
+        "bookGenre": "Science Fiction",
+        "bookAgeLimit": 14,
         "image": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1383718290l/13079982.jpg"
     },
     {
-        "book_name": "Jane Eyre",
+        "bookName": "Jane Eyre",
         "author": "Charlotte Bronte",
-        "book_genre": "Classic",
-        "book_age_limit": 14,
+        "bookGenre": "Classic",
+        "bookAgeLimit": 14,
         "image": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1327867269l/10210.jpg"
     },
     {
-        "book_name": "Animal Farm",
+        "bookName": "Animal Farm",
         "author": "George Orwell",
-        "book_genre": "Dystopian",
-        "book_age_limit": 12,
+        "bookGenre": "Dystopian",
+        "bookAgeLimit": 12,
         "image": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1424037542l/7613.jpg"
     },
     {
-        "book_name": "The Lord of the Rings",
+        "bookName": "The Lord of the Rings",
         "author": "J.R.R. Tolkien",
-        "book_genre": "Fantasy",
-        "book_age_limit": 14,
+        "bookGenre": "Fantasy",
+        "bookAgeLimit": 14,
         "image": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1411114164l/33.jpg"
     },
     {
-        "book_name": "The Alchemist",
+        "bookName": "The Alchemist",
         "author": "Paulo Coelho",
-        "book_genre": "Philosophy",
-        "book_age_limit": 10,
+        "bookGenre": "Philosophy",
+        "bookAgeLimit": 10,
         "image": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1483412266l/865.jpg"
     },
     {
-        "book_name": "The Chronicles of Narnia",
+        "bookName": "The Chronicles of Narnia",
         "author": "C.S. Lewis",
-        "book_genre": "Fantasy",
-        "book_age_limit": 8,
+        "bookGenre": "Fantasy",
+        "bookAgeLimit": 8,
         "image": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1546092655l/11127.jpg"
     },
     {
-        "book_name": "The Kite Runner",
+        "bookName": "The Kite Runner",
         "author": "Khaled Hosseini",
-        "book_genre": "Drama",
-        "book_age_limit": 16,
+        "bookGenre": "Drama",
+        "bookAgeLimit": 16,
         "image": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1484565687l/77203.jpg"
     },
     {
-        "book_name": "Moby Dick",
+        "bookName": "Moby Dick",
         "author": "Herman Melville",
-        "book_genre": "Adventure",
-        "book_age_limit": 14,
+        "bookGenre": "Adventure",
+        "bookAgeLimit": 14,
         "image": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1327940656l/153747.jpg"
     }
 ]
