@@ -6,6 +6,6 @@ export interface BookLog {
     user: User;
     book: Book; 
     dateIssued: Date;
-    date_to_be_returned: Date;
-    date_actually_returned: Date;
+    dateToBeReturned: Date;
+    dateActuallyReturned: Date;
 }
