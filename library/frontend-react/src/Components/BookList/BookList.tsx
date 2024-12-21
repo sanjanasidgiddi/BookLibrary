@@ -3,6 +3,7 @@ import { Book } from "../interface/Book"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import NewBook from "./NewBook";
+import { Button } from "@mui/material";
 
 function BookList() {
     const [allBooks, setAllBooks] = useState<Book[]>([])
@@ -59,6 +60,7 @@ function BookList() {
             </div>
             <button onClick={() => setShowAddBookPopup(true)}>Add New Book</button>
             <h2>All Books</h2>
+            <Button variant="contained" color="secondary" onClick={getBooks}>Get All Books</Button>
             <table>
                 <thead>
                     <tr>

@@ -46,13 +46,13 @@ function NavMUI() {
                         {/* Conditionally rendering login link, or logout button based on whether a user is logged in */}
                         {
                             userAuth?.role == "unauthenticated" ?
-                                <Button color="inherit" onClick={() => navToPage('/login')}>Login</Button> :
-                                <Button color="inherit" onClick={logOut}>Logout</Button>
+                                <Button variant="contained" color="secondary" onClick={() => navToPage('/login')}>Login</Button> :
+                                <Button variant="contained" color="secondary" onClick={logOut}>Logout</Button>
                         }
-                        <Button color="inherit" onClick={() => navToPage('/register')}>Register</Button>
-                        <Button color="inherit" onClick={() => navToPage('/allbooks')}>All Books</Button>
-                        <Button color="inherit" onClick={() => navToPage('/booklist')}>Book List</Button>
-                        <Button color="inherit" onClick={() => navToPage('/mybooks')}>My Books</Button>
+                        <Button variant="contained" color="secondary" onClick={() => navToPage('/register')}>Register</Button>
+                        <Button variant="contained" color="secondary" onClick={() => navToPage('/allbooks')}>All Books</Button>
+                        <Button variant="contained" color="secondary" onClick={() => navToPage('/booklist')}>Book List</Button>
+                        <Button variant="contained" color="secondary" onClick={() => navToPage('/mybooks')}>My Books</Button>
                     </Box>
                 </Toolbar>
             </AppBar>
