@@ -48,7 +48,16 @@ function AllBooks() {
             <main className="book_container">
                 <div className="wrapper">
                     <ul id="book_list_id" className="book_list">
-
+                        {allBooks.map((book)=>{
+                            return (
+                                <li>
+                                    <img src={book.image} alt="book image" className="book_image" height="256" width="81"/>
+                                    <span className="book_genre">{book.bookGenre}</span>
+                                    <h3 className="book_title"> {book.bookName} </h3>
+                                    <button className="book_button" data-id={book.bookId}>Issue</button>
+                                </li>
+                            )
+                        })}
                     </ul>
                 </div>
             </main>
