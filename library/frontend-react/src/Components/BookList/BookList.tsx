@@ -2,9 +2,11 @@ import "./BookList.css"
 import { Book } from "../interface/Book"
 import axios from "axios"
 import { useEffect, useState } from "react"
+import NewBook from "./NewBook";
 
 function BookList() {
     const [allBooks, setAllBooks] = useState<Book[]>([])
+    const [showAddBookPopup, setShowAddBookPopup] = useState(false);
 
     useEffect(() => {
         // This will execute when the component mounts and on certain other conditions
@@ -13,6 +15,9 @@ function BookList() {
             .then((res) => {
                 setAllBooks(res.data)
             })
+            .catch((error) => {
+                console.error("Error fetching books:", error);
+            });
     }, [])
 
     /** Function to trigger appearance theme change */
@@ -26,6 +31,11 @@ function BookList() {
         var theme_element = document.body;
         theme_element.classList.toggle("dark_mode");
     }
+
+    /**Add new book */
+    const addNewBookToList = (newBook: Book) => {
+        setAllBooks((prevBooks) => [...prevBooks, newBook]);
+      };
 
     /** Get all books from database */
 
@@ -47,6 +57,7 @@ function BookList() {
                     <i className='bx bx-moon' id="darklight" onClick={toggleDarkLight}>Light</i>
                 </label>
             </div>
+            <button onClick={() => setShowAddBookPopup(true)}>Add New Book</button>
             <h2>All Books</h2>
             <table>
                 <thead>
@@ -74,7 +85,12 @@ function BookList() {
                 </tbody>
             </table>
 
-            <button className="button" type="submit" onClick={getBooks}> Get Current Books in the Database </button>
+            {showAddBookPopup && (
+            <NewBook
+            onClose={() => setShowAddBookPopup(false)}
+            onBookAdded={addNewBookToList}
+            />
+        )}
         </div>
     )
 }
