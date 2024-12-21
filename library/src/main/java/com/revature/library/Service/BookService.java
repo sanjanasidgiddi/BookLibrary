@@ -4,7 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import com.revature.library.DAO.BookLogDAO;
+import com.revature.library.Exceptions.BookExceptions;
+import com.revature.library.Exceptions.Unauthorized;
+import com.revature.library.Helper.Helper;
 import com.revature.library.Models.Role;
+import org.hibernate.TransientObjectException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,32 +27,28 @@ public class BookService {
         this.bookLogDAO = bookLogDAO;
     }
 
-    public Book createNewBook(Book newbook, Optional<User> loggedIn) throws Unauthorized, TitleAndAuthorAlreadyExists {
-        if (!loggedIn.map(user->user.getRole() == Role.ADMIN).orElse(false)){
-            throw new Unauthorized();
-        }
+    public Book createNewBook(Book newbook, Optional<User> loggedIn) throws Unauthorized, BookExceptions.TitleAndAuthorAlreadyExists {
+        Helper.requireIsAdmin(loggedIn);
 
-        var booksWithSameTitleAndAuthor = bookDAO.findByBookNameAndAuthor(newbook.getBookName(), newbook.getAuthor());
-
-        if (hasAuthor(newbook) && !booksWithSameTitleAndAuthor.isEmpty()){
-            throw new TitleAndAuthorAlreadyExists();
-        }
+        checkValidity(newbook);
 
         return bookDAO.save(newbook);
     }
 
-    public Book getBookById(int BookId) throws NotFound {
-        return bookDAO.findById(BookId).orElseThrow(()->new NotFound());
+    public Book getBookById(int BookId) throws BookExceptions.NotFound {
+        return bookDAO
+            .findById(BookId)
+            .orElseThrow(
+                ()->new BookExceptions.NotFound()
+            );
     }
 
     public List<Book> getAllBooks(){
         return bookDAO.findAll();
     }
 
-    public Book editBook(int bookId, Book updatedBook, Optional<User> loggedIn) throws Unauthorized, NotFound {
-        if (loggedIn.map(user -> user.getRole() == Role.ADMIN).orElse(false)){
-            throw new Unauthorized();
-        }
+    public Book editBook(int bookId, Book updatedBook, Optional<User> loggedIn) throws Unauthorized, BookExceptions.NotFound {
+        Helper.requireIsAdmin(loggedIn);
 
         return bookDAO.findById(bookId)
             .map(existingBook-> {
@@ -56,37 +56,39 @@ public class BookService {
                 existingBook.setBookGenre(updatedBook.getBookGenre());
                 existingBook.setAuthor(updatedBook.getAuthor());
                 existingBook.setBookAgeLimit(updatedBook.getBookAgeLimit());
+                existingBook.setImage(updatedBook.getImage());
                 return bookDAO.save(existingBook);
             })
             .orElseThrow(
-                ()->new NotFound()
+                ()->new BookExceptions.NotFound()
             );
     }
 
-    public void deleteBook(int bookId, Optional<User> loggedIn) throws Unauthorized, NotFound, BookIsHeld {
-        if (!loggedIn.map(user->user.getRole() == Role.ADMIN).orElse(false)){
-            throw new Unauthorized();
-        }
+    public void deleteBook(int bookId, Optional<User> loggedIn) throws Unauthorized, BookExceptions.NotFound, BookExceptions.IsHeld {
+        Helper.requireIsAdmin(loggedIn);
 
         if (!bookDAO.existsById(bookId)){
-            throw new NotFound();
+            throw new BookExceptions.NotFound();
         }
         if (isBookHeld(bookId)){
-            throw new BookIsHeld();
+            throw new BookExceptions.IsHeld();
         }
+
 
         bookDAO.deleteById(bookId);
     }
-
-    public static class Unauthorized extends Exception{}
-    public static class BookIsHeld extends Exception{}
-    public static class NotFound extends Exception{}
-    public static class TitleAndAuthorAlreadyExists extends Exception{}
 
     boolean isBookHeld(int bookId){
         return bookLogDAO.findByBook_BookId(bookId)
             .stream()
             .anyMatch(it->it.getDateActuallyReturned() == null);
+    }
+
+    void checkValidity(Book book) throws BookExceptions.TitleAndAuthorAlreadyExists {
+//        var booksWithSameTitleAndAuthor = bookDAO.findByBookNameAndAuthor(newbook.getBookName(), newbook.getAuthor());
+//        if (hasAuthor(book) && !booksWithSameTitleAndAuthor.isEmpty()){
+//            throw new BookExceptions.TitleAndAuthorAlreadyExists();
+//        }
     }
 
     boolean hasAuthor(Book book){

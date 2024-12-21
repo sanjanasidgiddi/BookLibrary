@@ -1,5 +1,9 @@
 package com.revature.library.Controller;
 
+import com.revature.library.Exceptions.BookExceptions;
+import com.revature.library.Exceptions.BookLogExceptions;
+import com.revature.library.Exceptions.Unauthorized;
+import com.revature.library.Exceptions.UserExceptions;
 import com.revature.library.Models.Book;
 import com.revature.library.Models.BookLog;
 import com.revature.library.Models.User;
@@ -18,7 +22,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
-class Controller {
+public class Controller {
 
     private final UserService userService;
 
@@ -53,10 +57,6 @@ class Controller {
     @PostMapping("/users/login")
     public ResponseEntity<User> login(@RequestBody Map<String, String> body, HttpSession session) {
         try{
-            if (getUser(session).isPresent()){
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            }
-
             var username = (String)body.get("username");
             var password = (String)body.get("password");
 
@@ -66,7 +66,7 @@ class Controller {
 
             return ResponseEntity.ok(user);
         }
-        catch (UserService.Unauthorized e) {
+        catch (Unauthorized  e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         catch (NullPointerException|ClassCastException e){
@@ -78,7 +78,8 @@ class Controller {
     public ResponseEntity<User> register(@RequestBody User user) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(userService.register(user));
-        } catch (UserService.NotAbsent | UserService.UsernameInvalid | UserService.EmailInvalid | UserService.PasswordInvalid e) {
+        } catch (UserExceptions.NotAbsent | UserExceptions.UsernameInvalid | UserExceptions.EmailInvalid |
+                 UserExceptions.PasswordInvalid e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
@@ -100,7 +101,7 @@ class Controller {
             return ResponseEntity.ok(
                 userService.getAll(getUser(session))
             );
-        } catch (UserService.Unauthorized e) {
+        } catch (Unauthorized  e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
@@ -110,10 +111,10 @@ class Controller {
         try {
             return ResponseEntity.ok(userService.getByUsername(username, getUser(session)));
         }
-        catch (UserService.Unauthorized e) {
+        catch (Unauthorized  e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        catch (UserService.NotFound e) {
+        catch (UserExceptions.NotFound e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
@@ -123,11 +124,11 @@ class Controller {
         try {
             return ResponseEntity.ok(userService.editUser(username, user, getUser(session)));
         }
-        catch (UserService.Unauthorized e) {
+        catch (Unauthorized  e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        } catch (UserService.NotFound e) {
+        } catch (UserExceptions.NotFound e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } catch (UserService.UsernameInvalid | UserService.EmailInvalid | UserService.PasswordInvalid e) {
+        } catch (UserExceptions.UsernameInvalid | UserExceptions.EmailInvalid | UserExceptions.PasswordInvalid e) {
             return ResponseEntity.badRequest().build();
         }
     }
@@ -139,14 +140,14 @@ class Controller {
 
             return ResponseEntity.ok().build();
         }
-        catch (UserService.Unauthorized e) {
+        catch (Unauthorized  e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        catch (UserService.NotFound e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-        catch (UserService.IsHoldingBook e) {
+        catch (UserExceptions.NotFound e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        catch (UserExceptions.IsHoldingBook e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
     //endregion
@@ -163,7 +164,7 @@ class Controller {
     public ResponseEntity<Book> getBookById(@PathVariable int bookId) {
         try {
             return ResponseEntity.ok(bookService.getBookById(bookId));
-        } catch (BookService.NotFound e) {
+        } catch (BookExceptions.NotFound e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
@@ -180,10 +181,10 @@ class Controller {
 
             return ResponseEntity.status(HttpStatus.CREATED).body(newBook);
         } 
-        catch (BookService.Unauthorized e) {
+        catch (Unauthorized  e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        catch (BookService.TitleAndAuthorAlreadyExists e) {
+        catch (BookExceptions.TitleAndAuthorAlreadyExists e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         } 
     }
@@ -193,10 +194,10 @@ class Controller {
         try {
             return ResponseEntity.ok(bookService.editBook(bookId, book, getUser(session)));
         }
-        catch (BookService.Unauthorized e) {
+        catch (Unauthorized  e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        catch (BookService.NotFound e) {
+        catch (BookExceptions.NotFound e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
@@ -208,13 +209,13 @@ class Controller {
 
             return ResponseEntity.ok().build();
         }
-        catch (BookService.Unauthorized e) {
+        catch (Unauthorized  e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        catch (BookService.NotFound e) {
+        catch (BookExceptions.NotFound e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        catch (BookService.BookIsHeld e) {
+        catch (BookExceptions.IsHeld e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
@@ -232,13 +233,13 @@ class Controller {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(bookLogService.issueBook(bookId, getUser(session)));
         }
-        catch (BookLogService.Unauthorized e) {
+        catch (Unauthorized e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        catch (BookLogService.BookNotFound e) {
+        catch (BookExceptions.NotFound e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        catch (BookLogService.BookAlreadyHeld e) {
+        catch (BookExceptions.IsHeld e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
@@ -250,13 +251,13 @@ class Controller {
 
             return ResponseEntity.ok().build();
         }
-        catch (BookLogService.Unauthorized e) {
+        catch (Unauthorized e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        catch (BookLogService.NotFound e) {
+        catch (BookLogExceptions.NotFound e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        catch (BookLogService.BookAlreadyReturned e) {
+        catch (BookExceptions.AlreadyReturned e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
@@ -266,7 +267,7 @@ class Controller {
     public ResponseEntity<List<BookLog>> getAllLogs(HttpSession session) {
         try {
             return ResponseEntity.ok(bookLogService.getAll(getUser(session)));
-        } catch (BookLogService.Unauthorized e) {
+        } catch (Unauthorized e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
@@ -276,10 +277,10 @@ class Controller {
         try {
             return ResponseEntity.ok(bookLogService.edit(logId, bookLog, getUser(session)));
         }
-        catch (BookLogService.Unauthorized e) {
+        catch (Unauthorized e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        catch (BookLogService.NotFound e) {
+        catch (BookLogExceptions.NotFound e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
@@ -291,10 +292,10 @@ class Controller {
 
             return ResponseEntity.ok().build();
         }
-        catch (BookLogService.Unauthorized e) {
+        catch (Unauthorized e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        catch (BookLogService.NotFound e) {
+        catch (BookLogExceptions.NotFound e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }

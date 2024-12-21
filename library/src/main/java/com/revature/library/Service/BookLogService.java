@@ -2,6 +2,10 @@ package com.revature.library.Service;
 
 import com.revature.library.DAO.BookDAO;
 import com.revature.library.DAO.BookLogDAO;
+import com.revature.library.Exceptions.BookExceptions;
+import com.revature.library.Exceptions.BookLogExceptions;
+import com.revature.library.Exceptions.Unauthorized;
+import com.revature.library.Helper.Helper;
 import com.revature.library.Models.BookLog;
 import com.revature.library.Models.Role;
 import com.revature.library.Models.User;
@@ -25,20 +29,17 @@ public class BookLogService{
         this.bookDAO=bookDAO;
     }
 
-    public BookLog issueBook(int bookId, Optional<User> loggedIn) throws BookAlreadyHeld, BookNotFound, Unauthorized {
-        if (isBookHeld(bookId)){
-            throw new BookAlreadyHeld();
-        }
+    public BookLog issueBook(int bookId, Optional<User> loggedIn) throws Unauthorized, BookExceptions.IsHeld, BookExceptions.NotFound {
+        var user = loggedIn.orElseThrow(()->new Unauthorized());
 
-        var user = loggedIn
-            .orElseThrow(
-                ()->new Unauthorized()
-            );
+        if (isBookHeld(bookId)){
+            throw new BookExceptions.IsHeld();
+        }
 
         var book = bookDAO
             .findById(bookId)
             .orElseThrow(
-                ()-> new BookNotFound()
+                ()-> new BookExceptions.NotFound()
             );
 
         var returnDate = Calendar.getInstance();
@@ -54,20 +55,17 @@ public class BookLogService{
         return dao.save(newLog);
     }
 
-    public BookLog returnBook(int bookLogId, Optional<User> loggedIn) throws Unauthorized, NotFound, BookAlreadyReturned {
+    public BookLog returnBook(int bookLogId, Optional<User> loggedIn) throws Unauthorized, BookLogExceptions.NotFound, BookExceptions.AlreadyReturned {
         var log = dao
             .findById(bookLogId)
             .orElseThrow(
-                ()->new NotFound()
+                ()->new BookLogExceptions.NotFound()
             );
 
-        var authorized = loggedIn.map(user->user.getRole() == Role.ADMIN || log.getUser().equals(user)).orElse(false);
-        if (!authorized){
-            throw new Unauthorized();
-        }
+        Helper.requireIsAdminOrOfUser(log.getUser().getUsername(), loggedIn);
 
         if (log.getDateActuallyReturned() != null){
-            throw new BookAlreadyReturned();
+            throw new BookExceptions.AlreadyReturned();
         }
 
         log.setDateActuallyReturned(new Date());
@@ -77,26 +75,20 @@ public class BookLogService{
         return log;
     }
 
-    public BookLog get(int id, Optional<User> loggedIn) throws Unauthorized, NotFound {
+    public BookLog get(int id, Optional<User> loggedIn) throws Unauthorized, BookLogExceptions.NotFound {
         var log = dao
             .findById(id)
             .orElseThrow(
-                ()->new NotFound()
+                ()->new BookLogExceptions.NotFound()
             );
 
-        var authorized = loggedIn.map(user->user.getRole() == Role.ADMIN || user.getUsername().equals(log.getUser().getUsername())).orElse(false);
-        if (!authorized){
-            throw new Unauthorized();
-        }
+        Helper.requireIsAdminOrOfUser(log.getUser().getUsername(), loggedIn);
 
         return log;
     }
 
     public List<BookLog> getAll(Optional<User> loggedIn) throws Unauthorized {
-        var user = loggedIn
-            .orElseThrow(
-                ()->new Unauthorized()
-            );
+        var user = loggedIn.orElseThrow(()->new Unauthorized());
 
         if (user.getRole() == Role.ADMIN){
             return dao.findAll();
@@ -104,21 +96,13 @@ public class BookLogService{
         return dao.findByUser_Username(user.getUsername());
     }
 
-    public BookLog edit(int id, BookLog newBookLog, Optional<User> loggedIn) throws Unauthorized, NotFound {
-        var isAuthorized = loggedIn
-            .map(
-                user->user.getRole() == Role.ADMIN
-            )
-            .orElse(false);
-
-        if (!isAuthorized){
-            throw new Unauthorized();
-        }
+    public BookLog edit(int id, BookLog newBookLog, Optional<User> loggedIn) throws Unauthorized, BookLogExceptions.NotFound {
+        Helper.requireIsAdmin(loggedIn);
 
         var logInTable = dao
             .findById(id)
             .orElseThrow(
-                ()->new NotFound()
+                ()->new BookLogExceptions.NotFound()
             );
 
         logInTable.setBook(newBookLog.getBook());
@@ -132,28 +116,15 @@ public class BookLogService{
         return logInTable;
     }
 
-    public void delete(int id, Optional<User> loggedIn) throws Unauthorized, NotFound {
-        var isAuthorized = loggedIn.map(
-            user->user.getRole() == Role.ADMIN
-        )
-        .orElse(false);
-
-        if (!isAuthorized){
-            throw new Unauthorized();
-        }
+    public void delete(int id, Optional<User> loggedIn) throws Unauthorized, BookLogExceptions.NotFound {
+        Helper.requireIsAdmin(loggedIn);
 
         if (!dao.existsById(id)){
-            throw new NotFound();
+            throw new BookLogExceptions.NotFound();
         }
 
         dao.deleteById(id);
     }
-
-    public static class Unauthorized extends Exception{}
-    public static class BookNotFound extends Exception{}
-    public static class BookAlreadyHeld extends Exception{}
-    public static class BookAlreadyReturned extends Exception{}
-    public static class NotFound extends Exception{}
 
     boolean isBookHeld(int bookId){
         return dao.findByBook_BookId(bookId)

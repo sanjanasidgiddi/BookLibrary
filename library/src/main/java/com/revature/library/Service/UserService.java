@@ -2,7 +2,9 @@ package com.revature.library.Service;
 
 import com.revature.library.DAO.BookLogDAO;
 import com.revature.library.DAO.UserDAO;
-import com.revature.library.Models.Role;
+import com.revature.library.Exceptions.Unauthorized;
+import com.revature.library.Exceptions.UserExceptions;
+import com.revature.library.Helper.Helper;
 import com.revature.library.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,10 +23,10 @@ public class UserService{
         this.bookLogDao = bookLogDAO;
     }
 
-    public User register(User user) throws NotAbsent, UsernameInvalid, EmailInvalid, PasswordInvalid {
+    public User register(User user) throws UserExceptions.NotAbsent, UserExceptions.UsernameInvalid, UserExceptions.EmailInvalid, UserExceptions.PasswordInvalid {
         //TODO check for admin username
         if (dao.existsById(user.getUsername())){
-            throw new NotAbsent();
+            throw new UserExceptions.NotAbsent();
         }
 
         checkValidity(user);
@@ -37,33 +39,37 @@ public class UserService{
             .filter(
                 user->user.getPassword().equals(password)
             )
-            .orElseThrow(()->new Unauthorized());
+            .orElseThrow(
+                ()->new Unauthorized()
+            );
     }
 
-    public User getByUsername(String username, Optional<User> loggedIn) throws Unauthorized, NotFound {
-        if (!loggedIn.map(user->user.getRole() == Role.ADMIN || user.getUsername().equals(username)).orElse(false)){
-            throw new Unauthorized();
-        }
+    public User getByUsername(String username, Optional<User> loggedIn) throws Unauthorized, UserExceptions.NotFound {
+        Helper.requireIsAdminOrOfUser(username, loggedIn);
 
-        return dao.findById(username).orElseThrow(()->new NotFound());
+        return dao
+            .findById(username)
+            .orElseThrow(
+                ()->new UserExceptions.NotFound()
+            );
     }
 
     public List<User> getAll(Optional<User> loggedIn) throws Unauthorized {
-        if (!loggedIn.map(user->user.getRole() == Role.ADMIN).orElse(false)){
-            throw new Unauthorized();
-        }
+        Helper.requireIsAdmin(loggedIn);
 
         return dao.findAll();
     }
 
-    public User editUser(String username, User newUserInfo, Optional<User> loggedIn) throws NotFound, UsernameInvalid, EmailInvalid, PasswordInvalid, Unauthorized {
-        if (loggedIn.map(user->user.getRole()==Role.ADMIN || user.getUsername().equals(username)).orElse(false)){
-            throw new Unauthorized();
-        }
+    public User editUser(String username, User newUserInfo, Optional<User> loggedIn) throws UserExceptions.NotFound, UserExceptions.UsernameInvalid, UserExceptions.EmailInvalid, UserExceptions.PasswordInvalid, Unauthorized {
+        Helper.requireIsAdminOrOfUser(username, loggedIn);
 
         checkValidity(newUserInfo);
 
-        var userInTable = dao.findById(username).orElseThrow(()->new NotFound());
+        var userInTable = dao
+            .findById(username)
+            .orElseThrow(
+                ()->new UserExceptions.NotFound()
+            );
 
         userInTable.setPassword(newUserInfo.getPassword());
         userInTable.setFirstName(newUserInfo.getFirstName());
@@ -74,17 +80,15 @@ public class UserService{
         return dao.save(newUserInfo);
     }
 
-    public void deleteUser(String username, Optional<User> loggedIn) throws NotFound, IsHoldingBook, Unauthorized {
-        if (!loggedIn.map(user->user.getRole() == Role.ADMIN || user.getUsername().equals(username)).orElse(false)){
-            throw new Unauthorized();
-        }
+    public void deleteUser(String username, Optional<User> loggedIn) throws Unauthorized, UserExceptions.NotFound, UserExceptions.IsHoldingBook {
+        Helper.requireIsAdminOrOfUser(username, loggedIn);
 
         if (!dao.existsById(username)){
-            throw new NotFound();
+            throw new UserExceptions.NotFound();
         }
 
         if (isUserHoldingBook(username)){
-            throw new IsHoldingBook();
+            throw new UserExceptions.IsHoldingBook();
         }
 
         dao.deleteById(username);
@@ -94,7 +98,7 @@ public class UserService{
         return dao.findById(username);
     }
 
-    void checkValidity(User user) throws UsernameInvalid, PasswordInvalid, EmailInvalid {
+    void checkValidity(User user) throws UserExceptions.UsernameInvalid, UserExceptions.PasswordInvalid, UserExceptions.EmailInvalid {
 //        if (!user.getUsername().matches("[a-zA-Z0-9_]{3,16}")){
 //            throw new UsernameInvalid();
 //        }
@@ -105,18 +109,6 @@ public class UserService{
 //            throw new EmailInvalid();
 //        }
     }
-
-
-    public static class Unauthorized extends Exception{}
-
-    public static class NotFound extends Exception{};
-    public static class NotAbsent extends Exception{};
-
-    public static class UsernameInvalid extends Exception{};
-    public static class PasswordInvalid extends Exception{};
-    public static class EmailInvalid extends Exception{};
-
-    public static class IsHoldingBook extends Exception{}
 
     boolean isUserHoldingBook(String username){
         return bookLogDao.findByUser_Username(username)
