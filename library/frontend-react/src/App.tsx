@@ -8,6 +8,8 @@ import Register from './Components/RegisterComponent/Register'
 import axios from 'axios'
 import BookList from './Components/BookList/BookList'
 import MyBooks from './Components/MyBooks/MyBooks'
+import { User } from './Components/interface/User'
+
 
 /** Storing information about the logged in user */
 export interface UserInfoType {

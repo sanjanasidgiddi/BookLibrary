@@ -1,23 +1,5 @@
 
 function MyBooks() {
-
-
-    let books = [
-        {
-            BookId: 1,
-            BookName: "Harry Potter and the Philosopher’s Stone",
-            BookGenre: "fiction",
-            // image: "/assets/harry_potter1.jpg",
-            dueDate: "12/30/24"
-        },
-        {
-            BookId:2,
-            BookName: "Harry Potter and the Chamber of Secrets",
-            BookGenre: "fiction",
-            // image: "harry_potter2.jpg",
-            dueDate: "12/30/24"
-        }
-    ]
     
     // let bookList=document.getElementById('book_list_id')
     
