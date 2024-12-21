@@ -1,11 +1,11 @@
 import { User } from "./User";
+import { Book } from "./Book";
 
-// Fetch books from backend
-export interface Book{
-    bookLogId: number,
-    user: User,
-    book: Book,
-    dateIssued: Date,
-    date_to_be_returned: Date,
-    date_actually_returned: Date
+export interface BookLog {
+    bookLogId: number;
+    user: User;
+    book: Book; 
+    dateIssued: Date;
+    date_to_be_returned: Date;
+    date_actually_returned: Date;
 }
