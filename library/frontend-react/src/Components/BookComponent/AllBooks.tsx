@@ -16,6 +16,9 @@ function AllBooks() {
             .then((res) => {
                 setAllBooks(res.data)
             })
+            .catch((error) => {
+                console.error("Error fetching books:", error);
+            });
     }, [])
 
     /** Function to trigger appearance theme change */
@@ -28,6 +31,19 @@ function AllBooks() {
         /* Switch background and text colors using css class under wrapper */
         var theme_element = document.body;
         theme_element.classList.toggle("dark_mode");
+    }
+
+    // Handle issuing a book
+    const issueBook = (bookId: number) => {
+        axios.post(`http://localhost:8080/bookLogs/${bookId}`)
+            .then(response => {
+                console.log("Book issued:", response.data);
+                // Optionally, update the UI to reflect the issued book
+            })
+            .catch(error => {
+                console.error("Error issuing book:", error);
+                alert("Failed to issue the book.");
+            });
     }
 
 
@@ -54,7 +70,12 @@ function AllBooks() {
                                     <img src={book.image} alt="book image" className="book_image" height="256" width="81"/>
                                     <span className="book_genre">{book.bookGenre}</span>
                                     <h3 className="book_title"> {book.bookName} </h3>
-                                    <button className="book_button" data-id={book.bookId}>Issue</button>
+                                    <button
+                                        className="book_button"
+                                        data-id={book.bookId}
+                                        onClick={() => issueBook(book.bookId)}>
+                                        Issue
+                                    </button>
                                 </li>
                             )
                         })}

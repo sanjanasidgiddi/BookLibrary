@@ -228,6 +228,8 @@ public class Controller {
      * get all logs
      */
     //region booklog
+
+    
     @PostMapping("/bookLogs/{bookId}")
     ResponseEntity<BookLog> issueBook(@PathVariable int bookId, HttpSession session) {
         try {
