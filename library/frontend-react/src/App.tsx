@@ -9,6 +9,7 @@ import axios from 'axios'
 import BookList from './Components/BookList/BookList'
 import MyBooks from './Components/MyBooks/MyBooks'
 import { User } from './Components/interface/User'
+import NavMUI from './Components/NavigationLinks/NavMUI'
 
 
 /** Storing information about the logged in user */
@@ -53,7 +54,8 @@ function App() {
         }
       }>
         <BrowserRouter>
-          <Nav></Nav>
+          {/* <Nav></Nav> */}
+          <NavMUI></NavMUI>
           <Routes>
             <Route path='/login' element={<Login></Login>}></Route>
             <Route path='/register' element={<Register></Register>}></Route>

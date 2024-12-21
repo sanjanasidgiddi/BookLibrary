@@ -121,12 +121,12 @@ input:focus::placeholder {
     top:0;
     left:0;
     font-size: large;
+    font-family: 'Times New Roman', Times, serif;
     box-shadow: 0 0 10px rgba(248, 248, 248, 0.973);
     background-color: rgb(3, 37, 9);
-    padding: 10px;
 }
 
-.dark_mode .wrapper{
+.dark_mode .wrapper {
     width: 420px;
     background: rgb(5, 30, 10);
     color: rgb(23, 44, 26);
