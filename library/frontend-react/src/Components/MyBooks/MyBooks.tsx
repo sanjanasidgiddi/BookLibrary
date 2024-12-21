@@ -8,13 +8,12 @@ import backgroundImg from './background_img.jpg';
 
 function MyBooks() {
     
-  const [myBooks, setMyBooks] = useState<Book[]>([])  
-  const [bookLogs, setBookLogs] = useState<BookLog[]>([]);
+  const [myBooks, setMyBooks] = useState<BookLog[]>([])  
     
   useEffect(() => {
       // This will execute when the component mounts and on certain other conditions
       // Send an AXIOS request when the page loads
-      axios.get<Book[]>("http://localhost:8080/bookLogs",{withCredentials:true})
+      axios.get<BookLog[]>("http://localhost:8080/bookLogs")
           .then((res) => {
             setMyBooks(res.data)
           })
@@ -48,16 +47,16 @@ function MyBooks() {
   }
 
   return (
-    <div>
+      <div>
       <h1>My Books</h1>
-      {bookLogs.length === 0 ? (
+      {myBooks.length === 0 ? (
         <p>No books issued.</p>
       ) : (
         <ul>
-          {bookLogs.map((log) => (
+          {myBooks.map((log) => (
             <li key={log.bookLogId}>
               <div>
-                <h3>{log.book.title} by {log.book.author}</h3>
+                <h3>{log.book.bookName} by {log.book.author}</h3>
                 <p>Issued on: {new Date(log.dateIssued).toLocaleDateString()}</p>
                 <p>Return by: {new Date(log.dateToBeReturned).toLocaleDateString()}</p>
                 {log.dateActuallyReturned ? (
@@ -70,8 +69,9 @@ function MyBooks() {
           ))}
         </ul>
       )}
+      <button id="darklight" onClick={toggleDarkLight}>Dark</button>
     </div>
-  )
+  );
 }
 
-export default MyBooks
+export default MyBooks;
