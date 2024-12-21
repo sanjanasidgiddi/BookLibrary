@@ -32,14 +32,6 @@ public class User {
     @Column(name="last_name")
     private String lastName;
 
-//    //TODO check if integer is a proper datatype for phone numbers
-//    @Column
-//    private int phoneNumber;
-//
-//    @Column
-//    @DateTimeFormat(pattern = "dd/MM/yyyy")
-//    private Date dob;
-
     @Column(name="phone_number")
     private String phoneNumber;
 
