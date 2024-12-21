@@ -51,7 +51,8 @@ function NavMUI() {
                         }
                         <Button variant="contained" color="secondary" onClick={() => navToPage('/register')}>Register</Button>
                         <Button variant="contained" color="secondary" onClick={() => navToPage('/allbooks')}>All Books</Button>
-                        <Button variant="contained" color="secondary" onClick={() => navToPage('/booklist')}>Book List</Button>
+                        {/* <Button variant="contained" color="secondary" onClick={() => navToPage('/booklist')}>Book List</Button> */}
+                        <Button variant="contained" color="secondary" onClick={() => navToPage('/booklistmui')}>Book List</Button>
                         <Button variant="contained" color="secondary" onClick={() => navToPage('/mybooks')}>My Books</Button>
                     </Box>
                 </Toolbar>
