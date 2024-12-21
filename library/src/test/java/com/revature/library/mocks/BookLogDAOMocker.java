@@ -15,10 +15,9 @@ public class BookLogDAOMocker extends DaoMocker<BookLog, Integer> implements Boo
     @Override
     BookLog addId(BookLog entry, int index) {
         return new BookLog(
-            entry.getUser(),
+                index, entry.getUser(),
             entry.getBook(),
-            index,
-            entry.getDateIssued(),
+                entry.getDateIssued(),
             entry.getDateToBeReturned(),
             entry.getDateActuallyReturned()
         );

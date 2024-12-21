@@ -1,37 +1,23 @@
 package com.revature.library.mocks;
 
 import com.revature.library.DAO.BookDAO;
+import com.revature.library.DAO.UserDAO;
 import com.revature.library.Models.Book;
+import com.revature.library.Models.User;
 import com.revature.library.mocks.DaoMocker;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class UserDAOMocker extends DaoMocker<Book, Integer> implements BookDAO {
+public class UserDAOMocker extends DaoMocker<User, String> implements UserDAO {
     @Override
-    Integer getId(Book entry) {
-        return entry.getBookId();
+    String getId(User entry) {
+        return entry.getUsername();
     }
 
     @Override
-    Book addId(Book entry, int index) {
-        return new Book(
-            index,
-            entry.getBookName(),
-            entry.getAuthor(),
-            entry.getBookGenre(),
-            entry.getBookAgeLimit(),
-            entry.getImage()
-        );
-    }
-
-    @Override
-    public List<Book> findByBookNameAndAuthor(String bookName, String author) {
-        return findAll()
-            .stream()
-            .filter(
-                x->x.getBookName().equals(bookName) && x.getAuthor().equals(author)
-            )
-            .collect(Collectors.toList());
+    User addId(User entry, int index) {
+        return entry;
     }
 }

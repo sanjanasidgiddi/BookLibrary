@@ -1,3 +1,3 @@
 package com.revature.library.Exceptions;
 
-public class Unauthorized extends Exception{}
+public final class Unauthorized extends Exception{}

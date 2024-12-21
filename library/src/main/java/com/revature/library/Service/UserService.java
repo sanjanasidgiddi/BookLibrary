@@ -18,15 +18,14 @@ public class UserService{
     private final BookLogDAO bookLogDao;
 
     @Autowired
-    UserService(UserDAO dao, BookLogDAO bookLogDAO) {
+    public UserService(UserDAO dao, BookLogDAO bookLogDAO) {
         this.dao = dao;
         this.bookLogDao = bookLogDAO;
     }
 
-    public User register(User user) throws UserExceptions.NotAbsent, UserExceptions.UsernameInvalid, UserExceptions.EmailInvalid, UserExceptions.PasswordInvalid {
-        //TODO check for admin username
+    public User register(User user) throws UserExceptions.UsernameAlreadyTaken, UserExceptions.UsernameInvalid, UserExceptions.EmailInvalid, UserExceptions.PasswordInvalid {
         if (dao.existsById(user.getUsername())){
-            throw new UserExceptions.NotAbsent();
+            throw new UserExceptions.UsernameAlreadyTaken();
         }
 
         checkValidity(user);
@@ -35,7 +34,7 @@ public class UserService{
     }
 
     public User login(String username, String password) throws Unauthorized{
-        return dao.getUserByUsername(username)
+        return dao.findById(username)
             .filter(
                 user->user.getPassword().equals(password)
             )
@@ -75,6 +74,7 @@ public class UserService{
         userInTable.setFirstName(newUserInfo.getFirstName());
         userInTable.setLastName(newUserInfo.getLastName());
         userInTable.setEmail(newUserInfo.getEmail());
+        userInTable.setPhoneNumber(newUserInfo.getPhoneNumber());
         userInTable.setDob(newUserInfo.getDob());
 
         return dao.save(newUserInfo);

@@ -81,6 +81,18 @@ public class Book {
     public void setImage(String image) {
         this.image = image;
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "bookId=" + bookId +
+                ", bookName='" + bookName + '\'' +
+                ", author='" + author + '\'' +
+                ", bookGenre='" + bookGenre + '\'' +
+                ", bookAgeLimit=" + bookAgeLimit +
+                ", image='" + image + '\'' +
+                '}';
+    }
 }
 
     

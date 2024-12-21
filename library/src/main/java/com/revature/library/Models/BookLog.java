@@ -30,7 +30,7 @@ public class BookLog {
 
     public BookLog(){}
 
-    public BookLog(User user, Book book, int BookLogId, Date dateIssued, Date dateToBeReturned, Date dateActuallyReturned){
+    public BookLog(int BookLogId, User user, Book book, Date dateIssued, Date dateToBeReturned, Date dateActuallyReturned){
         this.user=user;
         this.book=book;
         this.bookLogId=BookLogId;
@@ -82,5 +82,16 @@ public class BookLog {
     public void setDateActuallyReturned(Date dateActuallyReturned) {
         this.dateActuallyReturned = dateActuallyReturned;
     }
-    
+
+    @Override
+    public String toString() {
+        return "BookLog{" +
+                "bookLogId=" + bookLogId +
+                ", user=" + user +
+                ", book=" + book +
+                ", dateIssued=" + dateIssued +
+                ", dateToBeReturned=" + dateToBeReturned +
+                ", dateActuallyReturned=" + dateActuallyReturned +
+                '}';
+    }
 }

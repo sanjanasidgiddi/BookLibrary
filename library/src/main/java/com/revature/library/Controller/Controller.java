@@ -23,7 +23,6 @@ import java.util.Optional;
 @RestController
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class Controller {
-
     private final UserService userService;
 
     private final BookService bookService;
@@ -78,8 +77,9 @@ public class Controller {
     public ResponseEntity<User> register(@RequestBody User user) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(userService.register(user));
-        } catch (UserExceptions.NotAbsent | UserExceptions.UsernameInvalid | UserExceptions.EmailInvalid |
-                 UserExceptions.PasswordInvalid e) {
+        } catch (UserExceptions.UsernameAlreadyTaken e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        } catch (UserExceptions.UsernameInvalid | UserExceptions.EmailInvalid | UserExceptions.PasswordInvalid e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
@@ -96,7 +96,7 @@ public class Controller {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getAllUser(HttpSession session) {
+    public ResponseEntity<List<User>> getAllUsers(HttpSession session) {
         try {
             return ResponseEntity.ok(
                 userService.getAll(getUser(session))
@@ -120,7 +120,7 @@ public class Controller {
     }
 
     @PatchMapping("/users/{username}")
-    public ResponseEntity<User> updateUser(@PathVariable String username, @RequestBody User user, HttpSession session) {
+    public ResponseEntity<User> editUsers(@PathVariable String username, @RequestBody User user, HttpSession session) {
         try {
             return ResponseEntity.ok(userService.editUser(username, user, getUser(session)));
         }
@@ -161,7 +161,7 @@ public class Controller {
      */
     //region books
     @GetMapping("/books/{bookId}")
-    public ResponseEntity<Book> getBookById(@PathVariable int bookId) {
+    public ResponseEntity<Book> getBook(@PathVariable int bookId) {
         try {
             return ResponseEntity.ok(bookService.getBookById(bookId));
         } catch (BookExceptions.NotFound e) {
@@ -228,10 +228,8 @@ public class Controller {
      * get all logs
      */
     //region booklog
-
-    
     @PostMapping("/bookLogs/{bookId}")
-    ResponseEntity<BookLog> issueBook(@PathVariable int bookId, HttpSession session) {
+    public ResponseEntity<BookLog> borrowBook(@PathVariable int bookId, HttpSession session) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(bookLogService.issueBook(bookId, getUser(session)));
         }
@@ -246,10 +244,10 @@ public class Controller {
         }
     }
 
-    @PostMapping("/bookLogs/return/{bookId}")
-    public ResponseEntity<Void> returnBook(@PathVariable int bookId, HttpSession session) {
+    @PostMapping("/bookLogs/return/{bookLogId}")
+    public ResponseEntity<Void> returnBook(@PathVariable int bookLogId, HttpSession session) {
         try {
-            bookLogService.returnBook(bookId, getUser(session));
+            bookLogService.returnBook(bookLogId, getUser(session));
 
             return ResponseEntity.ok().build();
         }
@@ -302,4 +300,5 @@ public class Controller {
         }
     }
     //endregion
+
 }

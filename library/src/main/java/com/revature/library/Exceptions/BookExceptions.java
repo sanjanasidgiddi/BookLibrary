@@ -1,11 +1,13 @@
 package com.revature.library.Exceptions;
 
-public class BookExceptions {
-    public static class TitleAndAuthorAlreadyExists extends Exception{}
+public final class BookExceptions {
+    private BookExceptions(){}
 
-    public static class NotFound extends Exception{}
+    public static final class TitleAndAuthorAlreadyExists extends Exception{}
 
-    public static class IsHeld extends Exception{}
+    public static final class NotFound extends Exception{}
 
-    public static class AlreadyReturned extends Exception{}
+    public static final class IsHeld extends Exception{}
+
+    public static final class AlreadyReturned extends Exception{}
 }

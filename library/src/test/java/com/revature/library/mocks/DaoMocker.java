@@ -22,11 +22,20 @@ public abstract class DaoMocker<T, ID> implements JpaRepository<T, ID> {
 
     @Override
     public final <S extends T> S save(S entity) {
-        var result = addId(entity, items.size()+1);
-        
-        items.add(result);
-        
-        return (S)result;
+        var indexOf = items.indexOf(entity);
+        if (indexOf == -1) {
+            var result = addId(entity, items.size()+1);
+
+            items.add(result);
+
+            return (S)result;
+        } else {
+            var result = addId(entity, indexOf+1);
+
+            items.set(indexOf, result);
+
+            return (S)result;
+        }
     }
 
     @Override

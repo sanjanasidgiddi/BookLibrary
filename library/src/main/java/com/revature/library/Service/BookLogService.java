@@ -109,7 +109,7 @@ public class BookLogService{
         logInTable.setUser(newBookLog.getUser());
         logInTable.setDateIssued(newBookLog.getDateIssued());
         logInTable.setDateToBeReturned(newBookLog.getDateToBeReturned());
-        logInTable.setDateActuallyReturned(logInTable.getDateActuallyReturned());
+        logInTable.setDateActuallyReturned(newBookLog.getDateActuallyReturned());
 
         dao.save(logInTable);
 

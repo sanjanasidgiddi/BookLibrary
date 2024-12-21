@@ -6,7 +6,9 @@ import com.revature.library.Models.User;
 
 import java.util.Optional;
 
-public class Helper {
+public final class Helper {
+    private Helper(){}
+
     public static void requireIsAdmin(Optional<User> loggedIn) throws Unauthorized{
         var authorized = loggedIn.map(user->user.getRole()==Role.ADMIN).orElse(false);
 
