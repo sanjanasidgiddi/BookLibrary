@@ -39,13 +39,13 @@ function MyBooks() {
     axios.post(`http://localhost:8080/bookLogs/return/${bookLogId}`)
       .then(response => {
         console.log("Book returned:", response.data);
-
+        setMyBooks(prevBooks => prevBooks.filter(log => log.bookLogId !== bookLogId));
       })
       .catch(error => {
         console.error("Error returning book:", error);
         alert("Failed to return the book.");
       });
-  }
+  };
 
   return (
     <div>
