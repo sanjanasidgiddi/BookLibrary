@@ -26,4 +26,20 @@ A web application for managing a library of books, with features for user authen
 
 ## Setup Instructions
 ### Prerequisites
+Before setting up the Online Book Library Management Application, ensure the following are installed on your system:
+
+- **Node.j**s: Download and install Node.js.
+- **Java JDK**: Install Java Development Kit (JDK) version 11 or above. You can download it from Oracle or OpenJDK.
+- **Maven**: Install Apache Maven for managing the Spring Boot backend dependencies.
+- **Git**: Install Git for version control. Download it from here.
+- **IDE/Text Editor**: Use an IDE like IntelliJ IDEA for the backend and VS Code for the frontend.
+
 ### Installation
+- **Clone the Respository**
+```bash
+git clone https://github.com/241209-JavaReactAWS/sharvani-rolando-sanjana-project1.git
+```
+- **Run Development Scripts**:
+```bash
+npm run dev
+```
