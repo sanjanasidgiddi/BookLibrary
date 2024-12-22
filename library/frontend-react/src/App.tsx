@@ -13,6 +13,8 @@ import NavMUI from './Components/NavigationLinks/NavMUI'
 import BookListMUI from './Components/BookList/BookListMUI'
 import AllBooksMUI from './Components/BookComponent/AllBooksMUI'
 import MyBooksMUI from './Components/MyBooks/MyBooksMUI'
+import LibraryLogs from './Components/LibraryLogs/LibraryLogs'
+import LibraryLogsMUI from './Components/LibraryLogs/LibraryLogsMUI'
 
 
 /** Storing information about the logged in user */
@@ -68,6 +70,8 @@ function App() {
             <Route path='/booklistmui' element={<BookListMUI></BookListMUI>}></Route>
             {/* <Route path='/mybooks' element={<MyBooks></MyBooks>}></Route> */}
             <Route path='/mybooks' element={<MyBooksMUI></MyBooksMUI>}></Route>
+            {/* <Route path='/libraryLogs' element={<LibraryLogs></LibraryLogs>}></Route> */}
+            <Route path='/libraryLogs' element={<LibraryLogsMUI></LibraryLogsMUI>}></Route>
           </Routes>
         </BrowserRouter>
       </UserInfo.Provider>

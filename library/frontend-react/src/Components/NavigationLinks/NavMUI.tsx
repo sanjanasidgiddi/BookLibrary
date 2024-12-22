@@ -66,6 +66,7 @@ function NavMUI() {
                         {/* <Button variant="contained" color="secondary" onClick={() => navToPage('/booklist')}>Book List</Button> */}
                         <Button variant="contained" color="secondary" onClick={() => navToPage('/booklistmui')}>Book List</Button>
                         <Button variant="contained" color="secondary" onClick={() => navToPage('/mybooks')}>My Books</Button>
+                        <Button variant="contained" color="secondary" onClick={() => navToPage('/libraryLogs')}>Logs</Button>
                     </Box>
                 </Toolbar>
             </AppBar>
