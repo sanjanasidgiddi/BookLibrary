@@ -12,7 +12,7 @@ function AllBooks() {
   useEffect(() => {
     // This will execute when the component mounts and on certain other conditions
     // Send an AXIOS request when the page loads
-    axios.get<Book[]>("http://localhost:8080/books")
+    axios.get<Book[]>("http://localhost:8080/books", { withCredentials: true })
       .then((res) => {
         setAllBooks(res.data)
       })
@@ -37,6 +37,8 @@ function AllBooks() {
   const borrowBook = (bookId: number) => {
     axios.post(`http://localhost:8080/bookLogs/${bookId}`)
       .then(response => {
+        axios.get<Book[]>("http://localhost:8080/books", { withCredentials: true })
+        .then((response) => setAllBooks(response.data));
         console.log("Book issued:", response.data);
         // Optionally, update the UI to reflect the issued book
       })

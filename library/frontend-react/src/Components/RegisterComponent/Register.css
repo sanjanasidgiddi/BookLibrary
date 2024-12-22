@@ -23,7 +23,7 @@ body{
     padding: 30px 40px;
     border-radius: 10px;
     background-blend-mode: soft-light;
-    background-color: rgba(2, 53, 8, 0.7);
+    background-color: darkslategray;
     backdrop-filter: blur(1px);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }

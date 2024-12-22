@@ -38,42 +38,40 @@ function NavMUI() {
 
     return (
         <>
-            <AppBar component="nav">
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        edge="start"
-                        sx={{ mr: 2, display: { sm: 'none' } }}
-                    >
-                    </IconButton>
+            <AppBar component="nav" sx={{ background: "RebeccaPurple" }}>
+                <Toolbar sx={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
+                    {/* Left-aligned logo and title */}
                     <Typography
                         variant="h6"
                         component="div"
-                        sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                        sx={{ display: { xs: 'none', sm: 'block' }, flexGrow: 0, paddingRight:"15px" }}
                     >
                         Book Library
                     </Typography>
-                    <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                        {/* Conditionally rendering login link, or logout button based on whether a user is logged in */}
-                        {
-                            userAuth?.role == "unauthenticated" ?
-                                <Button variant="contained" color="secondary" onClick={() => navToPage('/login')}>Login</Button> :
-                                <Button variant="contained" color="secondary" onClick={logOut}>Logout</Button>
+    
+                    {/* Left-aligned navigation buttons (space between them) */}
+                    <Box sx={{ display: "flex", gap: 2, flexGrow: 1, justifyContent: "flex-start" }}>
+                        <Button variant="contained" color="secondary" sx={{ color: "white", background: "rgba(0, 0, 0, 0.3)" }} onClick={() => navToPage('/allbooks')}>All Books</Button>
+                        <Button variant="contained" color="secondary" sx={{ color: "white", background: "rgba(0, 0, 0, 0.3)" }} onClick={() => navToPage('/mybooks')}>My Books</Button>
+                        <Button variant="contained" color="secondary" sx={{ color: "white", background: "rgba(0, 0, 0, 0.3)" }} onClick={() => navToPage('/booklistmui')}>Book List</Button>
+                        <Button variant="contained" color="secondary" sx={{ color: "white", background: "rgba(0, 0, 0, 0.3)" }} onClick={() => navToPage('/libraryLogs')}>Logs</Button>
+                    </Box>
+    
+                    {/* Right-aligned buttons (Login, Logout, Register) */}
+                    <Box sx={{ display: "flex", gap: 2 }}>
+                        <Button variant="contained" color="secondary" sx={{ color: "white", background: "rgba(0, 0, 0, 0.3)" }} onClick={() => navToPage('/register')}>Register</Button>
+                        {userAuth?.role === "unauthenticated" ? 
+                            (<Button variant="contained" color="secondary" sx={{ color: "white", background: "rgba(0, 0, 0, 0.3)" }} onClick={() => navToPage('/login')}>Login</Button>) 
+                            : 
+                            (<Button variant="contained" color="secondary" sx={{ color: "white", background: "rgba(0, 0, 0, 0.3)" }} onClick={logOut}>Logout</Button>)
                         }
-                        <Button variant="contained" color="secondary" onClick={() => navToPage('/register')}>Register</Button>
-                        <Button variant="contained" color="secondary" onClick={() => navToPage('/allbooks')}>All Books</Button>
-                        {/* <Button variant="contained" color="secondary" onClick={() => navToPage('/booklist')}>Book List</Button> */}
-                        <Button variant="contained" color="secondary" onClick={() => navToPage('/booklistmui')}>Book List</Button>
-                        <Button variant="contained" color="secondary" onClick={() => navToPage('/mybooks')}>My Books</Button>
-                        <Button variant="contained" color="secondary" onClick={() => navToPage('/libraryLogs')}>Logs</Button>
                     </Box>
                 </Toolbar>
             </AppBar>
             <Toolbar />
-            <br></br>
+            <br />
         </>
     )
-}
-
+    
+}    
 export default NavMUI

@@ -25,36 +25,42 @@ function LibraryLogs() {
     };
 
     return (
-        <div style={{ width: '100%', padding: 0, margin: 0 }}>
-            <h1> Library Logs </h1>
-            <TableContainer component="div" style={{ width: '100%', margin: '0 auto' }}>
-            <Table sx={{ minWidth: 650 }} aria-label="library logs table">
-                <TableHead>
+        <div>
+            <h1 style={{ marginBottom: '20px', textAlign: 'center' }}>Library Logs</h1>
+            <Table>
+              <TableHead>
                 <TableRow>
-                    <TableCell>ID</TableCell>
-                    <TableCell>Username</TableCell>
-                    <TableCell>Book ID</TableCell>
-                    <TableCell>Date Issued</TableCell>
-                    <TableCell>Date to be Returned</TableCell>
-                    <TableCell>Date Actually Returned</TableCell>
+                  <TableCell>ID</TableCell>
+                  <TableCell>Username</TableCell>
+                  <TableCell>Book ID</TableCell>
+                  <TableCell>Date Issued</TableCell>
+                  <TableCell>Date to be Returned</TableCell>
+                  <TableCell>Date Actually Returned</TableCell>
                 </TableRow>
-                </TableHead>
-                <TableBody>
-                {libraryLogs.map((log) => (
+              </TableHead>
+              <TableBody>
+                {libraryLogs.length > 0 ? (
+                  libraryLogs.map((log) => (
                     <TableRow key={log.bookLogId}>
-                    <TableCell>{log.bookLogId}</TableCell>
-                    <TableCell>{log.user.username}</TableCell>
-                    <TableCell >{log.book.bookId}</TableCell>
-                    <TableCell>{formatDate(log.dateIssued)}</TableCell>
-                    <TableCell>{formatDate(log.dateToBeReturned)}</TableCell>
-                    <TableCell>{formatDate(log.dateActuallyReturned)}</TableCell>
+                      <TableCell>{log.bookLogId}</TableCell>
+                      <TableCell>{log.user.username}</TableCell>
+                      <TableCell>{log.book.bookId}</TableCell>
+                      <TableCell>{formatDate(log.dateIssued)}</TableCell>
+                      <TableCell>{formatDate(log.dateToBeReturned)}</TableCell>
+                      <TableCell>{formatDate(log.dateActuallyReturned)}</TableCell>
                     </TableRow>
-                ))}
-                </TableBody>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={6} style={{ textAlign: 'center' }}>
+                      No logs available.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
             </Table>
-            </TableContainer>
         </div>
-    )
+      )
 }
 
 export default LibraryLogs

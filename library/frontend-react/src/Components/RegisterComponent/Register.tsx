@@ -2,6 +2,7 @@ import "./Register.css"
 import { UserInfo } from '../../App';
 import { SyntheticEvent, useContext, useState } from "react";
 import axios from "axios";
+import { colors } from "@mui/material";
 
 function Register() {
     /** We will store info about the currently logged in user, since they login at the same time as registration */

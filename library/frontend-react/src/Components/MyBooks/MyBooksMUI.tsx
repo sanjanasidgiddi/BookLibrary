@@ -58,7 +58,7 @@ function MyBooks() {
             padding: "10px"
         }}>
       {myBooks.length === 0 ? (
-        <Typography variant="h6">No books available.</Typography>
+        <Typography variant="h6">No books borrowed.</Typography>
       ) : (
         myBooks.map((log) => {
             return(
