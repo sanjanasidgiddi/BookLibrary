@@ -19,9 +19,10 @@ A web application for managing a library of books, with features for user authen
 - **Manage Books**: Admin users can view and manage the books, and new books to the Library, if needed.
 
 ## User Story
-![User story](library/UserStory.jpg "Optional Title")
+![User story](library/UserStory.jpg "User STory")
 
 ## Schema
+![User story](library/Schema.jpg "Scehma")
 
 ## Setup Instructions
 ### Prerequisites
