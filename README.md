@@ -14,9 +14,9 @@ A web application for managing a library of books, with features for user authen
 
 - **User Authentication**: Users can register, log in and log out.
 - **View All Books**: Browse a collection of available books.
-- **Issue Books**: Users can borrow, and return books to the library.
+- **Issue Books**: Users can borrow books, view borrowed books, and return books to the library.
 - **Library Logs**: Admin users can view library activity logs.
-- **Manage Books**: Admin users can manage the book data, and new books to the Library.
+- **Manage Books**: Admin users can view and manage the books, and new books to the Library, if needed.
 
 ## User Stories
 
