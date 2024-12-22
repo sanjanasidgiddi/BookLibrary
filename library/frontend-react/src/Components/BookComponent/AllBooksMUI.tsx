@@ -2,12 +2,15 @@ import { useEffect, useState } from 'react';
 import { Book } from "../interface/Book"
 import axios from "axios"
 import backgroundImg from './background_img.jpg';
-import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
+import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, IconButton, InputBase, Paper, Typography } from '@mui/material';
 
 
 function AllBooks() {
 
   const [allBooks, setAllBooks] = useState<Book[]>([])
+  const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
+  const [visibleBooks, setVisibleBooks] = useState<Book[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   useEffect(() => {
     // This will execute when the component mounts and on certain other conditions
@@ -15,6 +18,7 @@ function AllBooks() {
     axios.get<Book[]>("http://localhost:8080/books", { withCredentials: true })
       .then((res) => {
         setAllBooks(res.data)
+        setVisibleBooks(res.data.slice(0, 5));
       })
       .catch((error) => {
         console.error("Error fetching books:", error);
@@ -33,6 +37,21 @@ function AllBooks() {
     theme_element.classList.toggle("dark_mode");
   }
 
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    if (query === '') {
+      setVisibleBooks(allBooks.slice(0, 5)); // Reset to first 5 books if query is empty
+    } else {
+      const lowerCaseQuery = query.toLowerCase();
+      const filteredBooks = allBooks.filter(
+        (book) =>
+          book.bookName.toLowerCase().includes(lowerCaseQuery) ||
+          book.bookGenre.toLowerCase().includes(lowerCaseQuery)
+      );
+      setVisibleBooks(filteredBooks.slice(0, 5)); // Show only the first 5 filtered books
+    }
+  };
+
   // Handle issuing a book
   const borrowBook = (bookId: number) => {
     axios.post(`http://localhost:8080/bookLogs/${bookId}`)
@@ -50,9 +69,47 @@ function AllBooks() {
 
       
   return (
-    <div>
-      <Button variant="contained" color="secondary" id="darklight" onClick={toggleDarkLight}>Dark</Button>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
+        <Button
+          variant="contained"
+          color="secondary"
+          id="darklight"
+          onClick={toggleDarkLight}
+          style={{ marginRight: '10px' }}
+        >
+          Dark
+        </Button>
+      </div>
       <br />
+      <Paper
+        component="form"
+        sx={{
+          p: '2px 4px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center', // This centers the content horizontally
+          width: 400,
+          margin: 'auto', // This will ensure the Paper is centered in its container
+        }}
+      >
+        <InputBase
+          sx={{
+            ml: 1,
+            flex: 1,
+            textAlign: 'center', // This centers the text inside the input
+          }}
+          placeholder="Search books..."
+          inputProps={{ 'aria-label': 'search books' }}
+          value={searchQuery}
+          onChange={(e) => handleSearch(e.target.value)}
+        />
+        <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+          {/* <SearchIcon /> */}
+        </IconButton>
+      </Paper>
+
+
       {allBooks.length === 0 ? (
         <Typography variant="h6">No books available.</Typography>
       ) : (
@@ -65,7 +122,7 @@ function AllBooks() {
             padding: "10px"
           }}
         >
-          {allBooks.map((book) => {
+          {visibleBooks.map((book) => {
             return (
               <Card key={book.bookId} sx={{ maxWidth: 250, marginBottom: 2 }}>
                 <CardActionArea>
