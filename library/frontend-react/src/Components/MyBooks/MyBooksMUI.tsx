@@ -37,24 +37,24 @@ function MyBooks() {
   }
 
   const returnBook = (bookLogId: number) => {
-    console.log("Attempting to return book with bookLogId:", bookLogId);
-    axios.post(`http://localhost:8080/bookLogs/return/${bookLogId}`)
-      .then(response => {
-        console.log("Book returned successfully:", response.data);
-        setMyBooks(prevBooks => prevBooks.filter(log => log.bookLogId !== bookLogId));
-      })
-      .catch(error => {
-        console.error("Error returning book:", error.response?.data || error.message);
-        if (error.response?.status === 400) {
-          alert("Bad Request: " + error.response.data.message);
-        } else if (error.response?.status === 404) {
-          alert("Book log not found");
-        } else {
-          alert("Failed to return the book. Please try again later.");
-        }
-      });
-  };
-  
+  console.log("Attempting to return book with bookLogId:", bookLogId);
+  axios.post(`http://localhost:8080/bookLogs/return/${bookLogId}`)
+    .then(response => {
+      console.log("Book returned successfully:", response.data);
+      setMyBooks(prevBooks => prevBooks.filter(log => log.bookLogId !== bookLogId));
+    })
+    .catch(error => {
+      console.error("Error returning book:", error.response?.data || error.message);
+      if (error.response?.status === 400) {
+        alert("Bad Request: " + error.response.data.message);
+      } else if (error.response?.status === 404) {
+        alert("Book log not found");
+      } else {
+        alert("Failed to return the book. Please try again later.");
+      }
+    });
+};
+
   
 
   return (

@@ -7,16 +7,24 @@ function LibraryLogs() {
   const [libraryLogs, setlibraryLogs] = useState<BookLog[]>([])
 
   useEffect(() => {
-    // This will execute when the component mounts and on certain other conditions
-    // Send an AXIOS request when the page loads
+    fetchLogs();
+    const interval = setInterval(() => {
+      fetchLogs();
+    }, 5000); 
+
+    return () => clearInterval(interval); 
+  }, []);
+
+  const fetchLogs = () => {
     axios.get<BookLog[]>("http://localhost:8080/BookLogs")
       .then((res) => {
-        setlibraryLogs(res.data)
+        setlibraryLogs(res.data);
       })
       .catch((error) => {
         console.error("Error fetching books:", error);
       });
-  }, [])
+  };
+
 
   const formatDate = (date: Date | null) => {
     if (!date) return "N/A"; // Return N/A if date is missing
@@ -35,6 +43,16 @@ function LibraryLogs() {
       var theme_element = document.body;
       theme_element.classList.toggle("dark_mode");
     }
+
+    const handleReturnBook = (bookLogId: number) => {
+      axios.post(`http://localhost:8080/returnBook/${bookLogId}`)
+        .then(() => {
+          fetchLogs();
+        })
+        .catch((error) => {
+          console.error("Error returning book:", error);
+        });
+    };
 
   return (
     <div>
