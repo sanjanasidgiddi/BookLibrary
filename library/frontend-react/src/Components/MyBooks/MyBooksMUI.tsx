@@ -16,7 +16,8 @@ function MyBooks() {
     // Send an AXIOS request when the page loads
     axios.get<BookLog[]>("http://localhost:8080/bookLogs")
       .then((res) => {
-        setMyBooks(res.data)
+        const unreturnedBooks = res.data.filter(log => !log.dateActuallyReturned);
+        setMyBooks(unreturnedBooks)
       })
       .catch((error) => {
         console.error("Error fetching books:", error);
@@ -36,16 +37,25 @@ function MyBooks() {
   }
 
   const returnBook = (bookLogId: number) => {
+    console.log("Attempting to return book with bookLogId:", bookLogId);
     axios.post(`http://localhost:8080/bookLogs/return/${bookLogId}`)
       .then(response => {
-        console.log("Book returned:", response.data);
+        console.log("Book returned successfully:", response.data);
         setMyBooks(prevBooks => prevBooks.filter(log => log.bookLogId !== bookLogId));
       })
       .catch(error => {
-        console.error("Error returning book:", error);
-        alert("Failed to return the book.");
+        console.error("Error returning book:", error.response?.data || error.message);
+        if (error.response?.status === 400) {
+          alert("Bad Request: " + error.response.data.message);
+        } else if (error.response?.status === 404) {
+          alert("Book log not found");
+        } else {
+          alert("Failed to return the book. Please try again later.");
+        }
       });
   };
+  
+  
 
   return (
     <div>
@@ -90,7 +100,7 @@ function MyBooks() {
                   <Button
                     size="small"
                     color="primary"
-                    onClick={() => returnBook(log.book.bookId)}
+                    onClick={() => returnBook(log.bookLogId)}
                   >
                     Return
                   </Button>
