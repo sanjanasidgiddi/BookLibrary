@@ -35,8 +35,8 @@ function MyBooks() {
       theme_element.classList.toggle("dark_mode");
   }
 
-  const returnBook = (bookId: number) => {
-    axios.post(`http://localhost:8080/bookLogs/return/${bookId}`)
+  const returnBook = (bookLogId: number) => {
+    axios.post(`http://localhost:8080/bookLogs/return/${bookLogId}`)
         .then(response => {
             console.log("Book returned:", response.data);
 
@@ -53,7 +53,9 @@ function MyBooks() {
         style={{
             display:"flex",
             flexDirection:"row",
-            justifyContent:"space-evenly"
+            justifyContent:"space-evenly",
+            gap: "20px", 
+            padding: "10px"
         }}>
       {myBooks.length === 0 ? (
         <Typography variant="h6">No books available.</Typography>
@@ -67,9 +69,9 @@ function MyBooks() {
                 height="100"
                 sx={{
                     width: '100%',
-                    height: 'auto',  // Ensures the height adjusts automatically based on the width
-                    aspectRatio: '5/8', // Maintain 9:16 aspect ratio
-                    objectFit: 'cover', // Ensures the image is properly cropped or scaled
+                    height: 'auto',  
+                    aspectRatio: '5/8', 
+                    objectFit: 'cover', 
                   }}
                 image={log.book.image}
                 alt="Book cover"

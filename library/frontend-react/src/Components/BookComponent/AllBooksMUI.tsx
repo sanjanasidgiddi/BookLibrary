@@ -34,7 +34,7 @@ function AllBooks() {
   }
 
   // Handle issuing a book
-  const issueBook = (bookId: number) => {
+  const borrowBook = (bookId: number) => {
     axios.post(`http://localhost:8080/bookLogs/${bookId}`)
       .then(response => {
         console.log("Book issued:", response.data);
@@ -46,31 +46,35 @@ function AllBooks() {
       });
   }
 
-
-    return (
-        <div>
-            <div
-            style={{
-                display:"flex",
-                flexDirection:"row",
-                justifyContent:"space-evenly"
-            }}>
-          {allBooks.length === 0 ? (
-            <Typography variant="h6">No books available.</Typography>
-          ) : (
-            allBooks.map((book) => {
-                return(
+      
+  return (
+    <div>
+      <Button variant="contained" color="secondary" id="darklight" onClick={toggleDarkLight}>Dark</Button>
+      <br />
+      {allBooks.length === 0 ? (
+        <Typography variant="h6">No books available.</Typography>
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap", 
+            justifyContent: "space-evenly", 
+            gap: "20px", 
+            padding: "10px"
+          }}
+        >
+          {allBooks.map((book) => {
+            return (
               <Card key={book.bookId} sx={{ maxWidth: 250, marginBottom: 2 }}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
-                    height="100"
                     sx={{
-                        width: '100%',
-                        height: 'auto',  // Ensures the height adjusts automatically based on the width
-                        aspectRatio: '5/8', // Maintain 9:16 aspect ratio
-                        objectFit: 'cover', // Ensures the image is properly cropped or scaled
-                      }}
+                      width: '100%',
+                      height: 'auto',
+                      aspectRatio: '5/8', 
+                      objectFit: 'cover', 
+                    }}
                     image={book.image}
                     alt="Book cover"
                   />
@@ -87,58 +91,17 @@ function AllBooks() {
                   <Button
                     size="small"
                     color="primary"
-                    onClick={() => issueBook(book.bookId)}
+                    onClick={() => borrowBook(book.bookId)}
                   >
                     Issue
                   </Button>
                 </CardActions>
               </Card>
-            )})
-          )}
-        </div></div>
-    );
-      
-  return (
-    <div>
-      <Button variant="contained" color="secondary" id="darklight" onClick={toggleDarkLight}>Dark</Button>
-      <br></br>
-      {allBooks.length === 0 ? (
-        <Typography variant="h6">No books available.</Typography>
-      ) : (
-        allBooks.map((book) => {
-          return (
-            <Card key={book.bookId} sx={{ maxWidth: 345, marginBottom: 2 }}>
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  height="400"
-                  image={book.image}
-                  alt="Book cover"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h6" component="div">
-                    {book.bookName}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {book.bookGenre}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions>
-                <Button
-                  size="small"
-                  color="primary"
-                  onClick={() => issueBook(book.bookId)}
-                >
-                  Issue
-                </Button>
-              </CardActions>
-            </Card>
-          )
-        })
+            );
+          })}
+        </div>
       )}
     </div>
   );
-
 }
 export default AllBooks
