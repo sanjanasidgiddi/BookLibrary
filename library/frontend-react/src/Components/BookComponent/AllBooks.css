@@ -190,7 +190,7 @@ book_button
 
 /* Top-right corner position for Page Appearance Settings (Dark Mode) */
 /* Top-right corner position for Page Appearance Settings (Dark Mode) */
-#dark-topright{
+/* #dark-topright{
     color: black;
     position:absolute;
     padding:10px;
@@ -207,4 +207,23 @@ book_button
     align-items: center;
     min-height: 100vh;
     background:rgb(52, 29, 29);
+} */
+
+/* Top-right corner position for Page Appearance Settings (Dark Mode) */
+#dark-topright{
+    color: black;
+    position:absolute;
+    padding:10px;
+    top:0;
+    left:0;
+    box-shadow: 0 0 10px rgba(248, 248, 248, 0.973);
+    background-color: rgb(3, 37, 9);
+    padding: 10px;
+    font-size: large;
+    font-family: 'Times New Roman', Times, serif;
+}
+/* Dark Mode feature */
+.dark_mode{  
+    background:rgb(20, 6, 6);
+    color:white;
 }
