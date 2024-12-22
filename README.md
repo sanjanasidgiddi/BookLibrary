@@ -18,8 +18,10 @@ A web application for managing a library of books, with features for user authen
 - **Library Logs**: Admin users can view library activity logs.
 - **Manage Books**: Admin users can view and manage the books, and new books to the Library, if needed.
 
-## User Stories
+## User Story
 ![User story](library/UserStory.jpg "Optional Title")
+
+## Schema
 
 ## Setup Instructions
 ### Prerequisites
