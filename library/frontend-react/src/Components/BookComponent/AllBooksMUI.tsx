@@ -89,5 +89,56 @@ function AllBooks() {
     </div>
   );
 
+    return (
+        <div>
+            <div
+            style={{
+                display:"flex",
+                flexDirection:"row",
+                justifyContent:"space-evenly"
+            }}>
+          {allBooks.length === 0 ? (
+            <Typography variant="h6">No books available.</Typography>
+          ) : (
+            allBooks.map((book) => {
+                return(
+              <Card key={book.bookId} sx={{ maxWidth: 250, marginBottom: 2 }}>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    height="100"
+                    sx={{
+                        width: '100%',
+                        height: 'auto',  // Ensures the height adjusts automatically based on the width
+                        aspectRatio: '5/8', // Maintain 9:16 aspect ratio
+                        objectFit: 'cover', // Ensures the image is properly cropped or scaled
+                      }}
+                    image={book.image}
+                    alt="Book cover"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h6" component="div">
+                      {book.bookName}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {book.bookGenre}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+                <CardActions>
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={() => issueBook(book.bookId)}
+                  >
+                    Issue
+                  </Button>
+                </CardActions>
+              </Card>
+            )})
+          )}
+        </div></div>
+    );
+      
 }
 export default AllBooks

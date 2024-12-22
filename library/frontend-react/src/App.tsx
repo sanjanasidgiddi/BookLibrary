@@ -12,6 +12,7 @@ import { User } from './Components/interface/User'
 import NavMUI from './Components/NavigationLinks/NavMUI'
 import BookListMUI from './Components/BookList/BookListMUI'
 import AllBooksMUI from './Components/BookComponent/AllBooksMUI'
+import MyBooksMUI from './Components/MyBooks/MyBooksMUI'
 
 
 /** Storing information about the logged in user */
@@ -61,10 +62,12 @@ function App() {
           <Routes>
             <Route path='/login' element={<Login></Login>}></Route>
             <Route path='/register' element={<Register></Register>}></Route>
+            {/* <Route path='/allbooks' element={<AllBooks></AllBooks>}></Route> */}
             <Route path='/allbooks' element={<AllBooksMUI></AllBooksMUI>}></Route>
             {/* <Route path='/booklist' element={<BookList></BookList>}></Route> */}
             <Route path='/booklistmui' element={<BookListMUI></BookListMUI>}></Route>
-            <Route path='/mybooks' element={<MyBooks></MyBooks>}></Route>
+            {/* <Route path='/mybooks' element={<MyBooks></MyBooks>}></Route> */}
+            <Route path='/mybooks' element={<MyBooksMUI></MyBooksMUI>}></Route>
           </Routes>
         </BrowserRouter>
       </UserInfo.Provider>
