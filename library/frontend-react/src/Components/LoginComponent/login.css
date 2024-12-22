@@ -158,7 +158,6 @@ input:focus::placeholder {
     box-shadow: 0 0 10px rgba(248, 248, 248, 0.973);
     background-color: rgb(3, 37, 9);
     font-size: large;
-    font-family: 'Times New Roman', Times, serif;
 }
 /* Dark Mode feature */
 .dark_mode{  
