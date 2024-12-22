@@ -49,16 +49,28 @@ function AllBooks() {
 
     return (
         <div>
+            <div
+            style={{
+                display:"flex",
+                flexDirection:"row",
+                justifyContent:"space-evenly"
+            }}>
           {allBooks.length === 0 ? (
             <Typography variant="h6">No books available.</Typography>
           ) : (
             allBooks.map((book) => {
                 return(
-              <Card key={book.bookId} sx={{ maxWidth: 345, marginBottom: 2 }}>
+              <Card key={book.bookId} sx={{ maxWidth: 250, marginBottom: 2 }}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
-                    height="400"
+                    height="100"
+                    sx={{
+                        width: '100%',
+                        height: 'auto',  // Ensures the height adjusts automatically based on the width
+                        aspectRatio: '5/8', // Maintain 9:16 aspect ratio
+                        objectFit: 'cover', // Ensures the image is properly cropped or scaled
+                      }}
                     image={book.image}
                     alt="Book cover"
                   />
@@ -83,7 +95,7 @@ function AllBooks() {
               </Card>
             )})
           )}
-        </div>
+        </div></div>
     );
       
 }
