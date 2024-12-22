@@ -153,6 +153,6 @@ input:focus::placeholder {
 }
 /* Dark Mode feature */
 .dark_mode{  
-    background:rgb(20, 6, 6);
+    background:rgb(13, 48, 16);
     color:white;
 }
