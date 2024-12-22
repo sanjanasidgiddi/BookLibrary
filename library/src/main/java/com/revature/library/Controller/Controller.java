@@ -89,9 +89,9 @@ public class Controller {
 
     @PostMapping("/users/logout")
     public ResponseEntity<Void> logout(HttpSession session) {
-        if (getUser(session).isEmpty()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
+        // if (getUser(session).isEmpty()){
+        //     return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        // }
 
         session.invalidate();
         
