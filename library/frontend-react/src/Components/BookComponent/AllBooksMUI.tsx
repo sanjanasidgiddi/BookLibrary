@@ -57,7 +57,7 @@ function AllBooks() {
     axios.post(`http://localhost:8080/bookLogs/${bookId}`)
       .then(response => {
         axios.get<Book[]>("http://localhost:8080/books", { withCredentials: true })
-        .then((response) => setAllBooks(response.data));
+          .then((response) => setAllBooks(response.data));
         console.log("Book issued:", response.data);
         // Optionally, update the UI to reflect the issued book
       })
@@ -67,7 +67,19 @@ function AllBooks() {
       });
   }
 
-      
+  const delBook = (bookId: number) => {
+    axios.delete(`http://localhost:8080/books/${bookId}`)
+    .then(response => {
+      axios.get<Book>("http://localhost:8080/books/${bookId}", { withCredentials: true })
+      console.log("Book issued:", response.data);
+    })
+    .catch(error => {
+      console.error("Error deleting book:", error);
+      alert("Failed to delete the book.");
+    });
+  };
+
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
       <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
@@ -116,9 +128,9 @@ function AllBooks() {
         <div
           style={{
             display: "flex",
-            flexWrap: "wrap", 
-            justifyContent: "space-evenly", 
-            gap: "20px", 
+            flexWrap: "wrap",
+            justifyContent: "space-evenly",
+            gap: "20px",
             padding: "10px"
           }}
         >
@@ -131,8 +143,8 @@ function AllBooks() {
                     sx={{
                       width: '100%',
                       height: 'auto',
-                      aspectRatio: '5/8', 
-                      objectFit: 'cover', 
+                      aspectRatio: '5/8',
+                      objectFit: 'cover',
                     }}
                     image={book.image}
                     alt="Book cover"
@@ -153,6 +165,13 @@ function AllBooks() {
                     onClick={() => borrowBook(book.bookId)}
                   >
                     Issue
+                  </Button>
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={() => delBook(book.bookId)}
+                  >
+                    Delete
                   </Button>
                 </CardActions>
               </Card>

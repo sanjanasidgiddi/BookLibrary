@@ -100,7 +100,6 @@ function BookListMUI() {
                     })}
                 </TableBody>
             </Table>
-
             <Button variant="contained" color="secondary" onClick={getBooks}>Get All Books</Button>
 
             {showAddBookPopup && (
