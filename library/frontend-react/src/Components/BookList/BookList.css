@@ -54,78 +54,75 @@
     padding: 20px;
     border-radius: 10px;
     width: 400px;
-    border-radius: 4px;
-}
-
-#id_form_popup:hover{
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-}
-
-#form_add_books h1{
-    padding: 10px;
-    color: #555;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Adds spacing between each form element */
+  }
+  
+  /* Title */
+  .popup h2 {
     text-align: center;
-}
-
-#form_add_books{
-    background-color: #ddd;
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+  
+  /* Form styling */
+  .popup form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Adds spacing between inputs */
+  }
+  
+  /* Label and input styling specific to popup */
+  .popup label {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  .popup input[type="text"], .popup input[type="number"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .popup input[type="text"]:focus, .popup input[type="number"]:focus {
     outline: none;
-}
-
-#form_add_books input {
-    display: block;
-    width: 378.5px;
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 1px;
-}
-
-#form_add_books input::placeholder{
-    font-size:medium;
-}
-
-#id_book_genre {
-    padding-left: 10px; 
-    color: #555;
-    top:10%;
-    padding-bottom: 10px;
-}
-
-select{
-    border: none;
-    padding: 5px;
-    color: #555;
-    width:85%;
-}
-
-.book_cover_upload{
-    padding-left: 10px;    
-    color: #555;
-}
-
-#form_add_books .add_book_button{
-    background-color: indigo;
-    color: white;
-    padding: 10px;
-    border: none;
+    border-color: #888; /* Border on focus */
+    background-color: #fff;
+  }
+  
+  /* Buttons specific to the popup */
+  .popup button[type="submit"], .popup button[type="button"] {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
     width: 100%;
-}
-
-#form_add_books .cancel_button{
-    background-color: brown;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 10px;
-}
-
-#form_add_books .add_book_button:hover .add_book_link_text:hover{
-    opacity: 1;
-}
+    box-sizing: border-box;
+  }
+  
+  .popup button[type="submit"]:hover, .popup button[type="button"]:hover {
+    background-color: #45a049;
+  }
+  
+  .popup button[type="button"] {
+    background-color: #f44336;
+  }
+  
+  .popup button[type="button"]:hover {
+    background-color: #e53935;
+  }
+    
+  
+  
+  
 
 /*Dark mode*/
 /* #dark-topright{

@@ -60,9 +60,8 @@ function BookListMUI() {
         <div className="booklist-container">
             <Button variant="contained" color="secondary" id="darklight" onClick={toggleDarkLight}>Dark</Button>
             <br />
-            <h1>Book List Page</h1>
             <Button variant="contained" color="secondary" onClick={() => setShowAddBookPopup(true)}>Add New Book</Button>
-            <h2>All Books</h2>
+            <h2>Book Dashboard</h2>
 
             {/* Table Styling */}
             <Table className="book-table">
