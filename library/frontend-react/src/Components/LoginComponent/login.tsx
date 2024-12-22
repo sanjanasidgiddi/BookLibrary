@@ -30,7 +30,7 @@ function Login() {
     console.log("Entered: ", password)
     /** Sending a post request to the database and setting authentication credentials/context. */
     axios.post("http://localhost:8080/users/login",
-      {username, password}, {withCredentials: true}
+      { username, password }, { withCredentials: true }
     ).then((res) => {
       console.log("Login Successful, here's the data returned: ", res.data);
       userAuth?.setUsername(res.data.username);
@@ -39,7 +39,7 @@ function Login() {
       console.log(err);
     })
   }
-  
+
   /** Tester Function: Sending a get request to the database and checking who the users are. */
   let getusers = () => {
     axios.get("http://localhost:8080/users"
@@ -52,11 +52,7 @@ function Login() {
 
   return (
     <div>
-      <div id="dark-topright">
-        <label>
-          <i className='bx bx-moon' id="darklight" onClick={toggleDarkLight}>Light</i>
-        </label>
-      </div>
+      <button id="darklight" onClick={toggleDarkLight}>Dark</button>
       <div className="wrapper">
         <form action="" id="login_user">
           <h1>Login</h1>

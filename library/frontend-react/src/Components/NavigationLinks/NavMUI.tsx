@@ -24,6 +24,18 @@ function NavMUI() {
             })
     }
 
+    /** Function to trigger appearance theme change */
+    let toggleDarkLight = () => {
+        console.log("Dark mode clicked")
+        const darkl_button = document.getElementById('darklight')
+        /* Toggle Button Text */
+        let current_text: string = darkl_button!.innerText;
+        darkl_button!.innerText = current_text === 'Dark' ? 'Light' : 'Dark';
+        /* Switch background and text colors using css class under wrapper */
+        var theme_element = document.body;
+        theme_element.classList.toggle("dark_mode");
+    }
+
     return (
         <>
             <AppBar component="nav">
@@ -40,7 +52,7 @@ function NavMUI() {
                         component="div"
                         sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
                     >
-                        MUI
+                        Book Library
                     </Typography>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                         {/* Conditionally rendering login link, or logout button based on whether a user is logged in */}
@@ -58,6 +70,7 @@ function NavMUI() {
                 </Toolbar>
             </AppBar>
             <Toolbar />
+            <br></br>
         </>
     )
 }

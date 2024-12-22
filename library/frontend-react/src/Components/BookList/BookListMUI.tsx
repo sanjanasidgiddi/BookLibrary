@@ -36,11 +36,11 @@ function BookListMUI() {
     /**Add new book */
     const addNewBookToList = (newBook: Book) => {
         setAllBooks((prevBooks) => [...prevBooks, newBook]);
-      };
+    };
 
     /** Get all books from database */
 
-    /** Tester Function: Sending a get request to the database and checking who the users are. */
+    /** Tester Function: Sending a get request to the database getting all books. */
     let getBooks = () => {
         axios.get("http://localhost:8080/books"
         ).then((res) => {
@@ -52,15 +52,12 @@ function BookListMUI() {
 
     return (
         <div>
-            <h1> Book List Page rendered!</h1>
-            <div id="dark-topright">
-                <label>
-                    <i className='bx bx-moon' id="darklight" onClick={toggleDarkLight}>Light</i>
-                </label>
-            </div>
-            <button onClick={() => setShowAddBookPopup(true)}>Add New Book</button>
+            <Button variant="contained" color="secondary" id="darklight" onClick={toggleDarkLight}>Dark</Button>
+            <br></br>
+            <h1> Book List Page</h1>
+            {/* <button onClick={() => setShowAddBookPopup(true)}>Add New Book</button> */}
+            <Button variant="contained" color="secondary" onClick={() => setShowAddBookPopup(true)}>Add New Book</Button>
             <h2>All Books</h2>
-            <Button variant="contained" color="secondary" onClick={getBooks}>Get All Books</Button>
             <Table>
                 <TableHead>
                     <TableRow>
@@ -76,6 +73,7 @@ function BookListMUI() {
                     {allBooks.map((book) => {
                         return (
                             <TableRow key={book.bookId}>
+                                <TableCell>{book.bookId}</TableCell>
                                 <TableCell>{book.bookName}</TableCell>
                                 <TableCell>{book.author}</TableCell>
                                 <TableCell>{book.bookGenre}</TableCell>
@@ -86,13 +84,14 @@ function BookListMUI() {
                     })}
                 </TableBody>
             </Table>
+            <Button variant="contained" color="secondary" onClick={getBooks}>Get All Books</Button>
 
             {showAddBookPopup && (
-            <NewBook
-            onClose={() => setShowAddBookPopup(false)}
-            onBookAdded={addNewBookToList}
-            />
-        )}
+                <NewBook
+                    onClose={() => setShowAddBookPopup(false)}
+                    onBookAdded={addNewBookToList}
+                />
+            )}
         </div>
     )
 }

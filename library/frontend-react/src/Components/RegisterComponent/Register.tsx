@@ -41,11 +41,7 @@ function Register() {
 
     return (
         <div>
-            <div id="dark-topright">
-                <label>
-                    <i className='bx bx-moon' id="darklight" onClick={toggleDarkLight}>Light</i>
-                </label>
-            </div>
+            <button id="darklight" onClick={toggleDarkLight}>Dark</button>
             <div className="wrapper">
                 <form action="" id="login_user">
                     <h1>Register</h1>

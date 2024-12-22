@@ -7,47 +7,48 @@ import backgroundImg from './background_img.jpg';
 
 
 function MyBooks() {
-    
-  const [myBooks, setMyBooks] = useState<BookLog[]>([])  
-    
+
+  const [myBooks, setMyBooks] = useState<BookLog[]>([])
+
   useEffect(() => {
-      // This will execute when the component mounts and on certain other conditions
-      // Send an AXIOS request when the page loads
-      axios.get<BookLog[]>("http://localhost:8080/bookLogs")
-          .then((res) => {
-            setMyBooks(res.data)
-          })
-          .catch((error) => {
-                console.error("Error fetching books:", error);
-          });
+    // This will execute when the component mounts and on certain other conditions
+    // Send an AXIOS request when the page loads
+    axios.get<BookLog[]>("http://localhost:8080/bookLogs")
+      .then((res) => {
+        setMyBooks(res.data)
+      })
+      .catch((error) => {
+        console.error("Error fetching books:", error);
+      });
   }, [])
 
   /** Function to trigger appearance theme change */
   let toggleDarkLight = () => {
-      console.log("Dark mode clicked")
-      const darkl_button = document.getElementById('darklight')
-      /* Toggle Button Text */
-      let current_text: string = darkl_button!.innerText;
-      darkl_button!.innerText = current_text === 'Dark' ? 'Light' : 'Dark';
-      /* Switch background and text colors using css class under wrapper */
-      var theme_element = document.body;
-      theme_element.classList.toggle("dark_mode");
+    console.log("Dark mode clicked")
+    const darkl_button = document.getElementById('darklight')
+    /* Toggle Button Text */
+    let current_text: string = darkl_button!.innerText;
+    darkl_button!.innerText = current_text === 'Dark' ? 'Light' : 'Dark';
+    /* Switch background and text colors using css class under wrapper */
+    var theme_element = document.body;
+    theme_element.classList.toggle("dark_mode");
   }
 
   const returnBook = (bookId: number) => {
     axios.post(`http://localhost:8080/bookLogs/return/${bookId}`)
-        .then(response => {
-            console.log("Book returned:", response.data);
+      .then(response => {
+        console.log("Book returned:", response.data);
 
-        })
-        .catch(error => {
-            console.error("Error returning book:", error);
-            alert("Failed to return the book.");
-        });
+      })
+      .catch(error => {
+        console.error("Error returning book:", error);
+        alert("Failed to return the book.");
+      });
   }
 
   return (
-      <div>
+    <div>
+      <button id="darklight" onClick={toggleDarkLight}>Dark</button>
       <h1>My Books</h1>
       {myBooks.length === 0 ? (
         <p>No books issued.</p>
@@ -69,7 +70,6 @@ function MyBooks() {
           ))}
         </ul>
       )}
-      <button id="darklight" onClick={toggleDarkLight}>Dark</button>
     </div>
   );
 }
