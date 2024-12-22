@@ -150,6 +150,16 @@ input:focus::placeholder {
     font-size: large;
     font-family: 'Times New Roman', Times, serif;
 }
+
+/* Top-right corner position for Page Appearance Settings (Dark Mode) */
+#darklight{
+    color: rgb(255, 255, 255);
+    padding:10px;
+    box-shadow: 0 0 10px rgba(248, 248, 248, 0.973);
+    background-color: rgb(3, 37, 9);
+    font-size: large;
+    font-family: 'Times New Roman', Times, serif;
+}
 /* Dark Mode feature */
 .dark_mode{  
     background:rgb(13, 48, 16);
