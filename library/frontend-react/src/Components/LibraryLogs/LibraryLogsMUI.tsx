@@ -25,40 +25,34 @@ function LibraryLogs() {
     };
 
     return (
-        <div>
+        <div style={{ width: '100%', padding: 0, margin: 0 }}>
             <h1> Library Logs </h1>
-            <TableContainer component={LibraryLogs}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableContainer component="div" style={{ width: '100%', margin: '0 auto' }}>
+            <Table sx={{ minWidth: 650 }} aria-label="library logs table">
                 <TableHead>
                 <TableRow>
                     <TableCell>ID</TableCell>
-                    <TableCell align="right">Username</TableCell>
-                    <TableCell align="right">Book ID</TableCell>
-                    <TableCell align="right">Date Issued</TableCell>
-                    <TableCell align="right">Date to be Returned</TableCell>
-                    <TableCell align="right">Date Actually Returned</TableCell>
+                    <TableCell>Username</TableCell>
+                    <TableCell>Book ID</TableCell>
+                    <TableCell>Date Issued</TableCell>
+                    <TableCell>Date to be Returned</TableCell>
+                    <TableCell>Date Actually Returned</TableCell>
                 </TableRow>
                 </TableHead>
                 <TableBody>
                 {libraryLogs.map((log) => (
-                    <TableRow
-                    key={log.bookLogId}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                    <TableCell component="th" scope="row">
-                        {log.bookLogId}
-                    </TableCell>
-                    <TableCell align="right">{log.user.username}</TableCell>
-                    <TableCell align="right">{log.book.bookId}</TableCell>
-                    <TableCell align="right">{formatDate(log.dateIssued)}</TableCell>
-                    <TableCell align="right">{formatDate(log.dateToBeReturned)}</TableCell>
-                    <TableCell align="right">{formatDate(log.dateActuallyReturned)}</TableCell>
+                    <TableRow key={log.bookLogId}>
+                    <TableCell>{log.bookLogId}</TableCell>
+                    <TableCell>{log.user.username}</TableCell>
+                    <TableCell >{log.book.bookId}</TableCell>
+                    <TableCell>{formatDate(log.dateIssued)}</TableCell>
+                    <TableCell>{formatDate(log.dateToBeReturned)}</TableCell>
+                    <TableCell>{formatDate(log.dateActuallyReturned)}</TableCell>
                     </TableRow>
                 ))}
                 </TableBody>
             </Table>
             </TableContainer>
-
         </div>
     )
 }
