@@ -222,23 +222,6 @@ select{
     opacity: 1;
 }
 
-/*Dark mode*/
-/* #dark-topright{
-    color: #fff;
-    position:absolute;
-    padding:10px;
-    top:0;
-    left:0;
-    box-shadow: 0 0 10px rgba(248, 248, 248, 0.973);
-    background-color: rgb(3, 37, 9);
-    padding: 10px;
-}
-
-.dark_mode .nav{
-    color:white;
-    background-color: rgb(57, 39, 39);
-} */
-
 /* Top-right corner position for Page Appearance Settings (Dark Mode) */
 #dark-topright{
     color: black;
