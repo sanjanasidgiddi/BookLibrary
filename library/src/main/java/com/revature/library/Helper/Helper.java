@@ -13,7 +13,7 @@ public final class Helper {
 
     public static User requireIsAdmin(Optional<User> loggedIn) throws Unauthorized{
         if (DEBUG_MODE){
-            return requireLoggedIn(loggedIn);
+            return loggedIn.orElse(null);
         }
 
         return loggedIn
@@ -27,7 +27,7 @@ public final class Helper {
 
     public static User requireIsAdminOrOfUser(String username, Optional<User> loggedIn) throws Unauthorized{
         if (DEBUG_MODE){
-            return requireLoggedIn(loggedIn);
+            return loggedIn.orElse(null);
         }
 
         return loggedIn
