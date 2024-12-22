@@ -8,6 +8,7 @@ import { Button, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/m
 function BookListMUI() {
     const [allBooks, setAllBooks] = useState<Book[]>([])
     const [showAddBookPopup, setShowAddBookPopup] = useState(false);
+    const [bookToEdit, setBookToEdit] = useState<Book | null>(null);
 
     useEffect(() => {
         // This will execute when the component mounts and on certain other conditions
@@ -38,6 +39,11 @@ function BookListMUI() {
         setAllBooks((prevBooks) => [...prevBooks, newBook]);
     };
 
+    const editBook = (book: Book) => {
+        setBookToEdit(book);
+        setShowAddBookPopup(true); 
+      };
+
     /** Get all books from database */
 
     /** Tester Function: Sending a get request to the database getting all books. */
@@ -51,22 +57,24 @@ function BookListMUI() {
     }
 
     return (
-        <div>
+        <div className="booklist-container">
             <Button variant="contained" color="secondary" id="darklight" onClick={toggleDarkLight}>Dark</Button>
-            <br></br>
-            <h1> Book List Page</h1>
-            {/* <button onClick={() => setShowAddBookPopup(true)}>Add New Book</button> */}
+            <br />
+            <h1>Book List Page</h1>
             <Button variant="contained" color="secondary" onClick={() => setShowAddBookPopup(true)}>Add New Book</Button>
             <h2>All Books</h2>
-            <Table>
+
+            {/* Table Styling */}
+            <Table className="book-table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Book ID</TableCell>
-                        <TableCell>Book Name</TableCell>
-                        <TableCell>Author</TableCell>
-                        <TableCell>Genre</TableCell>
-                        <TableCell>Age Limit</TableCell>
-                        <TableCell>Image URL</TableCell>
+                        <TableCell className="table-header">Book ID</TableCell>
+                        <TableCell className="table-header">Book Name</TableCell>
+                        <TableCell className="table-header">Author</TableCell>
+                        <TableCell className="table-header">Genre</TableCell>
+                        <TableCell className="table-header">Age Limit</TableCell>
+                        <TableCell className="table-header">Image URL</TableCell>
+                        <TableCell className="table-header">Actions</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -79,17 +87,31 @@ function BookListMUI() {
                                 <TableCell>{book.bookGenre}</TableCell>
                                 <TableCell>{book.bookAgeLimit}</TableCell>
                                 <TableCell>{book.image}</TableCell>
+                                <TableCell>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() => editBook(book)}
+                                    >
+                                        Edit
+                                    </Button>
+                                </TableCell>
                             </TableRow>
                         )
                     })}
                 </TableBody>
             </Table>
+
             <Button variant="contained" color="secondary" onClick={getBooks}>Get All Books</Button>
 
             {showAddBookPopup && (
                 <NewBook
-                    onClose={() => setShowAddBookPopup(false)}
+                    onClose={() => {
+                        setShowAddBookPopup(false);
+                        setBookToEdit(null);
+                    }}
                     onBookAdded={addNewBookToList}
+                    bookToEdit={bookToEdit}
                 />
             )}
         </div>
