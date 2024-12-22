@@ -15,9 +15,10 @@ public class BookLogDAOMocker extends DaoMocker<BookLog, Integer> implements Boo
     @Override
     BookLog addId(BookLog entry, int index) {
         return new BookLog(
-                index, entry.getUser(),
+            index,
+            entry.getUser(),
             entry.getBook(),
-                entry.getDateIssued(),
+            entry.getDateIssued(),
             entry.getDateToBeReturned(),
             entry.getDateActuallyReturned()
         );
@@ -29,7 +30,7 @@ public class BookLogDAOMocker extends DaoMocker<BookLog, Integer> implements Boo
             .findAll()
             .stream()
             .filter(
-                x -> x.getUser().getUsername().equals(username)
+                x -> x.getUser() != null && x.getUser().getUsername().equals(username)
             )
             .collect(Collectors.toList());
     }
@@ -40,7 +41,7 @@ public class BookLogDAOMocker extends DaoMocker<BookLog, Integer> implements Boo
             .findAll()
             .stream()
             .filter(
-                x -> x.getBook().getBookId() == id
+                x -> x.getBook() != null && x.getBook().getBookId() == id
             )
             .collect(Collectors.toList());
     }

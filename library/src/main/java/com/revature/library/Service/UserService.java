@@ -93,6 +93,14 @@ public class UserService{
             throw new UserExceptions.IsHoldingBook();
         }
 
+        for (var log: bookLogDao.findAll()){
+            if (log.getUser() != null && log.getUser().getUsername().equals(username)){
+                log.setUser(null);
+
+                bookLogDao.save(log);
+            }
+        }
+
         dao.deleteById(username);
     }
 

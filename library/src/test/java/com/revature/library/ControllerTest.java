@@ -23,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -791,11 +792,11 @@ public class ControllerTest {
 
     void assertSameInfo(BookLog left, BookLog right){
         assertTrue(
-            left.getBook().equals(right.getBook()) &&
-            left.getUser().equals(right.getUser()) &&
+            Objects.equals(left.getBook(), right.getBook()) &&
+            Objects.equals(left.getUser(), right.getUser()) &&
             left.getDateIssued().equals(right.getDateIssued()) &&
             left.getDateToBeReturned().equals(right.getDateToBeReturned()) &&
-            left.getDateActuallyReturned().equals(right.getDateActuallyReturned())
+            Objects.equals(left.getDateActuallyReturned(), right.getDateActuallyReturned())
         );
     }
 }

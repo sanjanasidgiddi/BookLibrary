@@ -62,7 +62,12 @@ public class BookLogService{
                 ()->new BookLogExceptions.NotFound()
             );
 
-        Helper.requireIsAdminOrOfUser(log.getUser().getUsername(), loggedIn);
+        if (log.getUser() == null){
+            Helper.requireIsAdmin(loggedIn);
+        }
+        else {
+            Helper.requireIsAdminOrOfUser(log.getUser().getUsername(), loggedIn);
+        }
 
         if (log.getDateActuallyReturned() != null){
             throw new BookExceptions.AlreadyReturned();
@@ -82,7 +87,12 @@ public class BookLogService{
                 ()->new BookLogExceptions.NotFound()
             );
 
-        Helper.requireIsAdminOrOfUser(log.getUser().getUsername(), loggedIn);
+        if (log.getUser() == null){
+            Helper.requireIsAdmin(loggedIn);
+        }
+        else {
+            Helper.requireIsAdminOrOfUser(log.getUser().getUsername(), loggedIn);
+        }
 
         return log;
     }

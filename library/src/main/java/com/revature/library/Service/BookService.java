@@ -74,6 +74,14 @@ public class BookService {
             throw new BookExceptions.IsHeld();
         }
 
+        for (var log: bookLogDAO.findAll()){
+            if (log.getBook() != null && log.getBook().getBookId() == bookId){
+                log.setBook(null);
+
+                bookLogDAO.save(log);
+            }
+        }
+
         bookDAO.deleteById(bookId);
     }
 
