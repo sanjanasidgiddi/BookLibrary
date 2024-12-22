@@ -68,6 +68,9 @@ public class Controller {
         catch (Unauthorized  e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+        catch (UserExceptions.NotFound e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
         catch (NullPointerException|ClassCastException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

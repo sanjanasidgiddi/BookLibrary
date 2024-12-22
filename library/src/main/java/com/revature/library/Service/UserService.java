@@ -33,14 +33,16 @@ public class UserService{
         return dao.save(user);
     }
 
-    public User login(String username, String password) throws Unauthorized{
-        return dao.findById(username)
-            .filter(
-                user->user.getPassword().equals(password)
-            )
-            .orElseThrow(
-                ()->new Unauthorized()
-            );
+    public User login(String username, String password) throws UserExceptions.NotFound, Unauthorized{
+        var user = dao.findById(username).orElseThrow(
+            ()-> new UserExceptions.NotFound()
+        );
+
+        if (!user.getPassword().equals(password)){
+            throw new Unauthorized();
+        }
+
+        return user;
     }
 
     public User getByUsername(String username, Optional<User> loggedIn) throws Unauthorized, UserExceptions.NotFound {

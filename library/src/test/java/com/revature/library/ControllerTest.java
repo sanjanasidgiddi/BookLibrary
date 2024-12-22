@@ -100,6 +100,18 @@ public class ControllerTest {
     @Nested
     class Users{
         @Test
+        void wrongUsername(){
+            var loginInfo = Map.of(
+                    "username", "user5",
+                    "password", "password"
+            );
+
+            assertNotFound(
+                controller.login(loginInfo, session)
+            );
+        }
+
+        @Test
         void wrongPassword(){
             var loginInfo = Map.of(
                     "username", user1.getUsername(),
@@ -133,7 +145,6 @@ public class ControllerTest {
                 );
             }
         }
-
 
         @Nested
         class R{
