@@ -30,7 +30,7 @@ public class BookLogService{
     }
 
     public BookLog issueBook(int bookId, Optional<User> loggedIn) throws Unauthorized, BookExceptions.IsHeld, BookExceptions.NotFound {
-        var user = loggedIn.orElseThrow(()->new Unauthorized());
+        var user = Helper.requireLoggedIn(loggedIn);
 
         if (isBookHeld(bookId)){
             throw new BookExceptions.IsHeld();
@@ -88,7 +88,7 @@ public class BookLogService{
     }
 
     public List<BookLog> getAll(Optional<User> loggedIn) throws Unauthorized {
-        var user = loggedIn.orElseThrow(()->new Unauthorized());
+        var user = Helper.requireLoggedIn(loggedIn);
 
         if (user.getRole() == Role.ADMIN){
             return dao.findAll();

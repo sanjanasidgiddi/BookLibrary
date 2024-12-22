@@ -74,7 +74,6 @@ public class BookService {
             throw new BookExceptions.IsHeld();
         }
 
-
         bookDAO.deleteById(bookId);
     }
 

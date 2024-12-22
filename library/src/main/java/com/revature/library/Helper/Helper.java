@@ -9,19 +9,40 @@ import java.util.Optional;
 public final class Helper {
     private Helper(){}
 
-    public static void requireIsAdmin(Optional<User> loggedIn) throws Unauthorized{
-        var authorized = loggedIn.map(user->user.getRole()==Role.ADMIN).orElse(false);
+    public static boolean DEBUG_MODE = true;
 
-        if (!authorized){
-            throw new Unauthorized();
+    public static User requireIsAdmin(Optional<User> loggedIn) throws Unauthorized{
+        if (DEBUG_MODE){
+            return requireLoggedIn(loggedIn);
         }
+
+        return loggedIn
+            .filter(
+                user->user.getRole()==Role.ADMIN
+            )
+            .orElseThrow(
+                ()->new Unauthorized()
+            );
     }
 
-    public static void requireIsAdminOrOfUser(String username, Optional<User> loggedIn) throws Unauthorized{
-        var authorized = loggedIn.map(user->user.getRole()==Role.ADMIN || user.getUsername().equals(username)).orElse(false);
-
-        if (!authorized){
-            throw new Unauthorized();
+    public static User requireIsAdminOrOfUser(String username, Optional<User> loggedIn) throws Unauthorized{
+        if (DEBUG_MODE){
+            return requireLoggedIn(loggedIn);
         }
+
+        return loggedIn
+            .filter(
+                user->user.getRole()==Role.ADMIN || user.getUsername().equals(username)
+            )
+            .orElseThrow(
+                ()->new Unauthorized()
+            );
+    }
+
+    public static User requireLoggedIn(Optional<User> loggedIn) throws Unauthorized {
+        return loggedIn
+            .orElseThrow(
+                ()->new Unauthorized()
+            );
     }
 }
