@@ -16,7 +16,7 @@ function LibraryLogs() {
   }, []);
 
   const fetchLogs = () => {
-    axios.get<BookLog[]>("http://localhost:8080/BookLogs")
+    axios.get<BookLog[]>("http://localhost:8080/bookLogs")
       .then((res) => {
         setlibraryLogs(res.data);
       })
@@ -45,7 +45,7 @@ function LibraryLogs() {
     }
 
     const handleReturnBook = (bookLogId: number) => {
-      axios.post(`http://localhost:8080/returnBook/${bookLogId}`)
+      axios.post(`http://localhost:8080/bookLogs/return/${bookLogId}`)
         .then(() => {
           fetchLogs();
         })
