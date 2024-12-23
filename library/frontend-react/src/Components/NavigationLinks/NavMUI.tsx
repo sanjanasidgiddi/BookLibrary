@@ -54,7 +54,7 @@ function NavMUI() {
                         <Button variant="contained" color="secondary" sx={{ color: "white", background: "rgba(0, 0, 0, 0.3)" }} onClick={() => navToPage('/allbooks')}>All Books</Button>
                         <Button variant="contained" color="secondary" sx={{ color: "white", background: "rgba(0, 0, 0, 0.3)" }} onClick={() => navToPage('/mybooks')}>My Books</Button>
                         <Button variant="contained" color="secondary" sx={{ color: "white", background: "rgba(0, 0, 0, 0.3)" }} onClick={() => navToPage('/booklistmui')}>Book List</Button>
-                        <Button variant="contained" color="secondary" sx={{ color: "white", background: "rgba(0, 0, 0, 0.3)" }} onClick={() => navToPage('/libraryLogs')}>Logs</Button>
+                        {/* <Button variant="contained" color="secondary" sx={{ color: "white", background: "rgba(0, 0, 0, 0.3)" }} onClick={() => navToPage('/libraryLogs')}>Logs</Button> */}
                     </Box>
     
                     {/* Right-aligned buttons (Login, Logout, Register) */}
