@@ -44,6 +44,17 @@ function BookListMUI() {
         setShowAddBookPopup(true); 
       };
 
+      const delBook = (bookId: number) => {
+        axios.delete(`http://localhost:8080/books/${bookId}`)
+        .then(response => {
+          axios.get<Book>("http://localhost:8080/books/${bookId}", { withCredentials: true })
+          console.log("Book deleted:", response.data);
+        })
+        .catch(error => {
+          console.error("Error deleting book:", error);
+        });
+      };
+
     /** Get all books from database */
 
     /** Tester Function: Sending a get request to the database getting all books. */
@@ -83,7 +94,8 @@ function BookListMUI() {
                         <TableCell className="table-header">Genre</TableCell>
                         <TableCell className="table-header">Age Limit</TableCell>
                         <TableCell className="table-header">Image URL</TableCell>
-                        <TableCell className="table-header">Actions</TableCell>
+                        <TableCell className="table-header">Edit</TableCell>
+                        <TableCell className="table-header">Delete</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -103,6 +115,15 @@ function BookListMUI() {
                                         onClick={() => editBook(book)}
                                     >
                                         Edit
+                                    </Button>
+                                </TableCell>
+                                <TableCell>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() => delBook(book.bookId)}
+                                    >
+                                        Delete
                                     </Button>
                                 </TableCell>
                             </TableRow>

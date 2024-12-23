@@ -67,16 +67,7 @@ function AllBooks() {
       });
   }
 
-  const delBook = (bookId: number) => {
-    axios.delete(`http://localhost:8080/books/${bookId}`)
-    .then(response => {
-      axios.get<Book>("http://localhost:8080/books/${bookId}", { withCredentials: true })
-      console.log("Book deleted:", response.data);
-    })
-    .catch(error => {
-      console.error("Error deleting book:", error);
-    });
-  };
+  
 
 
   return (
@@ -164,13 +155,6 @@ function AllBooks() {
                     onClick={() => borrowBook(book.bookId)}
                   >
                     Issue
-                  </Button>
-                  <Button
-                    size="small"
-                    color="primary"
-                    onClick={() => delBook(book.bookId)}
-                  >
-                    Delete
                   </Button>
                 </CardActions>
               </Card>
