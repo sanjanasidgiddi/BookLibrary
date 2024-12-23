@@ -39,6 +39,18 @@ Before setting up the Online Book Library Management Application, ensure the fol
 ```bash
 git clone https://github.com/241209-JavaReactAWS/sharvani-rolando-sanjana-project1.git
 ```
+-- **Install React Router DOM**
+```bash
+npm install react-router-dom
+```
+-- **Install Axios**
+```bash
+npm install axios
+```
+-- **Install Material UI**
+```bash
+npm install @mui/material @emotion/react @emotion/styled
+```
 - **Run Development Scripts**:
 ```bash
 npm run dev
