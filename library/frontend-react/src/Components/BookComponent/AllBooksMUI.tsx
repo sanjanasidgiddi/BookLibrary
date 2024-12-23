@@ -57,7 +57,7 @@ function AllBooks() {
     axios.post(`http://localhost:8080/bookLogs/${bookId}`)
       .then(response => {
         axios.get<Book[]>("http://localhost:8080/books", { withCredentials: true })
-          .then((response) => setAllBooks(response.data));
+        .then((response) => setAllBooks(response.data));
         console.log("Book issued:", response.data);
         // Optionally, update the UI to reflect the issued book
       })

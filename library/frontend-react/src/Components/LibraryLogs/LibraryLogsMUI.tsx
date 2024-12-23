@@ -5,15 +5,15 @@ import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRo
 
 function LibraryLogs() {
   const [libraryLogs, setlibraryLogs] = useState<BookLog[]>([])
-
-  useEffect(() => {
-    fetchLogs();
-    const interval = setInterval(() => {
-      fetchLogs();
-    }, 5000); 
-
-    return () => clearInterval(interval); 
-  }, []);
+    useEffect(() => {
+        axios.get<BookLog[]>("http://localhost:8080/bookLogs")
+            .then((res) => {
+                setlibraryLogs(res.data)
+            })
+            .catch((error) => {
+                console.error("Error fetching books:", error);
+            });
+    }, [])
 
   const fetchLogs = () => {
     axios.get<BookLog[]>("http://localhost:8080/bookLogs", { withCredentials: true })
@@ -47,15 +47,15 @@ function LibraryLogs() {
       theme_element.classList.toggle("dark_mode");
     }
 
-    const handleReturnBook = (bookLogId: number) => {
-      axios.post(`http://localhost:8080/bookLogs/return/${bookLogId}`)
-        .then(() => {
-          fetchLogs();
-        })
-        .catch((error) => {
-          console.error("Error returning book:", error);
-        });
-    };
+    // const handleReturnBook = (bookLogId: number) => {
+    //   axios.post(`http://localhost:8080/bookLogs/return/${bookLogId}`)
+    //     .then(() => {
+    //       fetchLogs();
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error returning book:", error);
+    //     });
+    // };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
