@@ -67,12 +67,12 @@ public class BookService {
     public void deleteBook(int bookId, Optional<User> loggedIn) throws Unauthorized, BookExceptions.NotFound, BookExceptions.IsHeld {
         Helper.requireIsAdmin(loggedIn);
 
-        if (!bookDAO.existsById(bookId)){
-            throw new BookExceptions.NotFound();
-        }
-        if (isBookHeld(bookId)){
-            throw new BookExceptions.IsHeld();
-        }
+        // if (!bookDAO.existsById(bookId)){
+        //     throw new BookExceptions.NotFound();
+        // }
+        // if (isBookHeld(bookId)){
+        //     throw new BookExceptions.IsHeld();
+        // }
 
         for (var log: bookLogDAO.findAll()){
             if (log.getBook() != null && log.getBook().getBookId() == bookId){
