@@ -16,15 +16,17 @@ function LibraryLogs() {
   }, []);
 
   const fetchLogs = () => {
-    axios.get<BookLog[]>("http://localhost:8080/bookLogs")
+    axios.get<BookLog[]>("http://localhost:8080/bookLogs", { withCredentials: true })
       .then((res) => {
-        console.log(res.data);
+        console.log("Fetched logs:", res.data);
         setlibraryLogs(res.data);
       })
       .catch((error) => {
-        console.error("Error fetching books:", error);
+        console.error("Error fetching logs:", error);
+        alert("Authentication failed or logs are restricted.");
       });
   };
+  
 
 
   const formatDate = (date: Date | null) => {

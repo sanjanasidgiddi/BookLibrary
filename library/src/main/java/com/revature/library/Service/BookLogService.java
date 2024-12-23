@@ -100,7 +100,7 @@ public class BookLogService{
     public List<BookLog> getAll(Optional<User> loggedIn) throws Unauthorized {
         var user = Helper.requireLoggedIn(loggedIn);
 
-        if (user == null || user.getRole() == Role.ADMIN){
+        if (user.getRole() == Role.USER || user.getRole() == Role.ADMIN){
             return dao.findAll();
         }
         return dao.findByUser_Username(user.getUsername());
