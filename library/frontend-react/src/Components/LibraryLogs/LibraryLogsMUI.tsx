@@ -5,7 +5,10 @@ import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRo
 
 function LibraryLogs() {
   const [libraryLogs, setlibraryLogs] = useState<BookLog[]>([])
+
     useEffect(() => {
+        // This will execute when the component mounts and on certain other conditions
+        // Send an AXIOS request when the page loads
         axios.get<BookLog[]>("http://localhost:8080/bookLogs")
             .then((res) => {
                 setlibraryLogs(res.data)
@@ -15,25 +18,11 @@ function LibraryLogs() {
             });
     }, [])
 
-  const fetchLogs = () => {
-    axios.get<BookLog[]>("http://localhost:8080/bookLogs", { withCredentials: true })
-      .then((res) => {
-        console.log("Fetched logs:", res.data);
-        setlibraryLogs(res.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching logs:", error);
-        alert("Authentication failed or logs are restricted.");
-      });
-  };
-  
-
-
-  const formatDate = (date: Date | null) => {
-    if (!date) return "N/A"; // Return N/A if date is missing
-    const formattedDate = new Date(date);
-    return formattedDate.toLocaleDateString("en-US");
-  };
+    const formatDate = (date: Date | null) => {
+        if (!date) return "N/A"; // Return N/A if date is missing
+        const formattedDate = new Date(date);
+        return formattedDate.toLocaleDateString("en-US"); 
+    };
 
     /** Function to trigger appearance theme change */
     let toggleDarkLight = () => {

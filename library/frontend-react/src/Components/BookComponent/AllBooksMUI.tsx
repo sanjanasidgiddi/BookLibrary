@@ -59,7 +59,6 @@ function AllBooks() {
         axios.get<Book[]>("http://localhost:8080/books", { withCredentials: true })
         .then((response) => setAllBooks(response.data));
         console.log("Book issued:", response.data);
-        // Optionally, update the UI to reflect the issued book
       })
       .catch(error => {
         console.error("Error issuing book:", error);
