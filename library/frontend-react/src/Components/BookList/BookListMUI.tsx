@@ -75,14 +75,14 @@ function BookListMUI() {
                 color="secondary"
                 id="darklight"
                 onClick={toggleDarkLight}
-                style={{ marginRight: '10px' }}
+                style={{ marginRight: '20px' }}
                 >
                 Dark
                 </Button>
             </div>
             <br />
-            <Button variant="contained" color="secondary" onClick={() => setShowAddBookPopup(true)}>Add New Book</Button>
-            <h2>Book Dashboard</h2>
+            <Button variant="contained" color="secondary" style={{ marginBottom: '10px' }} onClick={() => setShowAddBookPopup(true)}>Add New Book</Button>
+            {/* <h2>Book Dashboard</h2> */}
             {/* Table Styling */}
             <Table className="book-table">
                 <TableHead>
