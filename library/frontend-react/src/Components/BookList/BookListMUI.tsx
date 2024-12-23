@@ -83,7 +83,6 @@ function BookListMUI() {
             <br />
             <Button variant="contained" color="secondary" onClick={() => setShowAddBookPopup(true)}>Add New Book</Button>
             <h2>Book Dashboard</h2>
-
             {/* Table Styling */}
             <Table className="book-table">
                 <TableHead>
@@ -131,7 +130,7 @@ function BookListMUI() {
                     })}
                 </TableBody>
             </Table>
-            <Button variant="contained" color="secondary" onClick={getBooks}>Get All Books</Button>
+            {/* <Button variant="contained" color="secondary" onClick={getBooks}>Get All Books</Button> */}
 
             {showAddBookPopup && (
                 <NewBook

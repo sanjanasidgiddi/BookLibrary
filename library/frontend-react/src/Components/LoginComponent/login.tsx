@@ -74,7 +74,7 @@ function Login() {
           </div>
 
           <button className="button" type="submit" onClick={submitUnamePass}> Login </button>
-          <button className="button" type="submit" onClick={getusers}> Get Current users in Database </button>
+          {/* <button className="button" type="submit" onClick={getusers}> Get Current users in Database </button> */}
           <div className="register">
             <p>Don't have an account?
               <a href="register.html">Register</a>
