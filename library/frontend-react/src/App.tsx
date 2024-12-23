@@ -48,7 +48,7 @@ function App() {
 
   return (
     <div>
-      <h1>Welcome to the Book Library </h1>
+      {/* <h1>Welcome to the Book Library </h1> */}
       <UserInfo.Provider value={
         {
           username,
