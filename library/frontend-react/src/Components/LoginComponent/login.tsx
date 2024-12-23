@@ -53,7 +53,7 @@ function Login() {
 
   return (
     <div>
-      <button id="darklight" onClick={toggleDarkLight}>Dark</button>
+      <button id="darklight" onClick={toggleDarkLight}>DARK</button>
       <div className="wrapper">
         <form action="" id="login_user">
           <h1>Login</h1>

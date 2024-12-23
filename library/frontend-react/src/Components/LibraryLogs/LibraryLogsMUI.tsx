@@ -58,8 +58,19 @@ function LibraryLogs() {
     };
 
   return (
-    <div>
-      <Button variant="contained" color="secondary" id="darklight" onClick={toggleDarkLight}>Dark</Button>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
+        <Button
+          variant="contained"
+          color="secondary"
+          id="darklight"
+          onClick={toggleDarkLight}
+          style={{ marginRight: '10px' }}
+        >
+          Dark
+        </Button>
+      </div>
+      <br />
       <h1 style={{ marginBottom: '20px', textAlign: 'center' }}>Library Logs</h1>
       <Table>
         <TableHead>

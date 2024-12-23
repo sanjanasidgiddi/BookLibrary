@@ -57,8 +57,18 @@ function BookListMUI() {
     }
 
     return (
-        <div className="booklist-container">
-            <Button variant="contained" color="secondary" id="darklight" onClick={toggleDarkLight}>Dark</Button>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+            <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
+                <Button
+                variant="contained"
+                color="secondary"
+                id="darklight"
+                onClick={toggleDarkLight}
+                style={{ marginRight: '10px' }}
+                >
+                Dark
+                </Button>
+            </div>
             <br />
             <Button variant="contained" color="secondary" onClick={() => setShowAddBookPopup(true)}>Add New Book</Button>
             <h2>Book Dashboard</h2>
