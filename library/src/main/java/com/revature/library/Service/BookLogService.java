@@ -32,9 +32,9 @@ public class BookLogService{
     public BookLog issueBook(int bookId, Optional<User> loggedIn) throws Unauthorized, BookExceptions.IsHeld, BookExceptions.NotFound {
         var user = Helper.requireLoggedIn(loggedIn);
 
-        if (isBookHeld(bookId)){
-            throw new BookExceptions.IsHeld();
-        }
+        // if (isBookHeld(bookId)){
+        //     throw new BookExceptions.IsHeld();
+        // }
 
         var book = bookDAO
             .findById(bookId)
