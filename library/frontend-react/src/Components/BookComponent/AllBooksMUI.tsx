@@ -71,11 +71,10 @@ function AllBooks() {
     axios.delete(`http://localhost:8080/books/${bookId}`)
     .then(response => {
       axios.get<Book>("http://localhost:8080/books/${bookId}", { withCredentials: true })
-      console.log("Book issued:", response.data);
+      console.log("Book deleted:", response.data);
     })
     .catch(error => {
       console.error("Error deleting book:", error);
-      alert("Failed to delete the book.");
     });
   };
 

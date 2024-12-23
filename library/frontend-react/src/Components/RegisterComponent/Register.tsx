@@ -35,6 +35,7 @@ function Register() {
             console.log(res.data);
             userAuth?.setUsername(res.data.username);
             userAuth?.setRole(res.data.role);
+            alert("Registered successfully!")
         }).catch((err) => {
             console.log(err);
         })

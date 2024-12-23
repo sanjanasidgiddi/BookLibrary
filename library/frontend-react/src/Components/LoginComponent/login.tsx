@@ -33,6 +33,7 @@ function Login() {
       { username, password }, { withCredentials: true }
     ).then((res) => {
       console.log("Login Successful, here's the data returned: ", res.data);
+      alert("Login Successful! Welcome")
       userAuth?.setUsername(res.data.username);
       userAuth?.setRole(res.data.role);
     }).catch((err) => {
