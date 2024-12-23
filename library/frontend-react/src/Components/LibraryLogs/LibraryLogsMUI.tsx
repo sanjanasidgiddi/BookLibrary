@@ -18,6 +18,7 @@ function LibraryLogs() {
   const fetchLogs = () => {
     axios.get<BookLog[]>("http://localhost:8080/bookLogs")
       .then((res) => {
+        console.log(res.data);
         setlibraryLogs(res.data);
       })
       .catch((error) => {
