@@ -46,8 +46,6 @@ public class UserService{
     }
 
     public User getByUsername(String username, Optional<User> loggedIn) throws Unauthorized, UserExceptions.NotFound {
-        Helper.requireIsAdminOrOfUser(username, loggedIn);
-
         return dao
             .findById(username)
             .orElseThrow(
@@ -56,14 +54,10 @@ public class UserService{
     }
 
     public List<User> getAll(Optional<User> loggedIn) throws Unauthorized {
-        Helper.requireIsAdmin(loggedIn);
-
         return dao.findAll();
     }
 
     public User editUser(String username, User newUserInfo, Optional<User> loggedIn) throws UserExceptions.NotFound, UserExceptions.UsernameInvalid, UserExceptions.EmailInvalid, UserExceptions.PasswordInvalid, Unauthorized {
-        Helper.requireIsAdminOrOfUser(username, loggedIn);
-
         checkValidity(newUserInfo);
 
         var userInTable = dao
@@ -83,8 +77,6 @@ public class UserService{
     }
 
     public void deleteUser(String username, Optional<User> loggedIn) throws Unauthorized, UserExceptions.NotFound, UserExceptions.IsHoldingBook {
-        Helper.requireIsAdminOrOfUser(username, loggedIn);
-
         if (!dao.existsById(username)){
             throw new UserExceptions.NotFound();
         }

@@ -10,6 +10,12 @@ function Register() {
     /** State variables username and password */
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
+    const [firstName, setFirstName] = useState<string>('')
+    const [lastName, setLastName] = useState<string>('')
+    const [email, setEmail] = useState<string>('')
+    const [phoneNumber, setPhoneNumber] = useState<number>()
+    const [dob, setDob] = useState<Date>()
+    const [role, setRole] = useState<"USER" | "ADMIN">("USER")
 
     /** Function to trigger appearance theme change */
     let toggleDarkLight = () => {
@@ -29,14 +35,21 @@ function Register() {
         console.log("Entered: ", username)
         console.log("Entered: ", password)
         /** Sending a post request to the database and setting authentication credentials/context. */
+        /** firstName: string,
+    lastName: string,
+    phoneNumber: number,
+    dob: Date,
+    role: "USER" | "ADMIN" */
         axios.post("http://localhost:8080/users/register",
-            { username, password }, { withCredentials: true }
+            { username, password, firstName, lastName, email, phoneNumber, dob, role }, { withCredentials: true,
+                headers: { "Content-Type": "application/json" } }
         ).then((res) => {
             console.log(res.data);
             userAuth?.setUsername(res.data.username);
             userAuth?.setRole(res.data.role);
             alert("Registered successfully!")
         }).catch((err) => {
+            alert("Uh oh! Could not Register -----> " + err);
             console.log(err);
         })
     }
@@ -48,23 +61,28 @@ function Register() {
                 <form action="" id="login_user">
                     <h1>Register</h1>
                     <div className="input_box">
-                        <input type="text" id="firstNameInput" placeholder="First Name" required />
+                        <input type="text" id="firstNameInput" placeholder="First Name" required
+                            value={firstName} onChange={(e: SyntheticEvent) => { setFirstName((e.target as HTMLInputElement).value) }} />
                     </div>
 
                     <div className="input_box">
-                        <input type="text" id="lastNameInput" placeholder="Last Name" required />
+                        <input type="text" id="lastNameInput" placeholder="Last Name" required
+                            value={lastName} onChange={(e: SyntheticEvent) => { setLastName((e.target as HTMLInputElement).value) }} />
                     </div>
 
                     <div className="input_box">
-                        <input type="email" id="emailInput" placeholder="Email" required />
+                        <input type="email" id="emailInput" placeholder="Email" required
+                            value={email} onChange={(e: SyntheticEvent) => { setEmail((e.target as HTMLInputElement).value) }} />
                     </div>
 
                     <div className="input_box">
-                        <input type="tel" id="phoneNumberInput" placeholder="Phone Number" required />
+                        <input type="tel" id="phoneNumberInput" placeholder="Phone Number" required
+                            value={phoneNumber} onChange={(e: SyntheticEvent) => { setPhoneNumber(Number((e.target as HTMLInputElement).value)) }} />
                     </div>
 
                     <div className="input_box">
-                        <input type="date" id="dateOfBirthInput" title="Date of Birth" placeholder="Date of Birth" required />
+                        <input type="date" id="dateOfBirthInput" title="Date of Birth" placeholder="Date of Birth" required
+                            value={dob ? dob.toISOString().split('T')[0] : ''} onChange={(e: SyntheticEvent) => { setDob(new Date((e.target as HTMLInputElement).value)) }} />
                     </div>
                     <div className="input_box">
                         <input type="text"
@@ -84,6 +102,32 @@ function Register() {
                     <div className="input_box">
                         <input type="password" id="re_passwordInput" placeholder="Re-enter Password" required />
                     </div>
+                    <br />
+                    <label>
+                        <input
+                            type="radio"
+                            name="role"
+                            value="USER"
+                            checked={role === "USER"}
+                            onChange={(e: SyntheticEvent) => {
+                                setRole((e.target as HTMLInputElement).value as "USER" | "ADMIN");
+                            }}
+                        />
+                        Avid Reader
+                    </label>
+                    <br />
+                    <label>
+                        <input
+                            type="radio"
+                            name="role"
+                            value="ADMIN"
+                            checked={role === "ADMIN"}
+                            onChange={(e: SyntheticEvent) => {
+                                setRole((e.target as HTMLInputElement).value as "USER" | "ADMIN");
+                            }}
+                        />
+                        Admin
+                    </label>
                     <button className="button" type="submit" onClick={submitUnamePass}> Register </button>
                     <div className="register">
                         <p>Don't have an account?

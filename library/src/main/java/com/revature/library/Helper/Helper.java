@@ -9,13 +9,8 @@ import java.util.Optional;
 public final class Helper {
     private Helper(){}
 
-    public static boolean DEBUG_MODE = true;
-
     public static User requireIsAdmin(Optional<User> loggedIn) throws Unauthorized{
-        if (DEBUG_MODE){
-            return loggedIn.orElse(null);
-        }
-
+        System.out.println("Logged in USER is -------------> " + loggedIn.toString());
         return loggedIn
             .filter(
                 user->user.getRole()==Role.ADMIN
@@ -26,10 +21,7 @@ public final class Helper {
     }
 
     public static User requireIsAdminOrOfUser(String username, Optional<User> loggedIn) throws Unauthorized{
-        if (DEBUG_MODE){
-            return loggedIn.orElse(null);
-        }
-
+        System.out.println("Logged in USER is -------------> " + loggedIn.toString());
         return loggedIn
             .filter(
                 user->user.getRole()==Role.ADMIN || user.getUsername().equals(username)
@@ -40,10 +32,7 @@ public final class Helper {
     }
 
     public static User requireLoggedIn(Optional<User> loggedIn) throws Unauthorized {
-        if (DEBUG_MODE){
-            return loggedIn.orElse(null);
-        }
-
+        System.out.println("Logged in USER is -------------> " + loggedIn.toString());
         return loggedIn
             .orElseThrow(
                 ()->new Unauthorized()
