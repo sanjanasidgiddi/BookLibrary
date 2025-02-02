@@ -54,7 +54,7 @@ function AllBooks() {
 
   // Handle issuing a book
   const borrowBook = (bookId: number) => {
-    axios.post(`http://localhost:8080/bookLogs/${bookId}`)
+    axios.post(`http://localhost:8080/bookLogs/${bookId}`, {}, { withCredentials: true })
       .then(response => {
         axios.get<Book[]>("http://localhost:8080/books", { withCredentials: true })
         .then((response) => setAllBooks(response.data));

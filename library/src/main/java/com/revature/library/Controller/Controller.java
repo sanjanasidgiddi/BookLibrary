@@ -39,10 +39,14 @@ public class Controller {
     static String USERNAME_KEY = "username";
 
     void setUser(User user, HttpSession session){
+        System.out.println("Setting session variable with - Username: " + user.getUsername());
+        System.out.println("Session ID: while setting " + session.getId());
         session.setAttribute(USERNAME_KEY, user.getUsername());
     }
 
     Optional<User> getUser(HttpSession session){
+        System.out.println("Getting session variable for Username: " + session.getAttribute(USERNAME_KEY));
+        System.out.println("Session ID: while retrieving " + session.getId());
         if (session.getAttribute(USERNAME_KEY) == null){
             return Optional.empty();
         }
@@ -59,6 +63,8 @@ public class Controller {
             String username = body.get("username");
             String password = body.get("password");
 
+            System.out.println("From Controller Attempting Login & setting session variable with these credentials - Username: " + username);
+            System.out.println("From Controller - Password: " + password);
             User user = userService.login(username, password);
 
             setUser(user, session);

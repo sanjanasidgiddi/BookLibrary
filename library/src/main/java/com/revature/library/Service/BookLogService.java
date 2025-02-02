@@ -6,6 +6,7 @@ import com.revature.library.Exceptions.BookExceptions;
 import com.revature.library.Exceptions.BookLogExceptions;
 import com.revature.library.Exceptions.Unauthorized;
 import com.revature.library.Helper.Helper;
+import com.revature.library.Models.Book;
 import com.revature.library.Models.BookLog;
 import com.revature.library.Models.Role;
 import com.revature.library.Models.User;
@@ -30,24 +31,24 @@ public class BookLogService{
     }
 
     public BookLog issueBook(int bookId, Optional<User> loggedIn) throws Unauthorized, BookExceptions.IsHeld, BookExceptions.NotFound {
-        var user = Helper.requireLoggedIn(loggedIn);
+        User user = Helper.requireLoggedIn(loggedIn);
 
         // if (isBookHeld(bookId)){
         //     throw new BookExceptions.IsHeld();
         // }
 
-        var book = bookDAO
+        Optional<Book> book = Optional.of(bookDAO
             .findById(bookId)
             .orElseThrow(
                 ()-> new BookExceptions.NotFound()
-            );
+            ));
 
-        var returnDate = Calendar.getInstance();
+        Calendar returnDate = Calendar.getInstance();
         returnDate.add(Calendar.DATE, 30);
 
-        var newLog = new BookLog();
+        BookLog newLog = new BookLog();
         newLog.setUser(user);
-        newLog.setBook(book);
+        newLog.setBook(book.get());
         newLog.setDateIssued(new Date());
         newLog.setDateToBeReturned(returnDate.getTime());
         newLog.setDateActuallyReturned(null);
@@ -56,51 +57,51 @@ public class BookLogService{
     }
 
     public BookLog returnBook(int bookLogId, Optional<User> loggedIn) throws Unauthorized, BookLogExceptions.NotFound, BookExceptions.AlreadyReturned {
-        var log = dao
+        Optional<BookLog> log = Optional.of(dao
             .findById(bookLogId)
             .orElseThrow(
                 ()->new BookLogExceptions.NotFound()
-            );
+            ));
 
-        if (log.getUser() == null){
+        if (log.get().getUser() == null){
             Helper.requireIsAdmin(loggedIn);
         }
         else {
-            Helper.requireIsAdminOrOfUser(log.getUser().getUsername(), loggedIn);
+            Helper.requireIsAdminOrOfUser(log.get().getUser().getUsername(), loggedIn);
         }
 
-        if (log.getDateActuallyReturned() != null){
+        if (log.get().getDateActuallyReturned() != null){
             throw new BookExceptions.AlreadyReturned();
         }
 
-        log.setDateActuallyReturned(new Date());
+        log.get().setDateActuallyReturned(new Date());
 
-        dao.save(log);
+        dao.save(log.get());
 
-        return log;
+        return log.get();
     }
 
     public BookLog get(int id, Optional<User> loggedIn) throws Unauthorized, BookLogExceptions.NotFound {
-        var log = dao
+        Optional<BookLog> log = Optional.of(dao
             .findById(id)
             .orElseThrow(
                 ()->new BookLogExceptions.NotFound()
-            );
+        ));
 
-        if (log.getUser() == null){
+        if (log.get().getUser() == null){
             Helper.requireIsAdmin(loggedIn);
         }
         else {
-            Helper.requireIsAdminOrOfUser(log.getUser().getUsername(), loggedIn);
+            Helper.requireIsAdminOrOfUser(log.get().getUser().getUsername(), loggedIn);
         }
 
-        return log;
+        return log.get();
     }
 
     public List<BookLog> getAll(Optional<User> loggedIn) throws Unauthorized {
-        var user = Helper.requireLoggedIn(loggedIn);
+        User user = Helper.requireLoggedIn(loggedIn);
 
-        if (user == null || user.getRole() == Role.ADMIN){
+        if (user.getRole() == Role.ADMIN){
             return dao.findAll();
         }
         return dao.findByUser_Username(user.getUsername());
@@ -109,21 +110,21 @@ public class BookLogService{
     public BookLog edit(int id, BookLog newBookLog, Optional<User> loggedIn) throws Unauthorized, BookLogExceptions.NotFound {
         Helper.requireIsAdmin(loggedIn);
 
-        var logInTable = dao
+        Optional<BookLog> logInTable = Optional.of(dao
             .findById(id)
             .orElseThrow(
                 ()->new BookLogExceptions.NotFound()
-            );
+            ));
 
-        logInTable.setBook(newBookLog.getBook());
-        logInTable.setUser(newBookLog.getUser());
-        logInTable.setDateIssued(newBookLog.getDateIssued());
-        logInTable.setDateToBeReturned(newBookLog.getDateToBeReturned());
-        logInTable.setDateActuallyReturned(newBookLog.getDateActuallyReturned());
+        logInTable.get().setBook(newBookLog.getBook());
+        logInTable.get().setUser(newBookLog.getUser());
+        logInTable.get().setDateIssued(newBookLog.getDateIssued());
+        logInTable.get().setDateToBeReturned(newBookLog.getDateToBeReturned());
+        logInTable.get().setDateActuallyReturned(newBookLog.getDateActuallyReturned());
 
-        dao.save(logInTable);
+        dao.save(logInTable.get());
 
-        return logInTable;
+        return logInTable.get();
     }
 
     public void delete(int id, Optional<User> loggedIn) throws Unauthorized, BookLogExceptions.NotFound {

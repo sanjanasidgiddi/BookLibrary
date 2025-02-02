@@ -45,7 +45,7 @@ function Login() {
 
   /** Tester Function: Sending a get request to the database and checking who the users are. */
   let getusers = () => {
-    axios.get("http://localhost:8080/users"
+    axios.get("http://localhost:8080/users", { withCredentials: true }
     ).then((res) => {
       console.log("Here are the current users in the database: ", res.data);
     }).catch((err) => {

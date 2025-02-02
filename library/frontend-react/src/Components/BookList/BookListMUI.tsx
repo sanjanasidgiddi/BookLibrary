@@ -13,7 +13,7 @@ function BookListMUI() {
     useEffect(() => {
         // This will execute when the component mounts and on certain other conditions
         // Send an AXIOS request when the page loads
-        axios.get<Book[]>("http://localhost:8080/books")
+        axios.get<Book[]>("http://localhost:8080/books", { withCredentials: true })
             .then((res) => {
                 setAllBooks(res.data)
             })
@@ -45,9 +45,9 @@ function BookListMUI() {
       };
 
       const delBook = (bookId: number) => {
-        axios.delete(`http://localhost:8080/books/${bookId}`)
+        axios.delete(`http://localhost:8080/books/${bookId}`, { withCredentials: true })
         .then(response => {
-          axios.get<Book>("http://localhost:8080/books/${bookId}", { withCredentials: true })
+          axios.get<Book>(`http://localhost:8080/books/${bookId}`, { withCredentials: true })
           console.log("Book deleted:", response.data);
         })
         .catch(error => {
@@ -59,7 +59,7 @@ function BookListMUI() {
 
     /** Tester Function: Sending a get request to the database getting all books. */
     let getBooks = () => {
-        axios.get("http://localhost:8080/books"
+        axios.get("http://localhost:8080/books", { withCredentials: true }
         ).then((res) => {
             console.log("Here are the current books in the database: ", res.data);
         }).catch((err) => {

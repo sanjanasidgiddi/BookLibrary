@@ -14,7 +14,7 @@ function MyBooks() {
   useEffect(() => {
     // This will execute when the component mounts and on certain other conditions
     // Send an AXIOS request when the page loads
-    axios.get<BookLog[]>("http://localhost:8080/bookLogs")
+    axios.get<BookLog[]>("http://localhost:8080/bookLogs", { withCredentials: true })
       .then((res) => {
         const unreturnedBooks = res.data.filter(log => !log.dateActuallyReturned);
         setMyBooks(unreturnedBooks)
@@ -38,7 +38,7 @@ function MyBooks() {
 
   const returnBook = (bookLogId: number) => {
   console.log("Attempting to return book with bookLogId:", bookLogId);
-  axios.post(`http://localhost:8080/bookLogs/return/${bookLogId}`)
+  axios.post(`http://localhost:8080/bookLogs/return/${bookLogId}`, {}, { withCredentials: true })
     .then(response => {
       console.log("Book returned successfully:", response.data);
       setMyBooks(prevBooks => prevBooks.filter(log => log.bookLogId !== bookLogId));
