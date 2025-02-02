@@ -29,16 +29,18 @@ function Login() {
     console.log("Entered: ", username)
     console.log("Entered: ", password)
     /** Sending a post request to the database and setting authentication credentials/context. */
-    axios.post("http://localhost:8080/users/login",
-      { username, password }, { withCredentials: true }
-    ).then((res) => {
-      console.log("Login Successful, here's the data returned: ", res.data);
-      alert("Login Successful! Welcome")
-      userAuth?.setUsername(res.data.username);
-      userAuth?.setRole(res.data.role);
-    }).catch((err) => {
-      console.log(err);
+    axios.post("http://localhost:8080/users/login", { username, password }, {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
     })
+    .then((res) => {
+      console.log("Login Successful: ", res.data);
+      alert("Login Successful, Welcome :) " + res.data);
+    })
+    .catch((err) => {
+      console.error("Axios Error: " + err);
+      alert("Login Failed! Error -----> " + (err.response ? err.response.data : err.message));
+    });
   }
 
   /** Tester Function: Sending a get request to the database and checking who the users are. */
@@ -54,6 +56,7 @@ function Login() {
   return (
     <div>
       <button id="darklight" onClick={toggleDarkLight}>DARK</button>
+      <button onClick={getusers}>Get all users</button>
       <div className="wrapper">
         <form action="" id="login_user">
           <h1>Login</h1>
@@ -73,7 +76,7 @@ function Login() {
             <i className='bx bxs-lock-alt' ></i>
           </div>
 
-          <button className="button" type="submit" onClick={submitUnamePass}> Login </button>
+          <button className="button" type="button" onClick={submitUnamePass}> Login </button>
           {/* <button className="button" type="submit" onClick={getusers}> Get Current users in Database </button> */}
           <div className="register">
             <p>Don't have an account?

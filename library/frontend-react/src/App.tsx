@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from 'react'
 import './App.css'
-import Login from './Components/LoginComponent/login'
 import AllBooks from './Components/BookComponent/AllBooks'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Nav from './Components/NavigationLinks/Nav'
@@ -14,6 +13,7 @@ import AllBooksMUI from './Components/BookComponent/AllBooksMUI'
 import MyBooksMUI from './Components/MyBooks/MyBooksMUI'
 import LibraryLogs from './Components/LibraryLogs/LibraryLogs'
 import LibraryLogsMUI from './Components/LibraryLogs/LibraryLogsMUI'
+import Login from './Components/LoginComponent/Login'
 
 
 /** Storing information about the logged in user */
@@ -33,18 +33,19 @@ function App() {
   const [username, setUsername] = useState<string>('')
 
   /** This ensures that the navigation links include either login or logout option based on user type */
-  useEffect(() => {
-    axios.get<User>('http://localhost:8080/users', { withCredentials: true })
-      .then((res) => { 
-        setUsername(res.data.username);
-        setRole(res.data.role);
-      })
-      .catch((err) => {
-        console.log(err);
-        setUsername('');
-        setRole('unauthenticated');
-      })
-  }, [])
+  // useEffect(() => {
+  //   axios.get<User>('http://localhost:8080/users', { withCredentials: true })
+  //     .then((res) => { 
+  //       setUsername(res.data.username);
+  //       setRole(res.data.role);
+  //       alert("Currently logged in user ------> " + res.data)
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       setUsername('');
+  //       setRole('unauthenticated');
+  //     })
+  // }, [])
 
   return (
     <div>

@@ -28,8 +28,6 @@ public class BookService {
     }
 
     public Book createNewBook(Book newbook, Optional<User> loggedIn) throws Unauthorized, BookExceptions.TitleAndAuthorAlreadyExists {
-        Helper.requireIsAdmin(loggedIn);
-
         checkValidity(newbook);
 
         return bookDAO.save(newbook);
@@ -48,8 +46,6 @@ public class BookService {
     }
 
     public Book editBook(int bookId, Book updatedBook, Optional<User> loggedIn) throws Unauthorized, BookExceptions.NotFound {
-        Helper.requireIsAdmin(loggedIn);
-
         return bookDAO.findById(bookId)
             .map(existingBook-> {
                 existingBook.setBookName(updatedBook.getBookName());
@@ -65,14 +61,6 @@ public class BookService {
     }
 
     public void deleteBook(int bookId, Optional<User> loggedIn) throws Unauthorized, BookExceptions.NotFound, BookExceptions.IsHeld {
-        Helper.requireIsAdmin(loggedIn);
-
-        // if (!bookDAO.existsById(bookId)){
-        //     throw new BookExceptions.NotFound();
-        // }
-        // if (isBookHeld(bookId)){
-        //     throw new BookExceptions.IsHeld();
-        // }
 
         for (var log: bookLogDAO.findAll()){
             if (log.getBook() != null && log.getBook().getBookId() == bookId){

@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5174", "http://localhost:5432"}, allowCredentials = "true")
 public class Controller {
     private final UserService userService;
 
@@ -55,24 +55,18 @@ public class Controller {
     //region user
     @PostMapping("/users/login")
     public ResponseEntity<User> login(@RequestBody Map<String, String> body, HttpSession session) {
-        try{
-            var username = (String)body.get("username");
-            var password = (String)body.get("password");
+        try {
+            String username = body.get("username");
+            String password = body.get("password");
 
-            var user = userService.login(username, password);
+            User user = userService.login(username, password);
 
             setUser(user, session);
 
             return ResponseEntity.ok(user);
         }
-        catch (Unauthorized  e) {
+        catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-        catch (UserExceptions.NotFound e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        catch (NullPointerException|ClassCastException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
@@ -302,6 +296,4 @@ public class Controller {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
-    //endregion
-
 }

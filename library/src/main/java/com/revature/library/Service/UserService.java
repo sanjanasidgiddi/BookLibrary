@@ -6,8 +6,14 @@ import com.revature.library.Exceptions.Unauthorized;
 import com.revature.library.Exceptions.UserExceptions;
 import com.revature.library.Helper.Helper;
 import com.revature.library.Models.User;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,16 +39,11 @@ public class UserService{
         return dao.save(user);
     }
 
-    public User login(String username, String password) throws UserExceptions.NotFound, Unauthorized{
-        var user = dao.findById(username).orElseThrow(
-            ()-> new UserExceptions.NotFound()
-        );
-
-        if (!user.getPassword().equals(password)){
-            throw new Unauthorized();
-        }
-
-        return user;
+    public User login(String username, String password) {
+        return dao
+            .findById(username)
+            .filter(user->user.getPassword().equals(password))
+            .orElse(null);
     }
 
     public User getByUsername(String username, Optional<User> loggedIn) throws Unauthorized, UserExceptions.NotFound {
