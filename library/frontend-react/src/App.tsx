@@ -20,32 +20,39 @@ import Login from './Components/LoginComponent/Login'
 export interface UserInfoType {
   username: string,
   setUsername: (username: string) => void,
-  role: "unauthenticated" | "USER" | "ADMIN",
-  setRole: (role: "unauthenticated" | "USER" | "ADMIN") => void
+  role: "unauthenticated" | "USER" | "ADMIN" | "STARTUP",
+  setRole: (role: "unauthenticated" | "USER" | "ADMIN" | "STARTUP") => void
 }
 
 export const UserInfo = createContext<UserInfoType | null>(null);
 
 function App() {
   /** User info context */
-  const [role, setRole] = useState<"unauthenticated" | "USER" | "ADMIN">('unauthenticated')
+  const [role, setRole] = useState<"unauthenticated" | "USER" | "ADMIN" | "STARTUP">('STARTUP')
   /** Shared username variable */
   const [username, setUsername] = useState<string>('')
 
   /** This ensures that the navigation links include either login or logout option based on user type */
-  // useEffect(() => {
-  //   axios.get<User>('http://localhost:8080/users', { withCredentials: true })
-  //     .then((res) => { 
-  //       setUsername(res.data.username);
-  //       setRole(res.data.role);
-  //       alert("Currently logged in user ------> " + res.data)
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       setUsername('');
-  //       setRole('unauthenticated');
-  //     })
-  // }, [])
+  useEffect(() => {
+    const logInUsername = sessionStorage.getItem('logInUsername');
+    if (!logInUsername) {
+      setUsername('');
+      /* 1st time app loads. */
+      setRole('STARTUP'); 
+      return;
+    }
+    axios.get<User>(`http://localhost:8080/users/${logInUsername}`, { withCredentials: true })
+      .then((res) => { 
+        setUsername(res.data.username);
+        setRole(res.data.role);
+        alert("Currently signed in User Details ------> " + res.data)
+      })
+      .catch((err) => {
+        console.log(err);
+        setUsername('');
+        setRole('unauthenticated');
+      })
+  }, [])
 
   return (
     <div>

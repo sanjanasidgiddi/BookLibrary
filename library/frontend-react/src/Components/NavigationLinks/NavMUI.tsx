@@ -1,7 +1,7 @@
 import { AppBar, Toolbar, IconButton, Typography, Box, Button } from "@mui/material"
 import axios from "axios"
 import { Link, useNavigate } from "react-router-dom"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { UserInfo } from "../../App";
 
 function NavMUI() {
@@ -14,14 +14,24 @@ function NavMUI() {
         navigate(location)
     }
 
+    useEffect(() => {
+        console.log("Current userAuth state: ", userAuth);
+      }, [userAuth]);
+      
     /** Action upon clicking logout button */
     let logOut = () => {
-        axios.post('http://localhost:8080/users/logout', {}, { withCredentials: true })
-            .then((res) => {
-                userAuth?.setUsername('')
-                userAuth?.setRole('unauthenticated')
-                navigate('/login')
-            })
+        axios.post(`http://localhost:8080/users/logout`, {}, { withCredentials: true })
+        .then((res) => {
+            sessionStorage.removeItem('logInUsername'); 
+            userAuth?.setUsername('');
+            userAuth?.setRole('unauthenticated');
+            alert("Logged out successfully! Returns Blank -----> " + res.data);
+            navigate('/login'); // Redirect to login page
+        })
+        .catch((err) => {
+            console.error("Logout Error: ", err);
+            alert("Logout failed! Please try again.");
+        });
     }
 
     /** Function to trigger appearance theme change */
@@ -60,7 +70,7 @@ function NavMUI() {
                     {/* Right-aligned buttons (Login, Logout, Register) */}
                     <Box sx={{ display: "flex", gap: 2 }}>
                         <Button variant="contained" color="secondary" sx={{ color: "white", background: "rgba(0, 0, 0, 0.3)" }} onClick={() => navToPage('/register')}>Register</Button>
-                        {userAuth?.role === "unauthenticated" ? 
+                        {userAuth?.role === "unauthenticated" ||  userAuth?.role === "STARTUP" ? 
                             (<Button variant="contained" color="secondary" sx={{ color: "white", background: "rgba(0, 0, 0, 0.3)" }} onClick={() => navToPage('/login')}>Login</Button>) 
                             : 
                             (<Button variant="contained" color="secondary" sx={{ color: "white", background: "rgba(0, 0, 0, 0.3)" }} onClick={logOut}>Logout</Button>)

@@ -10,6 +10,7 @@ function Login() {
   /** State variables username and password */
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [role, setRole] = useState<"unauthenticated" | "USER" | "ADMIN" | "STARTUP">('STARTUP')
 
   /** Function to trigger appearance theme change */
   let toggleDarkLight = () => {
@@ -36,6 +37,15 @@ function Login() {
     .then((res) => {
       console.log("Login Successful: ", res.data);
       alert("Login Successful, Welcome :) " + res.data);
+      const { username, role } = res.data;
+      /* Store username in session storage */
+      sessionStorage.setItem('logInUsername', username);
+      userAuth?.setUsername(username);
+      userAuth?.setRole(role);
+      console.log("userAuth state after Login------> ", userAuth);
+      /* Update state variables */
+      setUsername(username);
+      setRole(role);
     })
     .catch((err) => {
       console.error("Axios Error: " + err);

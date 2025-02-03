@@ -9,7 +9,7 @@ function LibraryLogs() {
     useEffect(() => {
         // This will execute when the component mounts and on certain other conditions
         // Send an AXIOS request when the page loads
-        axios.get<BookLog[]>("http://localhost:8080/bookLogs")
+        axios.get<BookLog[]>("http://localhost:8080/bookLogs", { withCredentials: true })
             .then((res) => {
                 setlibraryLogs(res.data)
             })
