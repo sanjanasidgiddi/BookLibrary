@@ -39,10 +39,10 @@ function Register() {
             { username, password, firstName, lastName, email, phoneNumber, dob, role }, { withCredentials: true,
                 headers: { "Content-Type": "application/json" } }
         ).then((res) => {
-            console.log(res.data);
-            userAuth?.setUsername(res.data.username);
-            userAuth?.setRole(res.data.role);
-            alert("Registered successfully!")
+            console.log("Registered as -------> ", res.data);
+            // userAuth?.setUsername(res.data.username);
+            // userAuth?.setRole(res.data.role);
+            alert("Registered successfully! You may now Login with your new account.")
         }).catch((err) => {
             alert("Uh oh! Could not Register -----> " + err);
             console.log(err);
@@ -123,7 +123,7 @@ function Register() {
                         />
                         Admin
                     </label>
-                    <button className="button" type="submit" onClick={submitUnamePass}> Register </button>
+                    <button className="button" type="button" onClick={submitUnamePass}> Register </button>
                     <div className="register">
                         <p>Don't have an account?
                             <a href="register.html">Register</a>
