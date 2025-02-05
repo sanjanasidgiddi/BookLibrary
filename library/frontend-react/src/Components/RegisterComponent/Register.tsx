@@ -1,12 +1,9 @@
-import "./Register.css"
-import { UserInfo } from '../../App';
+// import "./Register.css"
 import { SyntheticEvent, useContext, useState } from "react";
 import axios from "axios";
-import { colors } from "@mui/material";
 
 function Register() {
     /** We will store info about the currently logged in user, since they login at the same time as registration */
-    const userAuth = useContext(UserInfo)
     /** State variables username and password */
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
@@ -16,18 +13,6 @@ function Register() {
     const [phoneNumber, setPhoneNumber] = useState<number>()
     const [dob, setDob] = useState<Date>()
     const [role, setRole] = useState<"USER" | "ADMIN">("USER")
-
-    /** Function to trigger appearance theme change */
-    let toggleDarkLight = () => {
-        console.log("Dark mode clicked")
-        const darkl_button = document.getElementById('darklight')
-        /* Toggle Button Text */
-        let current_text: string = darkl_button!.innerText;
-        darkl_button!.innerText = current_text === 'Dark' ? 'Light' : 'Dark';
-        /* Switch background and text colors using css class under wrapper */
-        var theme_element = document.body;
-        theme_element.classList.toggle("dark_mode");
-    }
 
     /** Set state variables upon submit */
     let submitUnamePass = () => {
@@ -51,7 +36,6 @@ function Register() {
 
     return (
         <div>
-            <button id="darklight" onClick={toggleDarkLight}>Dark</button>
             <div className="wrapper">
                 <form action="" id="login_user">
                     <h1>Register</h1>

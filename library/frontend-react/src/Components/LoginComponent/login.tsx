@@ -1,5 +1,5 @@
 import 'boxicons'
-import './Login.css'
+// import './Login.css'
 import axios from "axios"
 import { SyntheticEvent, useContext, useState } from 'react';
 import { UserInfo } from '../../App';
@@ -11,18 +11,6 @@ function Login() {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [role, setRole] = useState<"unauthenticated" | "USER" | "ADMIN" | "STARTUP">('STARTUP')
-
-  /** Function to trigger appearance theme change */
-  let toggleDarkLight = () => {
-    console.log("Dark mode clicked")
-    const darkl_button = document.getElementById('darklight')
-    /* Toggle Button Text */
-    let current_text: string = darkl_button!.innerText;
-    darkl_button!.innerText = current_text === 'Dark' ? 'Light' : 'Dark';
-    /* Switch background and text colors using css class under wrapper */
-    var theme_element = document.body;
-    theme_element.classList.toggle("dark_mode");
-  }
 
   /** Set state variables upon submit */
   let submitUnamePass = () => {
@@ -65,7 +53,6 @@ function Login() {
 
   return (
     <div>
-      <button id="darklight" onClick={toggleDarkLight}>DARK</button>
       <button onClick={getusers}>Get all users</button>
       <div className="wrapper">
         <form action="" id="login_user">

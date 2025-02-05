@@ -1,17 +1,13 @@
 import { createContext, useEffect, useState } from 'react'
-import './App.css'
-import AllBooks from './Components/BookComponent/AllBooks'
+// import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Nav from './Components/NavigationLinks/Nav'
 import Register from './Components/RegisterComponent/Register'
 import axios from 'axios'
-import MyBooks from './Components/MyBooks/MyBooks'
 import { User } from './Components/interface/User'
 import NavMUI from './Components/NavigationLinks/NavMUI'
 import BookListMUI from './Components/BookList/BookListMUI'
 import AllBooksMUI from './Components/BookComponent/AllBooksMUI'
 import MyBooksMUI from './Components/MyBooks/MyBooksMUI'
-import LibraryLogs from './Components/LibraryLogs/LibraryLogs'
 import LibraryLogsMUI from './Components/LibraryLogs/LibraryLogsMUI'
 import Login from './Components/LoginComponent/Login'
 
@@ -78,7 +74,7 @@ function App() {
             {/* <Route path='/mybooks' element={<MyBooks></MyBooks>}></Route> */}
             <Route path='/mybooks' element={<MyBooksMUI></MyBooksMUI>}></Route>
             {/* <Route path='/libraryLogs' element={<LibraryLogs></LibraryLogs>}></Route> */}
-            <Route path='/libraryLogs' element={<LibraryLogsMUI></LibraryLogsMUI>}></Route>
+            <Route path='/libraryLogsMUI' element={<LibraryLogsMUI></LibraryLogsMUI>}></Route>
           </Routes>
         </BrowserRouter>
       </UserInfo.Provider>

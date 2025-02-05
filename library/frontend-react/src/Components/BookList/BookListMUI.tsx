@@ -1,4 +1,4 @@
-import "./BookList.css"
+// import "./BookList.css"
 import { Book } from "../interface/Book"
 import axios from "axios"
 import { useEffect, useState } from "react"
@@ -21,18 +21,6 @@ function BookListMUI() {
                 console.error("Error fetching books:", error);
             });
     }, [])
-
-    /** Function to TableRowigger appearance theme change */
-    let toggleDarkLight = () => {
-        console.log("Dark mode clicked")
-        const darkl_button = document.getElementById('darklight')
-        /* Toggle Button Text */
-        let current_text: string = darkl_button!.innerText;
-        darkl_button!.innerText = current_text === 'Dark' ? 'Light' : 'Dark';
-        /* Switch background and text colors using css class under wrapper */
-        var theme_element = document.body;
-        theme_element.classList.toggle("dark_mode");
-    }
 
     /**Add new book */
     const addNewBookToList = (newBook: Book) => {
@@ -70,15 +58,6 @@ function BookListMUI() {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
             <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
-                <Button
-                variant="contained"
-                color="secondary"
-                id="darklight"
-                onClick={toggleDarkLight}
-                style={{ marginRight: '20px' }}
-                >
-                Dark
-                </Button>
             </div>
             <br />
             <Button variant="contained" color="secondary" style={{ marginBottom: '10px' }} onClick={() => setShowAddBookPopup(true)}>Add New Book</Button>

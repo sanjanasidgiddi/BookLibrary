@@ -1,33 +1,3 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins",sans-serif;
-    color:white
-}
-
-.link-styles{
-    color: #fff;
-    padding:10px;
-    font-size: large;
-    box-shadow: 0 0 10px rgba(248, 248, 248, 0.973);
-    background-color: rgb(3, 37, 9);
-    padding: 10px;
-}
-
-/* Top-right corner position for Page Appearance Settings (Dark Mode) */
-#dark-topright{
-    color: black;
-    position:absolute;
-    padding:10px;
-    top:0;
-    left:0;
-    box-shadow: 0 0 10px rgba(248, 248, 248, 0.973);
-    background-color: rgb(3, 37, 9);
-    padding: 10px;
-    font-size: large;
-    font-family: 'Times New Roman', Times, serif;
-}
 /* Dark Mode feature */
 .dark_mode{  
     background:rgb(13, 48, 16);

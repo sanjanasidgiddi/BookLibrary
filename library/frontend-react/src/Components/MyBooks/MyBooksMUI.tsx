@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Book } from "../interface/Book"
 import { BookLog } from "../interface/BookLog"
-import "./MyBooks.css";
+// import "./MyBooks.css";
 import axios from "axios"
-import backgroundImg from './background_img.jpg';
 import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
 
 
@@ -23,18 +21,6 @@ function MyBooks() {
         console.error("Error fetching books:", error);
       });
   }, [])
-
-  /** Function to trigger appearance theme change */
-  let toggleDarkLight = () => {
-    console.log("Dark mode clicked")
-    const darkl_button = document.getElementById('darklight')
-    /* Toggle Button Text */
-    let current_text: string = darkl_button!.innerText;
-    darkl_button!.innerText = current_text === 'Dark' ? 'Light' : 'Dark';
-    /* Switch background and text colors using css class under wrapper */
-    var theme_element = document.body;
-    theme_element.classList.toggle("dark_mode");
-  }
 
   const returnBook = (bookLogId: number) => {
   console.log("Attempting to return book with bookLogId:", bookLogId);
@@ -60,15 +46,6 @@ function MyBooks() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
       <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
-        <Button
-          variant="contained"
-          color="secondary"
-          id="darklight"
-          onClick={toggleDarkLight}
-          style={{ marginRight: '10px' }}
-        >
-          Dark
-        </Button>
       </div>
       <br />
       <div

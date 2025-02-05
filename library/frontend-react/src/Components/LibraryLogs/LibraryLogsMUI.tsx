@@ -24,18 +24,6 @@ function LibraryLogs() {
         return formattedDate.toLocaleDateString("en-US"); 
     };
 
-    /** Function to trigger appearance theme change */
-    let toggleDarkLight = () => {
-      console.log("Dark mode clicked")
-      const darkl_button = document.getElementById('darklight')
-      /* Toggle Button Text */
-      let current_text: string = darkl_button!.innerText;
-      darkl_button!.innerText = current_text === 'Dark' ? 'Light' : 'Dark';
-      /* Switch background and text colors using css class under wrapper */
-      var theme_element = document.body;
-      theme_element.classList.toggle("dark_mode");
-    }
-
     // const handleReturnBook = (bookLogId: number) => {
     //   axios.post(`http://localhost:8080/bookLogs/return/${bookLogId}`)
     //     .then(() => {
@@ -49,26 +37,17 @@ function LibraryLogs() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
       <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
-        <Button
-          variant="contained"
-          color="secondary"
-          id="darklight"
-          onClick={toggleDarkLight}
-          style={{ marginRight: '10px' }}
-        >
-          Dark
-        </Button>
       </div>
       <br />
       <h1 style={{ marginBottom: '20px', textAlign: 'center' }}>Library Logs</h1>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Username</TableCell>
-            <TableCell>Book ID</TableCell>
+            <TableCell>Book Log ID</TableCell>
+            <TableCell>Reader Name</TableCell>
+            <TableCell>Book Name</TableCell>
             <TableCell>Date Issued</TableCell>
-            <TableCell>Date to be Returned</TableCell>
+            <TableCell>Return Date</TableCell>
             <TableCell>Date Actually Returned</TableCell>
           </TableRow>
         </TableHead>
@@ -77,8 +56,8 @@ function LibraryLogs() {
             libraryLogs.map((log) => (
               <TableRow key={log.bookLogId}>
                 <TableCell>{log.bookLogId}</TableCell>
-                <TableCell>{log.user.username}</TableCell>
-                <TableCell>{log.book.bookId}</TableCell>
+                <TableCell>{log.user.firstName} {log.user.lastName}</TableCell>
+                <TableCell>{log.book.bookName}</TableCell>
                 <TableCell>{formatDate(log.dateIssued)}</TableCell>
                 <TableCell>{formatDate(log.dateToBeReturned)}</TableCell>
                 <TableCell>{formatDate(log.dateActuallyReturned)}</TableCell>

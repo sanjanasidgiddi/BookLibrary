@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Book } from "../interface/Book"
 import axios from "axios"
-import backgroundImg from './background_img.jpg';
 import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, IconButton, InputBase, Paper, Typography } from '@mui/material';
 
 
@@ -18,24 +17,12 @@ function AllBooks() {
     axios.get<Book[]>("http://localhost:8080/books", { withCredentials: true })
       .then((res) => {
         setAllBooks(res.data)
-        setVisibleBooks(res.data.slice(0, 5));
+        setVisibleBooks(res.data.sort((a, b) => a.author.localeCompare(b.author))); 
       })
       .catch((error) => {
         console.error("Error fetching books:", error);
       });
   }, [])
-
-  /** Function to trigger appearance theme change */
-  let toggleDarkLight = () => {
-    console.log("Dark mode clicked")
-    const darkl_button = document.getElementById('darklight')
-    /* Toggle Button Text */
-    let current_text: string = darkl_button!.innerText;
-    darkl_button!.innerText = current_text === 'Dark' ? 'Light' : 'Dark';
-    /* Switch background and text colors using css class under wrapper */
-    var theme_element = document.body;
-    theme_element.classList.toggle("dark_mode");
-  }
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -72,15 +59,6 @@ function AllBooks() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
       <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
-        <Button
-          variant="contained"
-          color="secondary"
-          id="darklight"
-          onClick={toggleDarkLight}
-          style={{ marginRight: '10px' }}
-        >
-          Dark
-        </Button>
       </div>
       <br />
       <Paper
